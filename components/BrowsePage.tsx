@@ -222,7 +222,7 @@ export default function BrowsePage({
         <div className="browse-grid-section">
           <div className="feed-grid">
             {visible.map((art, i) => (
-              <div key={`${art.id}-${i}`} className="artwork-card">
+              <div key={`${art.id}-${i}`} className="artwork-card" onClick={() => router.push(`/paintings/${art.id}`)}>
                 <div className="artwork-img-wrap">
                   <img
                     src={art.img}
@@ -231,21 +231,25 @@ export default function BrowsePage({
                     onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')}
                   />
                   <div className="artwork-overlay">
-                    <button className="artwork-view-btn" onClick={() => router.push(`/paintings/${art.id}`)}>View Details</button>
+                    <div className="artwork-overlay-top">
+                      <button
+                        className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
+                        onClick={e => { e.stopPropagation(); toggleSave(art.id) }}
+                        title={saved.has(art.id) ? 'Unsave' : 'Save'}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="artwork-overlay-bottom">
+                      <div className="artwork-overlay-info">
+                        <span className="artwork-overlay-name">{art.name}</span>
+                        <span className="artwork-overlay-style">{art.style}</span>
+                      </div>
+                      <button className="artwork-view-btn" onClick={e => { e.stopPropagation(); router.push(`/paintings/${art.id}`) }}>View</button>
+                    </div>
                   </div>
-                  <button
-                    className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
-                    onClick={() => toggleSave(art.id)}
-                    title={saved.has(art.id) ? 'Unsave' : 'Save'}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                    </svg>
-                  </button>
-                </div>
-                <div className="artwork-info">
-                  <span className="artwork-name">{art.name}</span>
-                  <span className="artwork-style">{art.style}</span>
                 </div>
               </div>
             ))}

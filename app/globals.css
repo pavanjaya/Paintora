@@ -1437,3 +1437,52 @@ img.loaded { opacity: 1; }
   .painting-breadcrumb { padding: 1rem 1rem 0; }
   .painting-related-inner { padding: 0 1rem; }
 }
+
+/* ─── Artwork card shared actions ────────────────────────────────────── */
+.artwork-view-btn {
+  background: rgba(255,255,255,0.95);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  white-space: nowrap;
+}
+.artwork-view-btn:hover { background: #fff; transform: translateY(-1px); }
+
+.artwork-save-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.artwork-save-btn.saved { color: #e53e3e; background: #fff; }
+.artwork-save-btn:hover { background: #fff; color: #e53e3e; }
+
+/* Load more / outline button */
+.btn-outline {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--sans);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.btn-outline:hover { border-color: var(--ink); background: var(--bg-soft); }
