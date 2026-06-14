@@ -73,89 +73,36 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
   return (
     <>
       <nav style={{ borderBottom: scrolled ? '1px solid rgba(15,15,20,0.08)' : 'none', boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.04)' : 'none' }}>
-        <div className="nav-inner">
+        <div className="nav-inner" style={{ position: 'relative' }}>
 
           {/* LEFT: Logo */}
           <a href="/" className="logo" aria-label="Paintora">
             <img src="/logo.svg" alt="Paintora" style={{ height: 28, width: 'auto', display: 'block', opacity: 1 }} />
           </a>
 
-          {/* CENTER: Discover + Search */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-
-            {/* Discover dropdown */}
-            <div ref={discoverRef} style={{ position: 'relative' }}>
-              <button
-                onClick={() => setDiscoverOpen(o => !o)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  background: discoverOpen ? 'var(--bg-soft)' : 'none', border: 'none', cursor: 'pointer',
-                  fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, color: 'var(--ink)',
-                  padding: '8px 14px', borderRadius: 24,
-                  transition: 'background 0.15s',
-                } as React.CSSProperties}
-              >
-                Discover
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-                  style={{ transform: discoverOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-              </button>
-
-              {discoverOpen && (
-                <div style={{
-                  position: 'absolute', top: 'calc(100% + 10px)', left: '50%', transform: 'translateX(-50%)',
-                  minWidth: 260, background: '#fff', border: '1px solid var(--border)',
-                  borderRadius: 16, boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
-                  padding: '8px 0', zIndex: 200,
-                }}>
-                  {DISCOVER_ITEMS.map(item => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      onClick={e => { e.preventDefault(); handleDiscover(item.href) }}
-                      style={{
-                        display: 'flex', flexDirection: 'column', gap: 2,
-                        width: '100%', textAlign: 'left', padding: '10px 18px',
-                        background: 'none', textDecoration: 'none',
-                        fontFamily: 'var(--sans)',
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-                    >
-                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>{item.label}</span>
-                      <span style={{ fontSize: 11, color: 'var(--ink-muted)' }}>{item.desc}</span>
-                    </a>
-                  ))}
-                </div>
+          {/* CENTER: Search bar — absolutely centered in nav */}
+          <div ref={searchRef} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: 460 }}>
+            <form
+              className="nav-search-form"
+              onClick={() => setSearchOpen(true)}
+              onSubmit={e => { e.preventDefault(); if (searchQ.trim()) { setSearchOpen(false); router.push(`/search?q=${encodeURIComponent(searchQ.trim())}`) } }}
+            >
+              <span className="nav-search-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              </span>
+              <input
+                className="nav-search-input"
+                placeholder="Search artworks, collections, spaces…"
+                value={searchQ}
+                onChange={e => { setSearchQ(e.target.value); setSearchOpen(true) }}
+                onFocus={() => setSearchOpen(true)}
+              />
+              {searchQ && (
+                <button className="nav-search-clear visible" onClick={() => { setSearchQ(''); setSearchOpen(false) }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
               )}
-            </div>
-
-            {/* Search pill */}
-            <div ref={searchRef} style={{ position: 'relative', width: 280 }}>
-              <form
-                className="nav-search-form"
-                style={{ height: 40 }}
-                onClick={() => setSearchOpen(true)}
-                onSubmit={e => { e.preventDefault(); if (searchQ.trim()) { setSearchOpen(false); router.push(`/search?q=${encodeURIComponent(searchQ.trim())}`) } }}
-              >
-                <span className="nav-search-icon">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                </span>
-                <input
-                  className="nav-search-input"
-                  style={{ fontSize: 13 }}
-                  placeholder="Search by space, style, collection…"
-                  value={searchQ}
-                  onChange={e => { setSearchQ(e.target.value); setSearchOpen(true) }}
-                  onFocus={() => setSearchOpen(true)}
-                />
-                {searchQ && (
-                  <button className="nav-search-clear visible" onClick={() => { setSearchQ(''); setSearchOpen(false) }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                  </button>
-                )}
-              </form>
+            </form>
 
               <div className={`nav-search-dropdown${searchOpen ? ' open' : ''}${anyResults ? ' has-results' : ''}`}>
                 <div className="search-default-pane">
@@ -247,17 +194,50 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* RIGHT: Saved · Log In · Start Free */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+          {/* RIGHT: Discover + auth */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexShrink: 0, marginLeft: 'auto' }}>
+
+            {/* Discover dropdown */}
+            <div ref={discoverRef} style={{ position: 'relative' }}>
+              <button
+                onClick={() => setDiscoverOpen(o => !o)}
+                className="nav-text-btn"
+              >
+                Discover
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                  style={{ transform: discoverOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+              {discoverOpen && (
+                <div style={{
+                  position: 'absolute', top: 'calc(100% + 10px)', left: '50%', transform: 'translateX(-50%)',
+                  minWidth: 240, background: '#fff', border: '1px solid var(--border)',
+                  borderRadius: 16, boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
+                  padding: '8px 0', zIndex: 200,
+                }}>
+                  {DISCOVER_ITEMS.map(item => (
+                    <a key={item.label} href={item.href}
+                      onClick={e => { e.preventDefault(); handleDiscover(item.href) }}
+                      style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '10px 18px', background: 'none', textDecoration: 'none', fontFamily: 'var(--sans)' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+                    >
+                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>{item.label}</span>
+                      <span style={{ fontSize: 11, color: 'var(--ink-muted)' }}>{item.desc}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div style={{ width: 1, height: 20, background: 'var(--border)', margin: '0 6px', flexShrink: 0 }} />
+
             {isLoggedIn ? (
               <>
-                <button title="Saved" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-light)', display: 'flex', alignItems: 'center', padding: 6 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-                </button>
                 <div style={{ position: 'relative' }}>
-                  <button onClick={() => setProfileOpen(o => !o)} style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 14, fontWeight: 700 }}>
+                  <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#0F0F14', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 700 }}>
                     {userEmail ? userEmail[0].toUpperCase() : 'U'}
                   </button>
                   {profileOpen && (
@@ -277,11 +257,8 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
               </>
             ) : (
               <>
-                <button title="Saved" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-light)', display: 'flex', alignItems: 'center', padding: 6 }} onClick={onLogin}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-                </button>
-                <button className="nav-login" onClick={onLogin}>Log In</button>
-                <button className="nav-cta" onClick={onSignup} style={{ background: '#000', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)' }}>Start Free</button>
+                <button className="nav-login" onClick={onLogin}>Log in</button>
+                <button className="nav-cta" onClick={onSignup}>Sign up</button>
               </>
             )}
 

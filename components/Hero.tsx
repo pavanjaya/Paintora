@@ -44,23 +44,17 @@ export default function Hero({ onGallery }: { onGallery: () => void }) {
             <Link key={s.label} className="hero-tag" href={s.href}>{s.label}</Link>
           ))}
         </div>
-        <div style={{ marginTop: '1.5rem' }}>
-          <Link href="/spaces/office" className="btn-dark" style={{ fontFamily: 'var(--sans)', fontSize: 14, textDecoration: 'none', display: 'inline-block', padding: '10px 22px' }}>
-            Start Discovering
-          </Link>
-          <Link href="/styles/abstract" style={{ marginLeft: '1rem', fontFamily: 'var(--sans)', background: 'none', border: '1.5px solid var(--border)', borderRadius: 24, padding: '10px 22px', fontSize: 14, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', display: 'inline-block' }}>
-            Explore Collections
-          </Link>
-        </div>
       </div>
       <div className="hero-right">
         <div className="hero-art-card">
           <Img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80" alt="Featured artwork" />
           <div className="hero-art-credit">
-            <img className="hero-art-avatar loaded" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&q=80" alt="Artist" />
+            <div className="hero-art-thumb">
+              <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=64&q=80" alt="" className="loaded" />
+            </div>
             <div>
-              <div className="hero-art-name">Elena Marcov</div>
-              <div className="hero-art-style">Abstract Expressionism</div>
+              <div className="hero-art-name">Abstract No. 7</div>
+              <div className="hero-art-style">Featured Artwork</div>
             </div>
           </div>
         </div>

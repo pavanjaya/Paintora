@@ -19,7 +19,7 @@ const SUBJECT_OPTIONS = ['Landscape', 'Portrait', 'Floral', 'Still Life', 'Natur
 const SORT_OPTIONS    = ['Trending', 'Newest', "Editor's Picks", 'Price: Low to High', 'Price: High to Low']
 
 type FilterState = { style: string; medium: string; subject: string; sort: string }
-type ActiveDropdown = 'style' | 'medium' | 'subject' | 'sort' | null
+type ActiveDropdown = 'filters' | null
 
 export default function SearchPage({ query }: { query: string }) {
   const router = useRouter()
@@ -54,7 +54,7 @@ export default function SearchPage({ query }: { query: string }) {
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (!(e.target as Element).closest('.browse-filter-dropdown-wrap')) setActiveDropdown(null)
+      if (!(e.target as Element).closest('.browse-filter-bar')) setActiveDropdown(null)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -107,61 +107,54 @@ export default function SearchPage({ query }: { query: string }) {
         {/* Filter bar */}
         <div ref={filterBarRef} className={`browse-filter-bar${sticky ? ' sticky' : ''}`}>
           <div className="browse-filter-inner">
-            <div className="browse-filter-dropdown-wrap">
+            <div className="browse-filter-right" style={{ borderLeft: 'none', paddingLeft: 0 }}>
               <button
-                className={`browse-filter-btn${activeDropdown === 'sort' ? ' active' : ''}`}
-                onClick={() => setActiveDropdown(v => v === 'sort' ? null : 'sort')}
+                className={`browse-filter-toggle${activeDropdown === 'filters' ? ' active' : ''}`}
+                onClick={() => setActiveDropdown(v => v === 'filters' ? null : 'filters')}
               >
-                {filters.sort} <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                Filters
+                {hasActiveFilters && (
+                  <span className="browse-filter-badge">
+                    {[filters.style, filters.medium, filters.subject].filter(Boolean).length}
+                  </span>
+                )}
               </button>
-              {activeDropdown === 'sort' && (
-                <div className="browse-dropdown">
-                  {SORT_OPTIONS.map(o => (
-                    <button key={o} className={`browse-dropdown-item${filters.sort === o ? ' selected' : ''}`} onClick={() => setFilter('sort', o)}>{o}</button>
+            </div>
+          </div>
+
+          {activeDropdown === 'filters' && (
+            <div className="browse-filter-panel">
+              <div className="browse-filter-panel-group">
+                <div className="browse-filter-panel-label">Style</div>
+                <div className="browse-filter-panel-chips">
+                  {STYLE_OPTIONS.map(o => (
+                    <button key={o} className={`browse-filter-chip${filters.style === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, style: f.style === o ? '' : o }))}>{o}</button>
                   ))}
                 </div>
-              )}
-            </div>
-
-            <div className="browse-filter-divider" />
-
-            <div className="browse-filter-dropdown-wrap">
-              <button className={`browse-filter-btn${filters.style ? ' has-value' : ''}${activeDropdown === 'style' ? ' active' : ''}`} onClick={() => setActiveDropdown(v => v === 'style' ? null : 'style')}>
-                {filters.style || 'Style'} <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
-              </button>
-              {activeDropdown === 'style' && (
-                <div className="browse-dropdown">
-                  {STYLE_OPTIONS.map(o => <button key={o} className={`browse-dropdown-item${filters.style === o ? ' selected' : ''}`} onClick={() => setFilter('style', o)}>{o}</button>)}
+              </div>
+              <div className="browse-filter-panel-group">
+                <div className="browse-filter-panel-label">Medium</div>
+                <div className="browse-filter-panel-chips">
+                  {MEDIUM_OPTIONS.map(o => (
+                    <button key={o} className={`browse-filter-chip${filters.medium === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, medium: f.medium === o ? '' : o }))}>{o}</button>
+                  ))}
                 </div>
-              )}
-            </div>
-
-            <div className="browse-filter-dropdown-wrap">
-              <button className={`browse-filter-btn${filters.medium ? ' has-value' : ''}${activeDropdown === 'medium' ? ' active' : ''}`} onClick={() => setActiveDropdown(v => v === 'medium' ? null : 'medium')}>
-                {filters.medium || 'Medium'} <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
-              </button>
-              {activeDropdown === 'medium' && (
-                <div className="browse-dropdown">
-                  {MEDIUM_OPTIONS.map(o => <button key={o} className={`browse-dropdown-item${filters.medium === o ? ' selected' : ''}`} onClick={() => setFilter('medium', o)}>{o}</button>)}
+              </div>
+              <div className="browse-filter-panel-group">
+                <div className="browse-filter-panel-label">Subject</div>
+                <div className="browse-filter-panel-chips">
+                  {SUBJECT_OPTIONS.map(o => (
+                    <button key={o} className={`browse-filter-chip${filters.subject === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, subject: f.subject === o ? '' : o }))}>{o}</button>
+                  ))}
                 </div>
-              )}
+              </div>
+              <div className="browse-filter-panel-footer">
+                <button className="browse-filter-clear" onClick={resetFilters}>Clear all</button>
+                <button className="browse-filter-apply" onClick={() => setActiveDropdown(null)}>Apply</button>
+              </div>
             </div>
-
-            <div className="browse-filter-dropdown-wrap">
-              <button className={`browse-filter-btn${filters.subject ? ' has-value' : ''}${activeDropdown === 'subject' ? ' active' : ''}`} onClick={() => setActiveDropdown(v => v === 'subject' ? null : 'subject')}>
-                {filters.subject || 'Subject'} <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>
-              </button>
-              {activeDropdown === 'subject' && (
-                <div className="browse-dropdown">
-                  {SUBJECT_OPTIONS.map(o => <button key={o} className={`browse-dropdown-item${filters.subject === o ? ' selected' : ''}`} onClick={() => setFilter('subject', o)}>{o}</button>)}
-                </div>
-              )}
-            </div>
-
-            {hasActiveFilters && (
-              <button className="browse-filter-reset" onClick={resetFilters}>Clear filters</button>
-            )}
-          </div>
+          )}
         </div>
 
         {/* Grid */}
