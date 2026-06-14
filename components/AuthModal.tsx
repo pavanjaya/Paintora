@@ -61,9 +61,7 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
 
         <div className="auth-left">
           <div className="auth-logo">
-            <svg width="110" height="28" viewBox="0 0 110 28" fill="none">
-              <text x="0" y="22" fontFamily="'Plus Jakarta Sans', sans-serif" fontWeight="800" fontSize="20" fill="#0F0F14" letterSpacing="-0.5">Paintora</text>
-            </svg>
+            <img src="/logo.svg" alt="Paintora" style={{ height: 28, width: 'auto', display: 'block', opacity: 1 }} />
           </div>
           <h2 className="auth-heading">{mode === 'login' ? 'Welcome back.' : 'Join Paintora.'}</h2>
 

@@ -5,7 +5,6 @@ import { type ArtItem, FEED_ARTWORKS } from '@/lib/data'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
-import Loader         from '@/components/Loader'
 import Nav            from '@/components/Nav'
 import Hero           from '@/components/Hero'
 import Marquee        from '@/components/Marquee'
@@ -40,7 +39,6 @@ function Licensing({ onSignup }: { onSignup: () => void }) {
 }
 
 export default function Home() {
-  const [loaderDone, setLoaderDone]       = useState(false)
   const [authMode, setAuthMode]           = useState<'login' | 'signup'>('login')
   const [authOpen, setAuthOpen]           = useState(false)
   const [user, setUser]                   = useState<User | null>(null)
@@ -51,11 +49,6 @@ export default function Home() {
   const [previewOpen, setPreviewOpen]     = useState(false)
   const [previewIdx, setPreviewIdx]       = useState(0)
   const [previewList, setPreviewList]     = useState<ArtItem[]>(FEED_ARTWORKS)
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaderDone(true), 2000)
-    return () => clearTimeout(t)
-  }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
@@ -79,8 +72,6 @@ export default function Home() {
 
   return (
     <>
-      <Loader done={loaderDone} />
-
       <Nav
         onLogin={openLogin}
         onSignup={openSignup}

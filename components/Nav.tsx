@@ -62,10 +62,8 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
     <>
       <nav style={{ borderBottom: scrolled ? '1px solid rgba(15,15,20,0.08)' : 'none', boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.04)' : 'none' }}>
         <div className="nav-inner">
-          <a href="#" className="logo" aria-label="Paintora">
-            <svg width="130" height="34" viewBox="0 0 130 34" fill="none">
-              <text x="0" y="26" fontFamily="'Plus Jakarta Sans', sans-serif" fontWeight="800" fontSize="24" fill="#0F0F14" letterSpacing="-0.8">Paintora</text>
-            </svg>
+          <a href="/" className="logo" aria-label="Paintora">
+            <img src="/logo.svg" alt="Paintora" style={{ height: 28, width: 'auto', display: 'block', opacity: 1 }} />
           </a>
 
           {/* Desktop search */}
