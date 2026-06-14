@@ -172,7 +172,7 @@ export default function SearchPage({ query }: { query: string }) {
         <div className="browse-grid-section">
           <div className="feed-grid">
             {visible.map((art, i) => (
-              <div key={`${art.id}-${i}`} className="artwork-card" onClick={() => router.push(`/paintings/${art.id}`)}>
+              <div key={`${i}-${art.img}`} className="artwork-card" onClick={() => router.push(`/paintings/${art.id}`)}>
                 <div className="artwork-img-wrap">
                   <Img src={art.img} alt={art.name} />
                   <div className="artwork-overlay">
