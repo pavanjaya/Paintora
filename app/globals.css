@@ -1387,14 +1387,14 @@ img.loaded { opacity: 1; }
 .browse-filter-reset:hover { color: var(--ink); }
 
 /* Grid */
-.browse-grid-section { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+.browse-grid-section { padding: 4rem 1.5rem; }
 .browse-load-more { display: flex; justify-content: center; margin-top: 3rem; }
 
 @media (max-width: 640px) {
   .browse-header { padding: 1.5rem 1rem 1rem; }
   .browse-popular { padding: 0.75rem 1rem; }
   .browse-filter-inner { padding: 0 1rem; }
-  .browse-grid-section { padding: 1.5rem 1rem 3rem; }
+  .browse-grid-section { padding: 2rem 1rem 3rem; }
 }
 
 /* ─── Painting Detail Page ───────────────────────────────────────────── */

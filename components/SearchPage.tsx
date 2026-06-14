@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { ALL_ARTWORKS } from '@/lib/browse-data'
 import type { ArtItem } from '@/lib/browse-data'
+import Img from '@/components/Img'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
@@ -173,12 +174,7 @@ export default function SearchPage({ query }: { query: string }) {
             {visible.map((art, i) => (
               <div key={`${art.id}-${i}`} className="artwork-card" onClick={() => router.push(`/paintings/${art.id}`)}>
                 <div className="artwork-img-wrap">
-                  <img
-                    src={art.img}
-                    alt={art.name}
-                    ref={el => { if (el?.complete) el.classList.add('loaded') }}
-                    onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')}
-                  />
+                  <Img src={art.img} alt={art.name} />
                   <div className="artwork-overlay">
                     <div className="artwork-overlay-top">
                       <button

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { FEED_ARTWORKS, GALLERY_IMGS } from '@/lib/data'
 import type { ArtItem } from '@/lib/data'
+import Img from '@/components/Img'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
@@ -125,7 +126,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                 {related.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
                     <div className="artwork-img-wrap">
-                      <img src={a.img} alt={a.name} ref={el => { if (el?.complete) el.classList.add('loaded') }} onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
+                      <Img src={a.img} alt={a.name} />
                       <div className="artwork-overlay">
                         <button className="artwork-view-btn">View Details</button>
                       </div>
@@ -150,7 +151,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                 {similar.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
                     <div className="artwork-img-wrap">
-                      <img src={a.img} alt={a.name} ref={el => { if (el?.complete) el.classList.add('loaded') }} onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
+                      <Img src={a.img} alt={a.name} />
                       <div className="artwork-overlay">
                         <button className="artwork-view-btn">View Details</button>
                       </div>
