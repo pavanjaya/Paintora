@@ -22,11 +22,10 @@ function highlight(text: string, q: string): React.ReactNode {
 }
 
 const DISCOVER_ITEMS = [
-  { label: 'Spaces',      desc: 'Browse by room or environment',    href: '/discover/spaces/living-room' },
-  { label: 'Collections', desc: 'Curated editorial selections',      href: '/discover/collections/luxury-living' },
-  { label: 'Styles',      desc: 'Abstract, Minimalist, Realism…',   href: '/discover/styles/abstract' },
-  { label: 'Mediums',     desc: 'Oil, Watercolor, Acrylic…',        href: '/discover/mediums/oil-painting' },
-  { label: 'Subjects',    desc: 'Landscape, Portrait, Floral…',     href: '/discover/subjects/landscape' },
+  { label: 'Spaces',   desc: 'Browse by room or environment',  href: '/spaces/office' },
+  { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…', href: '/styles/abstract' },
+  { label: 'Mediums',  desc: 'Oil, Watercolor, Acrylic…',      href: '/mediums/oil' },
+  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',   href: '/subjects/landscape' },
 ]
 
 export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, userEmail, onLogout }: {
