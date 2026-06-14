@@ -18,7 +18,7 @@ export default function SpacesGrid({ onSpacePage }: { onSpacePage: () => void })
       <div className="spaces-inner">
         <div className="section-head">
           <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Designed for every space.</h2>
-          <Link href="/spaces/office" className="view-all" style={{ border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
+          <Link href="/spaces" className="view-all" style={{ border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
         </div>
         <div className="spaces-grid">
           {SPACES.map((s, i) => (

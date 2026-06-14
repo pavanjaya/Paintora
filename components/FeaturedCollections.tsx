@@ -15,7 +15,7 @@ export default function FeaturedCollections({ onGallery }: { onGallery: () => vo
     <section id="collections">
       <div className="section-head">
         <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Featured collections.</h2>
-        <Link href="/styles/abstract" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
+        <Link href="/collections" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
       </div>
       <div className="collections-grid">
         {FEATURED.map((c, i) => (

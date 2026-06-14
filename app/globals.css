@@ -1410,6 +1410,55 @@ img.loaded { opacity: 1; }
 .browse-grid-section { padding: 1.25rem 1.5rem 4rem; }
 .browse-load-more { display: flex; justify-content: center; margin-top: 3rem; }
 
+/* ─── Spaces Index Page ──────────────────────────────────────────────── */
+.spaces-index-header { padding: 3rem 1.5rem 2rem; }
+.spaces-index-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 48px); font-weight: 700; color: var(--ink); margin: 0 0 0.5rem; }
+.spaces-index-sub { font-size: 16px; color: var(--muted); margin: 0; }
+
+.spaces-index-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding: 0 1.5rem 5rem; }
+.spaces-index-card { display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; background: #fff; }
+.spaces-index-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-3px); }
+.spaces-index-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.spaces-index-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.spaces-index-card:hover .spaces-index-img img { transform: scale(1.04); }
+.spaces-index-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15)); }
+.spaces-index-info { padding: 1.25rem 1.25rem 1.5rem; }
+.spaces-index-count { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.spaces-index-name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); margin: 0.35rem 0 0.5rem; }
+.spaces-index-desc { font-size: 13px; color: var(--muted); margin: 0 0 1rem; line-height: 1.5; }
+.spaces-index-cta { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+/* ─── Collections Index Page ─────────────────────────────────────────── */
+.collections-filter-bar { display: flex; align-items: center; gap: 8px; padding: 0 1.5rem 1.5rem; flex-wrap: wrap; }
+.collections-filter-chip { padding: 6px 18px; font-size: 13px; font-family: var(--sans); color: var(--ink); background: none; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; transition: all 0.15s; }
+.collections-filter-chip:hover { border-color: var(--ink); }
+.collections-filter-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.collections-index-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 0 1.5rem 5rem; }
+.collections-index-card { display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; background: #fff; }
+.collections-index-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-3px); }
+.collections-index-img { position: relative; aspect-ratio: 3/2; overflow: hidden; }
+.collections-index-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.collections-index-card:hover .collections-index-img img { transform: scale(1.04); }
+.collections-index-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.2)); }
+.collections-index-tag { position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; color: #fff; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); border-radius: 20px; padding: 4px 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+.collections-index-info { padding: 1.25rem 1.25rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.collections-index-name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); margin: 0 0 0.4rem; }
+.collections-index-desc { font-size: 13px; color: var(--muted); line-height: 1.55; flex: 1; margin: 0 0 1rem; }
+.collections-index-footer { display: flex; align-items: center; justify-content: space-between; }
+.collections-index-count { font-size: 12px; color: var(--muted); font-weight: 500; }
+.collections-index-cta { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+@media (max-width: 960px) {
+  .spaces-index-grid { grid-template-columns: repeat(2, 1fr); }
+  .collections-index-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .spaces-index-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem 3rem; }
+  .collections-index-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem 3rem; }
+  .spaces-index-header { padding: 2rem 1rem 1.5rem; }
+}
+
 @media (max-width: 640px) {
   .browse-header { padding: 1.5rem 1rem 1rem; }
   .browse-popular { padding: 0.75rem 1rem; }
