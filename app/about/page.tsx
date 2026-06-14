@@ -1,11 +1,12 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import Footer from '@/components/Footer'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'About | Paintora',
-  description: 'Paintora curates contemporary paintings for homes, offices, and thoughtfully designed interiors. Learn about our mission and story.',
-}
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
+import AuthModal from '@/components/AuthModal'
+import { useRouter } from 'next/navigation'
 
 const STATS = [
   { value: '500+', label: 'Curated artworks' },
@@ -38,21 +39,30 @@ const VALUES = [
 ]
 
 export default function AboutPage() {
+  const router = useRouter()
+  const [user, setUser] = useState<{ email?: string } | null>(null)
+  const [authOpen, setAuthOpen] = useState(false)
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setUser(s?.user ?? null))
+    return () => subscription.unsubscribe()
+  }, [])
+
   return (
     <>
-      <div className="about-page">
-        {/* Nav — simple header */}
-        <header className="about-header">
-          <Link href="/" className="about-logo">
-            <img src="/logo.svg" alt="Paintora" style={{ height: 26, width: 'auto' }} />
-          </Link>
-          <nav className="about-header-nav">
-            <Link href="/trending" className="about-header-link">Browse</Link>
-            <Link href="/spaces" className="about-header-link">Spaces</Link>
-            <Link href="/" className="about-header-cta">Start exploring</Link>
-          </nav>
-        </header>
+      <Nav
+        onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
+        onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
+        onGallery={() => {}}
+        onStylesPage={() => {}}
+        isLoggedIn={!!user}
+        userEmail={user?.email}
+        onLogout={() => supabase.auth.signOut()}
+      />
 
+      <div className="about-page">
         {/* Hero */}
         <section className="about-hero">
           <div className="about-hero-inner">
@@ -140,6 +150,14 @@ export default function AboutPage() {
       </div>
 
       <Footer />
+
+      <AuthModal
+        mode={authMode}
+        open={authOpen}
+        onClose={() => setAuthOpen(false)}
+        onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
+        onSuccess={() => {}}
+      />
     </>
   )
 }
