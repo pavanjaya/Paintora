@@ -1,7 +1,3 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-
 const TESTIMONIALS = [
   {
     quote: 'Paintora transformed my living room into a gallery. The curation is exquisite — every piece feels intentional.',
@@ -69,13 +65,11 @@ const TESTIMONIALS = [
   },
 ]
 
-const PER_PAGE = 3
-
-function Stars({ count }: { count: number }) {
+function Stars() {
   return (
     <div className="testimonial-stars">
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#0F0F14" stroke="none">
+      {[1,2,3,4,5].map(i => (
+        <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#0F0F14" stroke="none">
           <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
         </svg>
       ))}
@@ -83,73 +77,45 @@ function Stars({ count }: { count: number }) {
   )
 }
 
+function Card({ t }: { t: typeof TESTIMONIALS[0] }) {
+  return (
+    <div className="testimonial-card">
+      <Stars />
+      <p className="testimonial-quote">{t.quote}</p>
+      <div className="testimonial-author">
+        <img src={t.img} alt={t.name} className="testimonial-avatar loaded" />
+        <div className="testimonial-author-info">
+          <span className="testimonial-name">{t.name}</span>
+          <span className="testimonial-title">{t.title} · {t.location}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Duplicate cards for seamless infinite loop
+const TRACK = [...TESTIMONIALS, ...TESTIMONIALS]
+
 export default function Testimonials() {
-  const [page, setPage] = useState(0)
-  const totalPages = Math.ceil(TESTIMONIALS.length / PER_PAGE)
-  const visible = TESTIMONIALS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPage(p => (p + 1) % totalPages)
-    }, 4000)
-    return () => clearInterval(timer)
-  }, [totalPages])
-
   return (
     <section className="testimonials-section">
       <div className="testimonials-head">
-        <div>
-          <h2 className="section-title">Trusted by designers<br />and homeowners.</h2>
-          <p className="testimonials-sub">{TESTIMONIALS.length}+ verified reviews from artists, designers, and collectors.</p>
-        </div>
-        <div className="testimonials-nav">
-          <button
-            className="testimonials-nav-btn"
-            onClick={() => setPage(p => (p - 1 + totalPages) % totalPages)}
-            aria-label="Previous"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <button
-            className="testimonials-nav-btn"
-            onClick={() => setPage(p => (p + 1) % totalPages)}
-            aria-label="Next"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
+        <h2 className="section-title">Trusted by designers<br />and homeowners.</h2>
+        <p className="testimonials-sub">{TESTIMONIALS.length}+ verified reviews from artists, designers, and collectors.</p>
       </div>
 
-      <div className="testimonials-grid">
-        {visible.map((t, i) => (
-          <div key={`${page}-${i}`} className="testimonial-card">
-            <Stars count={t.stars} />
-            <p className="testimonial-quote">{t.quote}</p>
-            <div className="testimonial-author">
-              <img
-                src={t.img}
-                alt={t.name}
-                className="testimonial-avatar loaded"
-              />
-              <div className="testimonial-author-info">
-                <span className="testimonial-name">{t.name}</span>
-                <span className="testimonial-title">{t.title} · {t.location}</span>
-              </div>
+      <div className="testimonials-marquee-wrap">
+        {/* Fade edges */}
+        <div className="testimonials-fade-left" />
+        <div className="testimonials-fade-right" />
+
+        <div className="testimonials-track">
+          {TRACK.map((t, i) => (
+            <div key={i} className="testimonials-track-item">
+              <Card t={t} />
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Dot indicators */}
-      <div className="testimonials-dots">
-        {Array.from({ length: totalPages }).map((_, i) => (
-          <button
-            key={i}
-            className={`testimonials-dot${i === page ? ' active' : ''}`}
-            onClick={() => setPage(i)}
-            aria-label={`Page ${i + 1}`}
-          />
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )
