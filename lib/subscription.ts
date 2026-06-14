@@ -1,13 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-// Server-side client with service role (bypasses RLS) — only use in API routes
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+function getSupabaseAdmin() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) throw new Error('Supabase service role not configured')
+  return createClient(url, key)
+}
 
 export async function getUserSubscription(userId: string) {
-  const { data } = await supabaseAdmin
+  const { data } = await getSupabaseAdmin()
     .from('subscriptions')
     .select('status, current_period_end')
     .eq('user_id', userId)

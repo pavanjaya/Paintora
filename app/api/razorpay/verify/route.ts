@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import crypto from 'crypto'
-import { supabaseAdmin } from '@/lib/subscription'
+import { getUserSubscription } from '@/lib/subscription'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
     const currentPeriodEnd = new Date()
     currentPeriodEnd.setDate(currentPeriodEnd.getDate() + 30)
 
+    const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
     await supabaseAdmin.from('subscriptions').upsert({
       user_id: userId,
       status: 'active',
