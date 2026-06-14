@@ -81,7 +81,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
           </a>
 
           {/* CENTER: Search bar — absolutely centered in nav */}
-          <div ref={searchRef} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: 460 }}>
+          <div ref={searchRef} className="nav-search-center" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: 460 }}>
             <form
               className="nav-search-form"
               onClick={() => setSearchOpen(true)}
@@ -232,7 +232,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
               )}
             </div>
 
-            <div style={{ width: 1, height: 20, background: 'var(--border)', margin: '0 6px', flexShrink: 0 }} />
+            <div className="nav-divider" style={{ width: 1, height: 20, background: 'var(--border)', margin: '0 6px', flexShrink: 0 }} />
 
             {isLoggedIn ? (
               <>

@@ -689,7 +689,8 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-login { display: none; }
-  .nav-inner { gap: 0.75rem; }
+  .nav-search-center { display: none !important; }
+  .nav-inner { gap: 0.75rem; justify-content: space-between; }
   .nav-hamburger { display: flex; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-image { display: none; }
@@ -1592,13 +1593,11 @@ img.loaded { opacity: 1; }
 
 /* ── NAV mobile ── */
 @media (max-width: 960px) {
-  /* Hide desktop centered search; hamburger visible */
-  .nav-inner > div[style*="position: absolute"] { display: none !important; }
+  .nav-search-center { display: none !important; }
   .nav-hamburger { display: flex !important; }
   .nav-login, .nav-cta { display: none; }
   .nav-text-btn { display: none; }
-  /* Divider separator between Discover and auth */
-  .nav-inner > div > div[style*="width: 1px"] { display: none; }
+  .nav-divider { display: none; }
 }
 
 /* ── HERO mobile ── */
