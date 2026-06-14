@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-
-const VALID_PASSWORD = 'Test1234567890'
+import { supabase } from '@/lib/supabase'
 
 export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: {
   mode: 'login' | 'signup'
@@ -11,19 +10,45 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
   onSwitch: () => void
   onSuccess: () => void
 }) {
-  const [email, setEmail] = useState('')
+  const [name, setName]         = useState('')
+  const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
-  const [showPw, setShowPw] = useState(false)
-  const [error, setError] = useState('')
+  const [showPw, setShowPw]     = useState(false)
+  const [error, setError]       = useState('')
+  const [loading, setLoading]   = useState(false)
 
-  const handle = (e: React.FormEvent) => {
+  const reset = () => { setName(''); setEmail(''); setPassword(''); setError('') }
+
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (mode === 'login') {
-      if (password === VALID_PASSWORD) { onSuccess(); onClose() }
-      else setError('Incorrect password. Try: Test1234567890')
-    } else {
-      onSuccess(); onClose()
+    setError('')
+    setLoading(true)
+
+    try {
+      if (mode === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (error) { setError(error.message); return }
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { full_name: name } },
+        })
+        if (error) { setError(error.message); return }
+      }
+      reset()
+      onSuccess()
+      onClose()
+    } finally {
+      setLoading(false)
     }
+  }
+
+  const handleGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    })
   }
 
   return (
@@ -33,6 +58,7 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
         <button className="auth-close" onClick={onClose}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
+
         <div className="auth-left">
           <div className="auth-logo">
             <svg width="110" height="28" viewBox="0 0 110 28" fill="none">
@@ -40,21 +66,30 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
             </svg>
           </div>
           <h2 className="auth-heading">{mode === 'login' ? 'Welcome back.' : 'Join Paintora.'}</h2>
+
           <form onSubmit={handle}>
             {mode === 'signup' && (
               <div className="auth-field">
                 <label className="auth-label">Full name</label>
-                <input className="auth-input" type="text" placeholder="Your name" />
+                <input className="auth-input" type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)} required />
               </div>
             )}
             <div className="auth-field">
               <label className="auth-label">Email address</label>
-              <input className="auth-input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} />
+              <input className="auth-input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
             </div>
             <div className="auth-field">
               <label className="auth-label">Password</label>
               <div className="auth-pw-wrap">
-                <input className="auth-input" type={showPw ? 'text' : 'password'} placeholder="Your password" value={password} onChange={e => { setPassword(e.target.value); setError('') }} />
+                <input
+                  className="auth-input"
+                  type={showPw ? 'text' : 'password'}
+                  placeholder={mode === 'signup' ? 'Min 6 characters' : 'Your password'}
+                  value={password}
+                  onChange={e => { setPassword(e.target.value); setError('') }}
+                  required
+                  minLength={6}
+                />
                 <button type="button" className="pw-toggle" onClick={() => setShowPw(s => !s)}>
                   {showPw
                     ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -63,12 +98,18 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
                 </button>
               </div>
             </div>
-            {error && <p style={{ fontSize: 12, color: '#E53E3E', marginBottom: '1rem' }}>{error}</p>}
+
+            {error && <p style={{ fontSize: 12, color: '#E53E3E', marginBottom: '1rem', lineHeight: 1.5 }}>{error}</p>}
             {mode === 'login' && <a href="#" className="auth-forgot" onClick={e => e.preventDefault()}>Forgot your password?</a>}
-            <button type="submit" className="auth-btn">{mode === 'login' ? 'Sign in' : 'Create account'}</button>
+
+            <button type="submit" className="auth-btn" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
+              {loading ? 'Please wait…' : mode === 'login' ? 'Sign in' : 'Create account'}
+            </button>
           </form>
+
           <div className="auth-divider">or</div>
-          <button className="auth-google">
+
+          <button className="auth-google" onClick={handleGoogle}>
             <svg width="18" height="18" viewBox="0 0 48 48">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
               <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -77,6 +118,7 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
             </svg>
             Continue with Google
           </button>
+
           <p className="auth-switch">
             {mode === 'login'
               ? <>Don&apos;t have an account? <a href="#" onClick={e => { e.preventDefault(); onSwitch() }}>Sign up free</a></>
@@ -85,6 +127,7 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
           </p>
           <p className="auth-terms">By continuing, you agree to Paintora&apos;s <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
         </div>
+
         <div className="auth-right">
           <div className="auth-right-inner">
             <div className="auth-artwork-stack">

@@ -20,12 +20,13 @@ function highlight(text: string, q: string): React.ReactNode {
   return <>{text.slice(0, idx)}<mark>{text.slice(idx, idx + q.length)}</mark>{text.slice(idx + q.length)}</>
 }
 
-export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, onLogout }: {
+export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, userEmail, onLogout }: {
   onLogin: () => void
   onSignup: () => void
   onGallery: () => void
   onStylesPage: () => void
   isLoggedIn: boolean
+  userEmail?: string
   onLogout: () => void
 }) {
   const [scrolled, setScrolled] = useState(false)
@@ -171,9 +172,10 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
 
           {isLoggedIn ? (
             <div style={{ position: 'relative' }}>
-              <button onClick={() => setProfileOpen(o => !o)} style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 14, fontWeight: 700 }}>P</button>
+              <button onClick={() => setProfileOpen(o => !o)} style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 14, fontWeight: 700 }}>{userEmail ? userEmail[0].toUpperCase() : 'U'}</button>
               {profileOpen && (
-                <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, minWidth: 180, background: '#fff', border: '1px solid rgba(15,15,20,0.08)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.12)', padding: '6px 0', zIndex: 200 }}>
+                <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, minWidth: 200, background: '#fff', border: '1px solid rgba(15,15,20,0.08)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.12)', padding: '6px 0', zIndex: 200 }}>
+                  {userEmail && <div style={{ padding: '10px 18px 8px', fontSize: 12, color: '#888', fontFamily: 'var(--sans)', borderBottom: '1px solid rgba(15,15,20,0.06)', marginBottom: 4, wordBreak: 'break-all' }}>{userEmail}</div>}
                   {['Profile', 'Saved', 'Downloads', 'Settings'].map(item => (
                     <button key={item} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 18px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 14, color: 'var(--ink)', fontWeight: 500 }}
                       onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}

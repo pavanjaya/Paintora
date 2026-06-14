@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { type ArtItem, FEED_ARTWORKS } from '@/lib/data'
+import { supabase } from '@/lib/supabase'
+import type { User } from '@supabase/supabase-js'
 
 import Loader         from '@/components/Loader'
 import Nav            from '@/components/Nav'
@@ -41,7 +43,8 @@ export default function Home() {
   const [loaderDone, setLoaderDone]       = useState(false)
   const [authMode, setAuthMode]           = useState<'login' | 'signup'>('login')
   const [authOpen, setAuthOpen]           = useState(false)
-  const [isLoggedIn, setIsLoggedIn]       = useState(false)
+  const [user, setUser]                   = useState<User | null>(null)
+  const isLoggedIn = user !== null
   const [galleryOpen, setGalleryOpen]     = useState(false)
   const [stylesOpen, setStylesOpen]       = useState(false)
   const [spaceOpen, setSpaceOpen]         = useState(false)
@@ -52,6 +55,14 @@ export default function Home() {
   useEffect(() => {
     const t = setTimeout(() => setLoaderDone(true), 2000)
     return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
   }, [])
 
   const openLogin  = useCallback(() => { setAuthMode('login');  setAuthOpen(true) }, [])
@@ -76,7 +87,8 @@ export default function Home() {
         onGallery={() => setGalleryOpen(true)}
         onStylesPage={() => setStylesOpen(true)}
         isLoggedIn={isLoggedIn}
-        onLogout={() => setIsLoggedIn(false)}
+        userEmail={user?.email}
+        onLogout={() => supabase.auth.signOut()}
       />
 
       <main>
@@ -100,7 +112,7 @@ export default function Home() {
         open={authOpen}
         onClose={() => setAuthOpen(false)}
         onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
-        onSuccess={() => setIsLoggedIn(true)}
+        onSuccess={() => {}}
       />
       <GalleryPage
         open={galleryOpen}
