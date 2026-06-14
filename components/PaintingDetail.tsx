@@ -125,7 +125,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                 {related.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
                     <div className="artwork-img-wrap">
-                      <img src={a.img} alt={a.name} loading="lazy" />
+                      <img src={a.img} alt={a.name} loading="lazy" onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
                       <div className="artwork-overlay">
                         <button className="artwork-view-btn">View Details</button>
                       </div>
@@ -150,7 +150,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                 {similar.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
                     <div className="artwork-img-wrap">
-                      <img src={a.img} alt={a.name} loading="lazy" />
+                      <img src={a.img} alt={a.name} loading="lazy" onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
                       <div className="artwork-overlay">
                         <button className="artwork-view-btn">View Details</button>
                       </div>

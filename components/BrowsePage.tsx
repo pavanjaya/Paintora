@@ -224,7 +224,7 @@ export default function BrowsePage({
             {visible.map((art, i) => (
               <div key={`${art.id}-${i}`} className="artwork-card">
                 <div className="artwork-img-wrap">
-                  <img src={art.img} alt={art.name} loading="lazy" />
+                  <img src={art.img} alt={art.name} loading="lazy" onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
                   <div className="artwork-overlay">
                     <button className="artwork-view-btn" onClick={() => router.push(`/paintings/${art.id}`)}>View Details</button>
                   </div>
