@@ -1604,6 +1604,189 @@ img.loaded { opacity: 1; }
 }
 .browse-empty-cta:hover { background: #333; }
 
+/* ══════════════════════════════════════════════
+   404 NOT FOUND PAGE
+   ══════════════════════════════════════════════ */
+.notfound-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--white); padding: 2rem 1.5rem;
+}
+.notfound-inner {
+  max-width: 560px; width: 100%; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+}
+.notfound-logo { display: inline-block; margin-bottom: 1rem; }
+.notfound-code {
+  font-size: clamp(80px, 15vw, 140px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.05em; line-height: 1;
+  opacity: 0.07;
+}
+.notfound-title {
+  font-size: clamp(24px, 4vw, 36px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.03em; margin-top: -2rem;
+}
+.notfound-sub {
+  font-size: 15px; color: var(--ink-muted); line-height: 1.7;
+}
+.notfound-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+.notfound-cta-primary {
+  padding: 13px 28px; background: var(--ink); color: #fff;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; font-family: var(--sans); transition: background 0.15s;
+}
+.notfound-cta-primary:hover { background: #333; }
+.notfound-cta-secondary {
+  padding: 13px 28px; background: none; color: var(--ink);
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; font-family: var(--sans);
+  border: 1.5px solid var(--border); transition: border-color 0.15s;
+}
+.notfound-cta-secondary:hover { border-color: var(--ink); }
+.notfound-suggestions { margin-top: 1rem; }
+.notfound-suggestions-label { font-size: 12px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.notfound-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.notfound-pill {
+  padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500;
+  border: 1.5px solid var(--border); color: var(--ink-light); text-decoration: none;
+  font-family: var(--sans); transition: all 0.15s;
+}
+.notfound-pill:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ══════════════════════════════════════════════
+   ABOUT PAGE
+   ══════════════════════════════════════════════ */
+.about-page { background: var(--white); }
+
+.about-header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 64px;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.about-logo { display: flex; align-items: center; text-decoration: none; }
+.about-header-nav { display: flex; align-items: center; gap: 0.5rem; }
+.about-header-link {
+  font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink-light);
+  text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 0.15s;
+}
+.about-header-link:hover { color: var(--ink); }
+.about-header-cta {
+  font-family: var(--sans); font-size: 13px; font-weight: 700;
+  background: var(--ink); color: #fff; padding: 9px 20px;
+  border-radius: 100px; text-decoration: none; transition: background 0.15s; margin-left: 8px;
+}
+.about-header-cta:hover { background: #333; }
+
+.about-hero { position: relative; overflow: hidden; }
+.about-hero-inner {
+  max-width: 760px; margin: 0 auto;
+  padding: 6rem 2rem 4rem; text-align: center; position: relative; z-index: 1;
+}
+.about-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 1.5rem;
+}
+.about-hero-title {
+  font-size: clamp(32px, 5vw, 58px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 1.5rem;
+}
+.about-hero-sub {
+  font-size: clamp(15px, 1.5vw, 18px); font-weight: 300;
+  color: var(--ink-light); line-height: 1.7; max-width: 560px; margin: 0 auto;
+}
+.about-hero-img-wrap { width: 100%; height: clamp(240px, 40vw, 520px); overflow: hidden; }
+.about-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.about-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.about-stat {
+  padding: 2.5rem 1.5rem; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.about-stat:last-child { border-right: none; }
+.about-stat-value {
+  font-size: clamp(32px, 4vw, 48px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.04em; margin-bottom: 0.25rem;
+}
+.about-stat-label { font-size: 13px; color: var(--ink-muted); font-weight: 500; }
+
+.about-mission { padding: 6rem 2rem; }
+.about-mission-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+}
+.about-section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 1rem;
+}
+.about-section-title {
+  font-size: clamp(24px, 3vw, 36px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 2rem;
+}
+.about-body {
+  font-size: 15px; font-weight: 300; color: var(--ink-light); line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+.about-body:last-child { margin-bottom: 0; }
+.about-mission-img-wrap { border-radius: 20px; overflow: hidden; }
+.about-mission-img { width: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; }
+
+.about-values { padding: 5rem 2rem; background: #fafafa; }
+.about-values-inner { max-width: 1100px; margin: 0 auto; }
+.about-values-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem;
+}
+.about-value-card {
+  background: var(--white); border-radius: 16px; padding: 2rem;
+  border: 1px solid var(--border);
+}
+.about-value-icon { font-size: 28px; display: block; margin-bottom: 1rem; }
+.about-value-title {
+  font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 0.6rem;
+}
+.about-value-desc { font-size: 14px; color: var(--ink-light); line-height: 1.7; }
+
+.about-cta-section {
+  padding: 7rem 2rem; text-align: center;
+  background: var(--ink); color: #fff;
+}
+.about-cta-inner { max-width: 600px; margin: 0 auto; }
+.about-cta-title {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem;
+}
+.about-cta-sub { font-size: 16px; opacity: 0.7; line-height: 1.6; margin-bottom: 2.5rem; }
+.about-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.about-cta-btn-primary {
+  padding: 14px 32px; background: #fff; color: var(--ink);
+  border-radius: 100px; font-size: 14px; font-weight: 700;
+  text-decoration: none; font-family: var(--sans); transition: opacity 0.15s;
+}
+.about-cta-btn-primary:hover { opacity: 0.88; }
+.about-cta-btn-secondary {
+  padding: 14px 32px; background: none; color: #fff;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; font-family: var(--sans);
+  border: 1.5px solid rgba(255,255,255,0.35); transition: border-color 0.15s;
+}
+.about-cta-btn-secondary:hover { border-color: rgba(255,255,255,0.8); }
+
+@media (max-width: 768px) {
+  .about-header { padding: 0 1.25rem; }
+  .about-header-nav .about-header-link { display: none; }
+  .about-hero-inner { padding: 4rem 1.25rem 3rem; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .about-stat { border-bottom: 1px solid var(--border); }
+  .about-mission { padding: 4rem 1.25rem; }
+  .about-mission-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-values { padding: 4rem 1.25rem; }
+  .about-values-grid { grid-template-columns: 1fr; }
+  .about-cta-section { padding: 5rem 1.25rem; }
+}
+
 /* ══════════════════════════════════════════════════════════════
    MOBILE RESPONSIVE — comprehensive overrides
    Breakpoints: 960px (tablet), 640px (large phone), 480px (phone)
