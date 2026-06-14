@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Img from './Img'
 
 const SUGGESTIONS = [
@@ -40,18 +41,16 @@ export default function Hero({ onGallery }: { onGallery: () => void }) {
         <div className="hero-tags">
           <span className="hero-tags-label">Popular:</span>
           {SUGGESTIONS.map(s => (
-            <a key={s.label} className="hero-tag" href={s.href} onClick={e => { e.preventDefault(); router.push(s.href) }}>{s.label}</a>
+            <Link key={s.label} className="hero-tag" href={s.href}>{s.label}</Link>
           ))}
         </div>
         <div style={{ marginTop: '1.5rem' }}>
-          <a href="/spaces/office" className="btn-dark" style={{ fontFamily: 'var(--sans)', fontSize: 14, textDecoration: 'none', display: 'inline-block', padding: '10px 22px' }}
-            onClick={e => { e.preventDefault(); router.push('/spaces/office') }}>
+          <Link href="/spaces/office" className="btn-dark" style={{ fontFamily: 'var(--sans)', fontSize: 14, textDecoration: 'none', display: 'inline-block', padding: '10px 22px' }}>
             Start Discovering
-          </a>
-          <a href="/styles/abstract" onClick={e => { e.preventDefault(); router.push('/styles/abstract') }}
-            style={{ marginLeft: '1rem', fontFamily: 'var(--sans)', cursor: 'pointer', background: 'none', border: '1.5px solid var(--border)', borderRadius: 24, padding: '10px 22px', fontSize: 14, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', display: 'inline-block' }}>
+          </Link>
+          <Link href="/styles/abstract" style={{ marginLeft: '1rem', fontFamily: 'var(--sans)', background: 'none', border: '1.5px solid var(--border)', borderRadius: 24, padding: '10px 22px', fontSize: 14, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', display: 'inline-block' }}>
             Explore Collections
-          </a>
+          </Link>
         </div>
       </div>
       <div className="hero-right">

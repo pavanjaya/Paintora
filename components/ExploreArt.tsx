@@ -1,6 +1,4 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const STYLES_LIST = [
   { name: 'Abstract Expressionism', tag: 'Emotion & Movement', slug: 'abstract' },
@@ -13,23 +11,23 @@ const STYLES_LIST = [
 ]
 
 const MEDIUMS_LIST = [
-  { name: 'Oil Painting',  tag: '5,400+ works', slug: 'oil' },
-  { name: 'Acrylic',       tag: '4,200+ works', slug: 'acrylic' },
-  { name: 'Watercolor',    tag: '3,100+ works', slug: 'watercolor' },
-  { name: 'Mixed Media',   tag: '2,400+ works', slug: 'mixed-media' },
-  { name: 'Ink',           tag: '1,800+ works', slug: 'oil' },
-  { name: 'Charcoal',      tag: '1,200+ works', slug: 'oil' },
-  { name: 'Digital',       tag: '2,900+ works', slug: 'oil' },
+  { name: 'Oil Painting', tag: '5,400+ works', slug: 'oil' },
+  { name: 'Acrylic',      tag: '4,200+ works', slug: 'acrylic' },
+  { name: 'Watercolor',   tag: '3,100+ works', slug: 'watercolor' },
+  { name: 'Mixed Media',  tag: '2,400+ works', slug: 'mixed-media' },
+  { name: 'Ink',          tag: '1,800+ works', slug: 'oil' },
+  { name: 'Charcoal',     tag: '1,200+ works', slug: 'oil' },
+  { name: 'Digital',      tag: '2,900+ works', slug: 'oil' },
 ]
 
 const SUBJECTS_LIST = [
-  { name: 'Landscape',     tag: '6,200+ works', slug: 'landscape' },
-  { name: 'Architecture',  tag: '3,400+ works', slug: 'architecture' },
-  { name: 'Floral',        tag: '2,800+ works', slug: 'floral' },
-  { name: 'Nature',        tag: '4,100+ works', slug: 'nature' },
-  { name: 'Portrait',      tag: '2,200+ works', slug: 'portrait' },
-  { name: 'Animals',       tag: '1,600+ works', slug: 'nature' },
-  { name: 'Cityscape',     tag: '2,900+ works', slug: 'architecture' },
+  { name: 'Landscape',    tag: '6,200+ works', slug: 'landscape' },
+  { name: 'Architecture', tag: '3,400+ works', slug: 'architecture' },
+  { name: 'Floral',       tag: '2,800+ works', slug: 'floral' },
+  { name: 'Nature',       tag: '4,100+ works', slug: 'nature' },
+  { name: 'Portrait',     tag: '2,200+ works', slug: 'portrait' },
+  { name: 'Animals',      tag: '1,600+ works', slug: 'nature' },
+  { name: 'Cityscape',    tag: '2,900+ works', slug: 'architecture' },
 ]
 
 function ArtCol({ title, items, baseHref, exploreHref }: {
@@ -38,34 +36,31 @@ function ArtCol({ title, items, baseHref, exploreHref }: {
   baseHref: string
   exploreHref: string
 }) {
-  const router = useRouter()
   return (
     <div>
       <h3 style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: '1rem' }}>{title}</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {items.map((item, i) => (
-          <a
+          <Link
             key={i}
             href={`${baseHref}/${item.slug}`}
             className="style-card"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textDecoration: 'none' }}
-            onClick={e => { e.preventDefault(); router.push(`${baseHref}/${item.slug}`) }}
           >
             <div className="style-card-info" style={{ flex: 1 }}>
               <div className="style-name">{item.name}</div>
               <span className="style-tag">{item.tag}</span>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
-      <a
+      <Link
         href={exploreHref}
         className="view-all"
         style={{ marginTop: '1rem', background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none', display: 'inline-block' }}
-        onClick={e => { e.preventDefault(); router.push(exploreHref) }}
       >
         Explore more
-      </a>
+      </Link>
     </div>
   )
 }

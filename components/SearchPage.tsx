@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { ALL_ARTWORKS } from '@/lib/browse-data'
 import type { ArtItem } from '@/lib/browse-data'
@@ -172,14 +173,14 @@ export default function SearchPage({ query }: { query: string }) {
         <div className="browse-grid-section">
           <div className="feed-grid">
             {visible.map((art, i) => (
-              <div key={`${i}-${art.img}`} className="artwork-card" onClick={() => router.push(`/paintings/${art.id}`)}>
+              <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
                 <div className="artwork-img-wrap">
                   <Img src={art.img} alt={art.name} />
                   <div className="artwork-overlay">
                     <div className="artwork-overlay-top">
                       <button
                         className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
-                        onClick={e => { e.stopPropagation(); toggleSave(art.id) }}
+                        onClick={e => { e.preventDefault(); e.stopPropagation(); toggleSave(art.id) }}
                         title={saved.has(art.id) ? 'Unsave' : 'Save'}
                       >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
@@ -192,11 +193,11 @@ export default function SearchPage({ query }: { query: string }) {
                         <span className="artwork-overlay-name">{art.name}</span>
                         <span className="artwork-overlay-style">{art.style}</span>
                       </div>
-                      <button className="artwork-view-btn" onClick={e => { e.stopPropagation(); router.push(`/paintings/${art.id}`) }}>View</button>
+                      <span className="artwork-view-btn">View</span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
