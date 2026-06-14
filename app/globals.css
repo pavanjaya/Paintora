@@ -420,12 +420,33 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .insitu-caption strong { font-size: 20px; font-weight: 600; color: white; display: block; margin-top: 4px; }
 
 /* ── TESTIMONIALS ── */
-.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 3rem; }
-.testimonial-card { background: var(--white); padding: 2.5rem 2rem; border-radius: 16px; border: 1px solid var(--border); }
-.testimonial-icon { font-size: 32px; color: var(--violet); margin-bottom: 1.5rem; line-height: 1; font-family: Georgia, serif; font-weight: 700; }
-.testimonial-quote { font-size: 18px; font-weight: 300; line-height: 1.7; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 2rem; font-style: italic; }
-.testimonial-name { font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.08em; text-transform: uppercase; }
-.testimonial-title { font-size: 11px; font-weight: 400; color: var(--ink-muted); margin-top: 4px; }
+.testimonials-section { padding: 4rem 1.5rem; }
+.testimonials-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; }
+.testimonials-sub { font-size: 14px; color: var(--muted); margin-top: 0.5rem; }
+.testimonials-nav { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.testimonials-nav-btn { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; color: var(--ink); flex-shrink: 0; }
+.testimonials-nav-btn:hover:not(:disabled) { border-color: var(--ink); background: var(--bg-soft); }
+.testimonials-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.testimonials-nav-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px; text-align: center; }
+
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.testimonial-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 20px;
+  padding: 2rem; display: flex; flex-direction: column; gap: 1rem;
+  transition: box-shadow 0.2s;
+}
+.testimonial-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.testimonial-stars { display: flex; gap: 3px; }
+.testimonial-quote { font-size: 15px; line-height: 1.7; color: var(--ink); flex: 1; margin: 0; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; padding-top: 1rem; border-top: 1px solid var(--border); }
+.testimonial-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.testimonial-author-info { display: flex; flex-direction: column; gap: 2px; }
+.testimonial-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+.testimonial-title { font-size: 12px; color: var(--muted); }
+
+.testimonials-dots { display: flex; justify-content: center; gap: 6px; margin-top: 2rem; }
+.testimonials-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; padding: 0; transition: background 0.2s, width 0.2s; }
+.testimonials-dot.active { background: var(--ink); width: 20px; border-radius: 3px; }
 
 /* ── MEMBERSHIP ── */
 .membership-outer { background: #FAFAF8; padding: 6rem 1.5rem; }
@@ -673,7 +694,8 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .feed-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .styles-scroll { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .insitu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .testimonials-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .footer-brand-row { flex-direction: column; gap: 2rem; }
   .footer-nav-cols { gap: 2rem; flex-wrap: wrap; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 1rem; }
@@ -695,7 +717,7 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .feed-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .styles-scroll { grid-template-columns: repeat(1, 1fr); gap: 10px; }
   .insitu-grid { grid-template-columns: 1fr; gap: 10px; }
-  .testimonials-grid { grid-template-columns: 1fr; gap: 10px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 12px; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
   .col-title { font-size: 12px; }
   .col-name { font-size: 8px; }
