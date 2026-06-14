@@ -1,10 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import Img from './Img'
 import { FEED_ARTWORKS, type ArtItem } from '@/lib/data'
 
-export default function TrendingPaintings({ onPreview, onGallery }: {
+export default function TrendingPaintings({ onPreview, onGallery, savedIds, onToggleSave }: {
   onPreview: (idx: number, list: ArtItem[]) => void
   onGallery: () => void
+  savedIds?: Set<number>
+  onToggleSave?: (id: number) => void
 }) {
   const paintings = FEED_ARTWORKS.slice(0, 8)
 
@@ -23,8 +27,12 @@ export default function TrendingPaintings({ onPreview, onGallery }: {
               <Img src={a.img} alt={a.name} />
               <div className="artwork-overlay">
                 <div className="artwork-overlay-top">
-                  <button className="artwork-save-btn" onClick={e => { e.preventDefault(); e.stopPropagation() }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  <button
+                    className={`artwork-save-btn${savedIds?.has(a.id) ? ' saved' : ''}`}
+                    onClick={e => { e.preventDefault(); e.stopPropagation(); onToggleSave?.(a.id) }}
+                    title={savedIds?.has(a.id) ? 'Unsave' : 'Save'}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill={savedIds?.has(a.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                   </button>
                 </div>
                 <div className="artwork-overlay-bottom">

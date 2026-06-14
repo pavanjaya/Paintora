@@ -34,19 +34,25 @@ export default function PaintingDetail({ id }: { id: string }) {
     if (data?.status === 'active' && new Date(data.current_period_end) > new Date()) setIsPro(true)
   }
 
+  const checkSaved = async (userId: string, artId: string) => {
+    const { data } = await supabase.from('saves').select('id').eq('user_id', userId).eq('artwork_id', Number(artId)).maybeSingle()
+    setSaved(!!data)
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
       const u = data.session?.user ?? null
       setUser(u)
-      if (u) checkPro(u.id)
+      if (u) { checkPro(u.id); checkSaved(u.id, id) }
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
       const u = s?.user ?? null
       setUser(u)
-      if (u) checkPro(u.id)
+      if (u) { checkPro(u.id); checkSaved(u.id, id) }
+      else setSaved(false)
     })
     return () => subscription.unsubscribe()
-  }, [])
+  }, [id])
 
   const art = ALL.find(a => String(a.id) === id)
   const related = ALL.filter(a => a.style === art?.style && String(a.id) !== id).slice(0, 8)
@@ -147,7 +153,16 @@ export default function PaintingDetail({ id }: { id: string }) {
                   </button>
                   <button
                     className={`painting-save-btn-large${saved ? ' saved' : ''}`}
-                    onClick={() => { if (!user) { setAuthMode('login'); setAuthOpen(true); return } setSaved(s => !s) }}
+                    onClick={async () => {
+                      if (!user) { setAuthMode('login'); setAuthOpen(true); return }
+                      const next = !saved
+                      setSaved(next)
+                      if (next) {
+                        await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: Number(id) })
+                      } else {
+                        await supabase.from('saves').delete().eq('user_id', user.id!).eq('artwork_id', Number(id))
+                      }
+                    }}
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                     {saved ? 'Saved' : 'Save'}

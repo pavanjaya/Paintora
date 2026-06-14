@@ -26,6 +26,7 @@ export default function Home() {
   const [authMode, setAuthMode]           = useState<'login' | 'signup'>('login')
   const [authOpen, setAuthOpen]           = useState(false)
   const [user, setUser]                   = useState<User | null>(null)
+  const [savedIds, setSavedIds]           = useState<Set<number>>(new Set())
   const isLoggedIn = user !== null
   const [galleryOpen, setGalleryOpen]     = useState(false)
   const [stylesOpen, setStylesOpen]       = useState(false)
@@ -34,16 +35,39 @@ export default function Home() {
   const [previewIdx, setPreviewIdx]       = useState(0)
   const [previewList, setPreviewList]     = useState<ArtItem[]>(FEED_ARTWORKS)
 
+  const loadSaves = async (userId: string) => {
+    const { data } = await supabase.from('saves').select('artwork_id').eq('user_id', userId)
+    if (data) setSavedIds(new Set(data.map((r: { artwork_id: number }) => r.artwork_id)))
+  }
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    supabase.auth.getSession().then(({ data }) => {
+      const u = data.session?.user ?? null
+      setUser(u)
+      if (u) loadSaves(u.id)
+    })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
+      const u = session?.user ?? null
+      setUser(u)
+      if (u) loadSaves(u.id)
+      else setSavedIds(new Set())
     })
     return () => subscription.unsubscribe()
   }, [])
 
   const openLogin  = useCallback(() => { setAuthMode('login');  setAuthOpen(true) }, [])
   const openSignup = useCallback(() => { setAuthMode('signup'); setAuthOpen(true) }, [])
+
+  const toggleSave = useCallback(async (id: number) => {
+    if (!user) { setAuthMode('login'); setAuthOpen(true); return }
+    const isSaved = savedIds.has(id)
+    setSavedIds(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
+    if (isSaved) {
+      await supabase.from('saves').delete().eq('user_id', user.id).eq('artwork_id', id)
+    } else {
+      await supabase.from('saves').upsert({ user_id: user.id, artwork_id: id })
+    }
+  }, [user, savedIds])
 
   const openPreview = useCallback((idx: number, list: ArtItem[]) => {
     setPreviewList(list)
@@ -68,7 +92,7 @@ export default function Home() {
 
       <main>
         <Hero                onGallery={() => setGalleryOpen(true)} />
-        <TrendingPaintings   onPreview={openPreview} onGallery={() => setGalleryOpen(true)} />
+        <TrendingPaintings   onPreview={openPreview} onGallery={() => setGalleryOpen(true)} savedIds={savedIds} onToggleSave={toggleSave} />
         <SpacesGrid          onSpacePage={() => setSpaceOpen(true)} />
         <FeaturedCollections onGallery={() => setGalleryOpen(true)} />
         <ExploreArt          onGallery={() => setGalleryOpen(true)} onStylesPage={() => setStylesOpen(true)} />

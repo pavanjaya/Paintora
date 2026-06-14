@@ -47,8 +47,24 @@ export default function BrowsePage({
   const [sticky, setSticky] = useState(false)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setUser(s?.user ?? null))
+    supabase.auth.getSession().then(async ({ data }) => {
+      const u = data.session?.user ?? null
+      setUser(u)
+      if (u) {
+        const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+      }
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_e, s) => {
+      const u = s?.user ?? null
+      setUser(u)
+      if (u) {
+        const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+      } else {
+        setSaved(new Set())
+      }
+    })
     return () => subscription.unsubscribe()
   }, [])
 
@@ -69,10 +85,16 @@ export default function BrowsePage({
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const toggleSave = useCallback((id: number) => {
+  const toggleSave = useCallback(async (id: number) => {
     if (!user) { setAuthMode('login'); setAuthOpen(true); return }
-    setSaved(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
-  }, [user])
+    const isSaved = saved.has(id)
+    setSaved(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
+    if (isSaved) {
+      await supabase.from('saves').delete().eq('user_id', (user as { id?: string }).id!).eq('artwork_id', id)
+    } else {
+      await supabase.from('saves').upsert({ user_id: (user as { id?: string }).id!, artwork_id: id })
+    }
+  }, [user, saved])
 
   const artworks: ArtItem[] = ALL_ARTWORKS
   const gated = !user && artworks.length > FREE_LIMIT
@@ -190,7 +212,7 @@ export default function BrowsePage({
                         title={saved.has(art.id) ? 'Unsave' : 'Save'}
                       >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
                         </svg>
                       </button>
                     </div>

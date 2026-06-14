@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Nav from '@/components/Nav'
-import Footer from '@/components/Footer'
+
 import AuthModal from '@/components/AuthModal'
 import AccountLayout from '@/components/AccountLayout'
 import UpgradeModal from '@/components/UpgradeModal'
@@ -132,7 +132,7 @@ export default function SettingsPage() {
         </div>
       </AccountLayout>
 
-      <Footer />
+
       <AuthModal mode={authMode} open={authOpen} onClose={() => setAuthOpen(false)} onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')} onSuccess={() => {}} />
       {user && (
         <UpgradeModal

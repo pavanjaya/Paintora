@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import Nav from '@/components/Nav'
-import Footer from '@/components/Footer'
+
 import AuthModal from '@/components/AuthModal'
 import AccountLayout from '@/components/AccountLayout'
 
@@ -97,7 +97,7 @@ export default function DownloadsPage() {
           </div>
         )}
       </AccountLayout>
-      <Footer />
+
       <AuthModal mode={authMode} open={authOpen} onClose={() => setAuthOpen(false)} onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')} onSuccess={() => {}} />
     </>
   )

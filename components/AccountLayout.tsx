@@ -32,28 +32,22 @@ export default function AccountLayout({ active, user, children }: Props) {
 
   return (
     <div style={{ paddingTop: 68, minHeight: '85vh', background: '#fff' }}>
-      <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
-
-        {/* Sidebar */}
-        <aside style={{ flexShrink: 0, width: 210, background: '#fff', borderRadius: 16, border: '1px solid #e2e2e6', boxShadow: '0 2px 8px rgba(0,0,0,0.07)', overflow: 'hidden' }}>
-          {/* User block */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '1rem', borderBottom: '1px solid #e2e2e6', background: '#f8f8fa' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0 }}>
-              {initial}
+      {/* Desktop: sidebar + content */}
+      <div className="al-desktop">
+        <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
+          <aside style={{ flexShrink: 0, width: 210, background: '#fff', borderRadius: 16, border: '1px solid #e2e2e6', boxShadow: 'none', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '1rem', borderBottom: '1px solid #e2e2e6', background: '#f8f8fa' }}>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0 }}>
+                {initial}
+              </div>
+              <div style={{ overflow: 'hidden' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#0F0F14', lineHeight: 1.3 }}>{user?.email?.split('@')[0] ?? 'Account'}</div>
+                <div style={{ fontSize: 11, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</div>
+              </div>
             </div>
-            <div style={{ overflow: 'hidden' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#0F0F14', lineHeight: 1.3 }}>{user?.email?.split('@')[0] ?? 'Account'}</div>
-              <div style={{ fontSize: 11, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</div>
-            </div>
-          </div>
-
-          {/* Nav */}
-          <div style={{ padding: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {NAV.map(({ key, label, href, icon }) => (
-              <Link
-                key={key}
-                href={href}
-                style={{
+            <div style={{ padding: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {NAV.map(({ key, label, href, icon }) => (
+                <Link key={key} href={href} style={{
                   display: 'flex', alignItems: 'center', gap: 9,
                   padding: '9px 12px', borderRadius: 10,
                   fontSize: 13.5, fontWeight: active === key ? 600 : 500,
@@ -61,19 +55,32 @@ export default function AccountLayout({ active, user, children }: Props) {
                   background: active === key ? '#0F0F14' : 'transparent',
                   textDecoration: 'none', fontFamily: 'var(--sans)',
                   transition: 'background 0.12s, color 0.12s',
-                }}
-              >
-                <span style={{ display: 'flex', alignItems: 'center', opacity: active === key ? 1 : 0.6 }}>{icon}</span>
-                {label}
-              </Link>
-            ))}
-          </div>
-        </aside>
+                }}>
+                  <span style={{ display: 'flex', alignItems: 'center', opacity: active === key ? 1 : 0.6 }}>{icon}</span>
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </aside>
+          <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {children}
+          </main>
+        </div>
+      </div>
 
-        {/* Content */}
-        <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {/* Mobile: content + bottom tab bar */}
+      <div className="al-mobile">
+        <div style={{ padding: '1rem 1rem 5rem' }}>
           {children}
-        </main>
+        </div>
+        <div className="al-bottom-tabs">
+          {NAV.map(({ key, label, href, icon }) => (
+            <Link key={key} href={href} className={`al-tab${active === key ? ' al-tab-active' : ''}`}>
+              <span className="al-tab-icon">{icon}</span>
+              <span className="al-tab-label">{label}</span>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )
