@@ -2179,3 +2179,38 @@ img.loaded { opacity: 1; }
   .upgrade-modal { padding: 2rem 1.25rem; border-radius: 20px 20px 0 0; }
   .upgrade-modal-overlay { align-items: flex-end; padding: 0; }
 }
+
+/* ── DOWNLOAD SIZE PANEL ── */
+.painting-download-wrap { position: relative; }
+.painting-download-row {
+  display: flex; gap: 10px;
+}
+.painting-download-row .painting-download-btn {
+  flex: 1; margin-bottom: 0;
+}
+.painting-download-row .painting-save-btn-large {
+  flex: 0 0 auto; width: auto; padding: 14px 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.download-size-panel {
+  margin-top: 10px;
+  border: 1.5px solid var(--border); border-radius: 14px;
+  overflow: hidden; background: var(--white);
+}
+.download-size-row {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 13px 16px;
+  background: none; border: none; border-bottom: 1px solid var(--border);
+  cursor: pointer; text-align: left; font-family: var(--sans);
+  transition: background 0.12s;
+}
+.download-size-row:last-child { border-bottom: none; }
+.download-size-row:hover { background: var(--bg-soft); }
+.download-size-label { font-size: 14px; font-weight: 700; color: var(--ink); min-width: 64px; }
+.download-size-fmt { font-size: 12px; color: var(--ink-muted); margin-right: auto; }
+.download-size-res { font-size: 13px; color: var(--ink-muted); }
+.download-size-pro {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+  background: var(--ink); color: #fff;
+  padding: 3px 7px; border-radius: 100px;
+}
