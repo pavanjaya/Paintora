@@ -100,14 +100,11 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                 onChange={e => { setSearchQ(e.target.value); setSearchOpen(true) }}
                 onFocus={() => setSearchOpen(true)}
               />
-              {searchQ ? (
+              {searchQ && (
                 <button type="button" className="nav-search-clear visible" onClick={() => { setSearchQ(''); setSearchOpen(false) }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
-              ) : null}
-              <button type="submit" className="nav-search-submit" aria-label="Search">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-              </button>
+              )}
             </form>
 
               <div className={`nav-search-dropdown${searchOpen ? ' open' : ''}${anyResults ? ' has-results' : ''}`}>
