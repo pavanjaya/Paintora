@@ -1248,3 +1248,99 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 /* ── SMOOTH IMAGE LOAD ── */
 img { opacity: 0; transition: opacity 0.4s ease; }
 img.loaded { opacity: 1; }
+
+/* ── DISCOVER PAGES ── */
+.discover-hero {
+  position: relative; height: 520px; overflow: hidden; margin-top: 68px;
+}
+.discover-hero-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 0.6s;
+}
+.discover-hero-bg.loaded { opacity: 1; }
+.discover-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.15) 100%);
+}
+.discover-hero-content {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 3rem 2rem;
+  max-width: 1280px; margin: 0 auto; left: 0; right: 0;
+}
+.discover-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6);
+  margin-bottom: 1.25rem;
+}
+.discover-breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+.discover-breadcrumb a:hover { color: white; }
+.discover-breadcrumb span:last-child { color: rgba(255,255,255,0.9); }
+.discover-hero-title {
+  font-size: clamp(36px, 5vw, 64px); font-weight: 800; color: white;
+  letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem;
+}
+.discover-hero-desc {
+  font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.8);
+  max-width: 560px; line-height: 1.7; margin-bottom: 0.75rem;
+}
+.discover-hero-count {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); margin-bottom: 1.5rem;
+}
+.discover-hero-related { display: flex; flex-wrap: wrap; gap: 8px; }
+.discover-hero-pill {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 100px;
+  padding: 6px 14px; text-decoration: none; transition: all 0.2s; backdrop-filter: blur(8px);
+}
+.discover-hero-pill:hover { background: rgba(255,255,255,0.22); color: white; border-color: rgba(255,255,255,0.4); }
+
+/* Filter bar */
+.discover-filter-bar {
+  background: white; border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem; z-index: 100; transition: box-shadow 0.2s;
+}
+.discover-filter-bar.sticky {
+  position: sticky; top: 68px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.discover-filter-inner {
+  max-width: 1280px; margin: 0 auto; display: flex; align-items: center;
+  gap: 4px; height: 56px; overflow-x: auto;
+}
+.discover-filter-divider { width: 1px; height: 20px; background: var(--border); margin: 0 8px; flex-shrink: 0; }
+.discover-filter-dropdown-wrap { position: relative; flex-shrink: 0; }
+.discover-filter-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink-light);
+  background: none; border: none; cursor: pointer; padding: 8px 12px; border-radius: 8px;
+  white-space: nowrap; transition: all 0.15s;
+}
+.discover-filter-btn:hover { background: var(--bg-soft); color: var(--ink); }
+.discover-filter-btn.active { color: var(--ink); background: var(--bg-soft); }
+.discover-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 180px; background: white; border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  padding: 6px 0; z-index: 200;
+}
+.discover-dropdown-item {
+  display: block; width: 100%; text-align: left;
+  padding: 9px 16px; background: none; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink);
+  transition: background 0.12s;
+}
+.discover-dropdown-item:hover { background: var(--bg-soft); }
+.discover-dropdown-item.active { font-weight: 700; }
+.discover-filter-reset {
+  font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--ink-muted);
+  background: none; border: none; cursor: pointer; padding: 8px 10px;
+  margin-left: auto; flex-shrink: 0; transition: color 0.2s;
+}
+.discover-filter-reset:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .discover-hero { height: 320px; }
+  .discover-hero-content { padding: 2rem 1rem; }
+  .discover-hero-title { font-size: clamp(28px, 8vw, 42px); }
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { FEED_ARTWORKS, STYLES, SPACES } from '@/lib/data'
 
 function getSearchResults(q: string) {
@@ -21,11 +22,11 @@ function highlight(text: string, q: string): React.ReactNode {
 }
 
 const DISCOVER_ITEMS = [
-  { label: 'Spaces', desc: 'Browse by room or environment' },
-  { label: 'Collections', desc: 'Curated editorial selections' },
-  { label: 'Styles', desc: 'Abstract, Minimalist, Realism…' },
-  { label: 'Mediums', desc: 'Oil, Watercolor, Acrylic…' },
-  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…' },
+  { label: 'Spaces',      desc: 'Browse by room or environment',    href: '/discover/spaces/living-room' },
+  { label: 'Collections', desc: 'Curated editorial selections',      href: '/discover/collections/luxury-living' },
+  { label: 'Styles',      desc: 'Abstract, Minimalist, Realism…',   href: '/discover/styles/abstract' },
+  { label: 'Mediums',     desc: 'Oil, Watercolor, Acrylic…',        href: '/discover/mediums/oil-painting' },
+  { label: 'Subjects',    desc: 'Landscape, Portrait, Floral…',     href: '/discover/subjects/landscape' },
 ]
 
 export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, userEmail, onLogout }: {
@@ -37,6 +38,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
   userEmail?: string
   onLogout: () => void
 }) {
+  const router = useRouter()
   const [scrolled, setScrolled] = useState(false)
   const [discoverOpen, setDiscoverOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -64,11 +66,9 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
   const results = getSearchResults(searchQ)
   const anyResults = searchQ.trim().length > 0 && (results.artworks.length > 0 || results.styles.length > 0 || results.spaces.length > 0)
 
-  const handleDiscover = (label: string) => {
+  const handleDiscover = (href: string) => {
     setDiscoverOpen(false)
-    if (label === 'Styles' || label === 'Mediums' || label === 'Subjects') onStylesPage()
-    else if (label === 'Spaces') onGallery()
-    else onGallery()
+    router.push(href)
   }
 
   return (
@@ -111,13 +111,14 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                   padding: '8px 0', zIndex: 200,
                 }}>
                   {DISCOVER_ITEMS.map(item => (
-                    <button
+                    <a
                       key={item.label}
-                      onClick={() => handleDiscover(item.label)}
+                      href={item.href}
+                      onClick={e => { e.preventDefault(); handleDiscover(item.href) }}
                       style={{
                         display: 'flex', flexDirection: 'column', gap: 2,
                         width: '100%', textAlign: 'left', padding: '10px 18px',
-                        background: 'none', border: 'none', cursor: 'pointer',
+                        background: 'none', textDecoration: 'none',
                         fontFamily: 'var(--sans)',
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
@@ -125,7 +126,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                     >
                       <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>{item.label}</span>
                       <span style={{ fontSize: 11, color: 'var(--ink-muted)' }}>{item.desc}</span>
-                    </button>
+                    </a>
                   ))}
                 </div>
               )}
@@ -285,13 +286,10 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" color="#aaa"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input placeholder="Search by space, style, collection…" />
         </div>
-        {['Spaces', 'Collections', 'Styles', 'Mediums', 'Subjects'].map(l => (
-          <a key={l} href="#" className="mobile-nav-link" onClick={e => {
-            e.preventDefault()
-            setMobileOpen(false)
-            if (l === 'Styles' || l === 'Mediums' || l === 'Subjects') onStylesPage()
-            else onGallery()
-          }}>{l}</a>
+        {DISCOVER_ITEMS.map(item => (
+          <a key={item.label} href={item.href} className="mobile-nav-link" onClick={() => setMobileOpen(false)}>
+            {item.label}
+          </a>
         ))}
         {isLoggedIn
           ? <button className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={onLogout}>Sign out</button>
