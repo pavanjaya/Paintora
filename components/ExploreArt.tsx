@@ -1,42 +1,71 @@
-import { STYLES } from '@/lib/data'
+'use client'
 
-const MEDIUMS = [
-  { name: 'Oil Painting', tag: '5,400+ works' },
-  { name: 'Acrylic', tag: '4,200+ works' },
-  { name: 'Watercolor', tag: '3,100+ works' },
-  { name: 'Mixed Media', tag: '2,400+ works' },
-  { name: 'Ink', tag: '1,800+ works' },
-  { name: 'Charcoal', tag: '1,200+ works' },
-  { name: 'Digital Painting', tag: '2,900+ works' },
+import { useRouter } from 'next/navigation'
+
+const STYLES_LIST = [
+  { name: 'Abstract Expressionism', tag: 'Emotion & Movement', slug: 'abstract' },
+  { name: 'Minimalism',             tag: 'Form & Negative Space', slug: 'minimalist' },
+  { name: 'Impressionism',          tag: 'Light & Atmosphere', slug: 'impressionism' },
+  { name: 'Geometric',              tag: 'Pattern & Precision', slug: 'geometric' },
+  { name: 'Landscape',              tag: 'Horizon & Depth', slug: 'landscape' },
+  { name: 'Contemporary',           tag: 'Modern Voices', slug: 'contemporary' },
+  { name: 'Portraiture',            tag: 'Character & Expression', slug: 'portrait' },
 ]
 
-const SUBJECTS = [
-  { name: 'Landscape', tag: '6,200+ works' },
-  { name: 'Architecture', tag: '3,400+ works' },
-  { name: 'Floral', tag: '2,800+ works' },
-  { name: 'Nature', tag: '4,100+ works' },
-  { name: 'Portrait', tag: '2,200+ works' },
-  { name: 'Animals', tag: '1,600+ works' },
-  { name: 'Cityscape', tag: '2,900+ works' },
+const MEDIUMS_LIST = [
+  { name: 'Oil Painting',  tag: '5,400+ works', slug: 'oil' },
+  { name: 'Acrylic',       tag: '4,200+ works', slug: 'acrylic' },
+  { name: 'Watercolor',    tag: '3,100+ works', slug: 'watercolor' },
+  { name: 'Mixed Media',   tag: '2,400+ works', slug: 'mixed-media' },
+  { name: 'Ink',           tag: '1,800+ works', slug: 'oil' },
+  { name: 'Charcoal',      tag: '1,200+ works', slug: 'oil' },
+  { name: 'Digital',       tag: '2,900+ works', slug: 'oil' },
 ]
 
-function ArtCol({ title, items, onExplore }: { title: string; items: { name: string; tag: string }[]; onExplore: () => void }) {
+const SUBJECTS_LIST = [
+  { name: 'Landscape',     tag: '6,200+ works', slug: 'landscape' },
+  { name: 'Architecture',  tag: '3,400+ works', slug: 'architecture' },
+  { name: 'Floral',        tag: '2,800+ works', slug: 'floral' },
+  { name: 'Nature',        tag: '4,100+ works', slug: 'nature' },
+  { name: 'Portrait',      tag: '2,200+ works', slug: 'portrait' },
+  { name: 'Animals',       tag: '1,600+ works', slug: 'nature' },
+  { name: 'Cityscape',     tag: '2,900+ works', slug: 'architecture' },
+]
+
+function ArtCol({ title, items, baseHref, exploreHref }: {
+  title: string
+  items: { name: string; tag: string; slug: string }[]
+  baseHref: string
+  exploreHref: string
+}) {
+  const router = useRouter()
   return (
     <div>
       <h3 style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: '1rem' }}>{title}</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {items.map((item, i) => (
-          <div key={i} className="style-card" onClick={onExplore} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <a
+            key={i}
+            href={`${baseHref}/${item.slug}`}
+            className="style-card"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textDecoration: 'none' }}
+            onClick={e => { e.preventDefault(); router.push(`${baseHref}/${item.slug}`) }}
+          >
             <div className="style-card-info" style={{ flex: 1 }}>
               <div className="style-name">{item.name}</div>
               <span className="style-tag">{item.tag}</span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
-      <button className="view-all" onClick={onExplore} style={{ marginTop: '1rem', background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>
+      <a
+        href={exploreHref}
+        className="view-all"
+        style={{ marginTop: '1rem', background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none', display: 'inline-block' }}
+        onClick={e => { e.preventDefault(); router.push(exploreHref) }}
+      >
         Explore more
-      </button>
+      </a>
     </div>
   )
 }
@@ -52,9 +81,9 @@ export default function ExploreArt({ onGallery, onStylesPage }: { onGallery: () 
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginTop: '1.5rem' }}>
-          <ArtCol title="Styles" items={STYLES.slice(0, 7).map(s => ({ name: s.name, tag: s.tag }))} onExplore={onStylesPage} />
-          <ArtCol title="Mediums" items={MEDIUMS} onExplore={onGallery} />
-          <ArtCol title="Subjects" items={SUBJECTS} onExplore={onGallery} />
+          <ArtCol title="Styles"   items={STYLES_LIST}   baseHref="/styles"   exploreHref="/styles/abstract" />
+          <ArtCol title="Mediums"  items={MEDIUMS_LIST}  baseHref="/mediums"  exploreHref="/mediums/oil" />
+          <ArtCol title="Subjects" items={SUBJECTS_LIST} baseHref="/subjects" exploreHref="/subjects/landscape" />
         </div>
       </div>
     </div>

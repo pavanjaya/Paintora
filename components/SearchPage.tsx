@@ -175,7 +175,7 @@ export default function SearchPage({ query }: { query: string }) {
                 <div className="artwork-img-wrap">
                   <img src={art.img} alt={art.name} loading="lazy" />
                   <div className="artwork-overlay">
-                    <button className="artwork-view-btn">View Details</button>
+                    <button className="artwork-view-btn" onClick={() => router.push(`/paintings/${art.id}`)}>View Details</button>
                   </div>
                   <button
                     className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}

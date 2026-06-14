@@ -133,10 +133,11 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
 
             {/* Search pill */}
             <div ref={searchRef} style={{ position: 'relative', width: 280 }}>
-              <div
+              <form
                 className="nav-search-form"
                 style={{ height: 40 }}
                 onClick={() => setSearchOpen(true)}
+                onSubmit={e => { e.preventDefault(); if (searchQ.trim()) { setSearchOpen(false); router.push(`/search?q=${encodeURIComponent(searchQ.trim())}`) } }}
               >
                 <span className="nav-search-icon">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -154,20 +155,33 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
                   </button>
                 )}
-              </div>
+              </form>
 
               <div className={`nav-search-dropdown${searchOpen ? ' open' : ''}${anyResults ? ' has-results' : ''}`}>
                 <div className="search-default-pane">
                   <div className="search-section-label">Suggestions</div>
                   <div className="search-pills-row">
-                    {['Living Room', 'Law Office', 'Abstract', 'Hotel Lobby', 'Minimalist'].map(p => (
-                      <button key={p} className="search-pill" onClick={() => setSearchQ(p)}>{p}</button>
+                    {[
+                      { label: 'Living Room', href: '/spaces/living-room' },
+                      { label: 'Law Office',  href: '/spaces/office' },
+                      { label: 'Abstract',    href: '/styles/abstract' },
+                      { label: 'Hotel Lobby', href: '/spaces/hotel' },
+                      { label: 'Minimalist',  href: '/styles/minimalist' },
+                    ].map(p => (
+                      <button key={p.label} className="search-pill" onClick={() => { setSearchOpen(false); router.push(p.href) }}>{p.label}</button>
                     ))}
                   </div>
                   <div className="search-section-label">Browse by style</div>
                   <div className="search-cat-row">
-                    {[{ icon: '🎨', label: 'Abstract' }, { icon: '🌿', label: 'Botanical' }, { icon: '🏙️', label: 'Urban' }, { icon: '🌅', label: 'Landscape' }, { icon: '👤', label: 'Portrait' }, { icon: '⬡', label: 'Geometric' }].map(c => (
-                      <button key={c.label} className="search-cat-item" onClick={() => setSearchQ(c.label)}>
+                    {[
+                      { icon: '🎨', label: 'Abstract',  href: '/styles/abstract' },
+                      { icon: '🌿', label: 'Botanical', href: '/subjects/floral' },
+                      { icon: '🏙️', label: 'Urban',     href: '/subjects/architecture' },
+                      { icon: '🌅', label: 'Landscape', href: '/subjects/landscape' },
+                      { icon: '👤', label: 'Portrait',  href: '/subjects/portrait' },
+                      { icon: '⬡',  label: 'Geometric', href: '/styles/geometric' },
+                    ].map(c => (
+                      <button key={c.label} className="search-cat-item" onClick={() => { setSearchOpen(false); router.push(c.href) }}>
                         <span className="search-cat-icon">{c.icon}</span>
                         {c.label}
                       </button>
@@ -181,7 +195,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                         <div className="search-result-group">
                           <div className="search-result-group-title">Artworks</div>
                           {results.artworks.map(a => (
-                            <div key={a.id} className="search-result-row">
+                            <div key={a.id} className="search-result-row" style={{ cursor: 'pointer' }} onClick={() => { setSearchOpen(false); router.push(`/search?q=${encodeURIComponent(a.name)}`) }}>
                               <img className="search-result-img" src={a.img} alt={a.name} onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
                               <div className="search-result-info">
                                 <div className="search-result-name">{highlight(a.name, searchQ)}</div>
@@ -196,7 +210,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                         <div className="search-result-group">
                           <div className="search-result-group-title">Styles</div>
                           {results.styles.map(s => (
-                            <div key={s.name} className="search-result-row">
+                            <div key={s.name} className="search-result-row" style={{ cursor: 'pointer' }} onClick={() => { setSearchOpen(false); router.push(`/styles/${s.name.toLowerCase().replace(/\s+/g, '-')}`) }}>
                               <div className="search-result-icon" style={{ background: '#f0f0f0' }}>🎨</div>
                               <div className="search-result-info">
                                 <div className="search-result-name">{highlight(s.name, searchQ)}</div>
@@ -211,7 +225,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                         <div className="search-result-group">
                           <div className="search-result-group-title">Spaces</div>
                           {results.spaces.map(s => (
-                            <div key={s.name} className="search-result-row">
+                            <div key={s.name} className="search-result-row" style={{ cursor: 'pointer' }} onClick={() => { setSearchOpen(false); router.push(`/spaces/${s.name.toLowerCase().replace(/\s+/g, '-')}`) }}>
                               <div className="search-result-icon" style={{ background: '#EDFAF5' }}>🏠</div>
                               <div className="search-result-info">
                                 <div className="search-result-name">{highlight(s.name, searchQ)}</div>
@@ -281,10 +295,10 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
 
       {/* Mobile drawer */}
       <div className={`mobile-nav-drawer${mobileOpen ? ' open' : ''}`}>
-        <div className="mobile-search-bar">
+        <form className="mobile-search-bar" onSubmit={e => { e.preventDefault(); const v = (e.currentTarget.querySelector('input') as HTMLInputElement).value.trim(); if (v) { setMobileOpen(false); router.push(`/search?q=${encodeURIComponent(v)}`) } }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" color="#aaa"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input placeholder="Search by space, style, collection…" />
-        </div>
+        </form>
         {DISCOVER_ITEMS.map(item => (
           <a key={item.label} href={item.href} className="mobile-nav-link" onClick={() => setMobileOpen(false)}>
             {item.label}
