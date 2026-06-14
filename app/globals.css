@@ -1488,11 +1488,11 @@ img.loaded { opacity: 1; }
 .btn-outline:hover { border-color: var(--ink); background: var(--bg-soft); }
 
 /* ─── Page Transition ────────────────────────────────────────────────── */
-@keyframes pageEnter {
+@keyframes pageFade {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-.page-transition {
-  animation: pageEnter 0.25s ease both;
+main {
+  animation: pageFade 0.2s ease;
 }
