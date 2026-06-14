@@ -8,6 +8,7 @@ import { ALL_ARTWORKS } from '@/lib/browse-data'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
+import AccountLayout from '@/components/AccountLayout'
 import Img from '@/components/Img'
 
 export default function SavedPage() {
@@ -42,50 +43,48 @@ export default function SavedPage() {
         isLoggedIn={!!user} userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
       />
-      <main className="account-page">
-        <div className="account-inner">
-          <div className="account-sidebar">
-            <nav className="account-nav">
-              <a href="/profile" className="account-nav-link">Profile</a>
-              <a href="/saved" className="account-nav-link active">Saved</a>
-              <a href="/downloads" className="account-nav-link">Downloads</a>
-              <a href="/settings" className="account-nav-link">Settings</a>
-            </nav>
-          </div>
-
-          <div className="account-content">
-            <div className="account-title-row">
-              <h1 className="account-title">Saved</h1>
-              <span className="account-count">{savedArtworks.length} painting{savedArtworks.length !== 1 ? 's' : ''}</span>
-            </div>
-
-            {savedArtworks.length === 0 ? (
-              <div className="account-empty">
-                <div className="account-empty-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-                </div>
-                <h3 className="account-empty-title">No saved paintings yet</h3>
-                <p className="account-empty-sub">Tap the bookmark icon on any painting to save it here.</p>
-                <Link href="/" className="account-empty-cta">Browse paintings</Link>
-              </div>
-            ) : (
-              <div className="account-grid">
-                {savedArtworks.map(art => (
-                  <div key={art.id} className="account-art-card">
-                    <Link href={`/paintings/${art.id}`} className="account-art-img-wrap">
-                      <Img src={art.img} alt={art.name} />
-                    </Link>
-                    <div className="account-art-info">
-                      <span className="account-art-name">{art.name}</span>
-                      <button className="account-art-unsave" onClick={() => toggle(art.id)}>Remove</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+      <AccountLayout active="saved" user={user}>
+        <div className="ap-page-header">
+          <h1 className="ap-page-title">Saved paintings</h1>
+          {savedArtworks.length > 0 && <span className="ap-page-badge">{savedArtworks.length}</span>}
         </div>
-      </main>
+
+        {savedArtworks.length === 0 ? (
+          <div className="ap-empty">
+            <div className="ap-empty-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 className="ap-empty-title">Nothing saved yet</h3>
+            <p className="ap-empty-sub">Tap the bookmark icon on any painting to save it to your collection.</p>
+            <Link href="/" className="ap-btn-primary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Browse paintings
+            </Link>
+          </div>
+        ) : (
+          <div className="ap-art-grid">
+            {savedArtworks.map(art => (
+              <div key={art.id} className="ap-art-card">
+                <Link href={`/paintings/${art.id}`} className="ap-art-img">
+                  <Img src={art.img} alt={art.name} />
+                  <div className="ap-art-overlay">
+                    <span className="ap-art-view">View</span>
+                  </div>
+                </Link>
+                <div className="ap-art-footer">
+                  <div className="ap-art-meta">
+                    <span className="ap-art-name">{art.name}</span>
+                    <span className="ap-art-style">{art.style}</span>
+                  </div>
+                  <button className="ap-art-remove" onClick={() => toggle(art.id)} title="Remove">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </AccountLayout>
       <Footer />
       <AuthModal mode={authMode} open={authOpen} onClose={() => setAuthOpen(false)} onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')} onSuccess={() => {}} />
     </>

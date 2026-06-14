@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
+import AccountLayout from '@/components/AccountLayout'
 
 type DownloadRecord = {
   id: number
@@ -54,51 +55,48 @@ export default function DownloadsPage() {
         isLoggedIn={!!user} userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
       />
-      <main className="account-page">
-        <div className="account-inner">
-          <div className="account-sidebar">
-            <nav className="account-nav">
-              <a href="/profile" className="account-nav-link">Profile</a>
-              <a href="/saved" className="account-nav-link">Saved</a>
-              <a href="/downloads" className="account-nav-link active">Downloads</a>
-              <a href="/settings" className="account-nav-link">Settings</a>
-            </nav>
-          </div>
-
-          <div className="account-content">
-            <div className="account-title-row">
-              <h1 className="account-title">Downloads</h1>
-              {!loading && <span className="account-count">{downloads.length} file{downloads.length !== 1 ? 's' : ''}</span>}
-            </div>
-
-            {loading ? (
-              <div className="account-loading">Loading…</div>
-            ) : downloads.length === 0 ? (
-              <div className="account-empty">
-                <div className="account-empty-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                </div>
-                <h3 className="account-empty-title">No downloads yet</h3>
-                <p className="account-empty-sub">Your downloaded paintings will appear here.</p>
-                <Link href="/" className="account-empty-cta">Browse paintings</Link>
-              </div>
-            ) : (
-              <div className="downloads-list">
-                {downloads.map(d => (
-                  <div key={d.id} className="download-row">
-                    <img src={d.painting_img} alt={d.painting_name} className="download-row-img" />
-                    <div className="download-row-info">
-                      <span className="download-row-name">{d.painting_name}</span>
-                      <span className="download-row-meta">{d.size} · {new Date(d.downloaded_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                    </div>
-                    <Link href={`/paintings/${d.painting_id}`} className="download-row-view">View</Link>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+      <AccountLayout active="downloads" user={user}>
+        <div className="ap-page-header">
+          <h1 className="ap-page-title">Downloads</h1>
+          {!loading && downloads.length > 0 && <span className="ap-page-badge">{downloads.length}</span>}
         </div>
-      </main>
+
+        {loading ? (
+          <div className="ap-loading">
+            <div className="ap-loading-spinner" />
+            Loading your downloads…
+          </div>
+        ) : downloads.length === 0 ? (
+          <div className="ap-empty">
+            <div className="ap-empty-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <h3 className="ap-empty-title">No downloads yet</h3>
+            <p className="ap-empty-sub">Paintings you download will show up here with their size and date.</p>
+            <Link href="/" className="ap-btn-primary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Browse paintings
+            </Link>
+          </div>
+        ) : (
+          <div className="ap-card ap-dl-list">
+            {downloads.map((d, i) => (
+              <div key={d.id} className={`ap-dl-row${i === downloads.length - 1 ? ' last' : ''}`}>
+                <img src={d.painting_img} alt={d.painting_name} className="ap-dl-img" />
+                <div className="ap-dl-info">
+                  <span className="ap-dl-name">{d.painting_name}</span>
+                  <div className="ap-dl-meta">
+                    <span className="ap-dl-size-badge">{d.size}</span>
+                    <span className="ap-dl-dot">·</span>
+                    <span>{new Date(d.downloaded_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                  </div>
+                </div>
+                <Link href={`/paintings/${d.painting_id}`} className="ap-dl-btn">View</Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </AccountLayout>
       <Footer />
       <AuthModal mode={authMode} open={authOpen} onClose={() => setAuthOpen(false)} onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')} onSuccess={() => {}} />
     </>
