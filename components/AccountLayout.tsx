@@ -31,7 +31,7 @@ export default function AccountLayout({ active, user, children }: Props) {
   const initial = (user?.email ?? 'U')[0].toUpperCase()
 
   return (
-    <div style={{ paddingTop: 68, minHeight: '85vh', background: '#f0f0f2' }}>
+    <div style={{ paddingTop: 68, minHeight: '85vh', background: '#fff' }}>
       <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
 
         {/* Sidebar */}
