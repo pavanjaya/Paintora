@@ -246,11 +246,11 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
                   {profileOpen && (
                     <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, minWidth: 200, background: '#fff', border: '1px solid rgba(15,15,20,0.08)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.12)', padding: '6px 0', zIndex: 200 }}>
                       {userEmail && <div style={{ padding: '10px 18px 8px', fontSize: 12, color: '#888', fontFamily: 'var(--sans)', borderBottom: '1px solid rgba(15,15,20,0.06)', marginBottom: 4, wordBreak: 'break-all' }}>{userEmail}</div>}
-                      {['Profile', 'Saved', 'Downloads', 'Settings'].map(item => (
-                        <button key={item} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 18px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 14, color: 'var(--ink)', fontWeight: 500 }}
+                      {[['Profile', '/profile'], ['Saved', '/saved'], ['Downloads', '/downloads'], ['Settings', '/settings']].map(([label, href]) => (
+                        <a key={label} href={href} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 18px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 14, color: 'var(--ink)', fontWeight: 500, textDecoration: 'none' }}
                           onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
                           onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-                        >{item}</button>
+                        >{label}</a>
                       ))}
                       <div style={{ height: 1, background: 'rgba(15,15,20,0.08)', margin: '4px 0' }} />
                       <button onClick={onLogout} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 18px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)', fontSize: 14, color: '#E53E3E', fontWeight: 600 }}>Sign out</button>
