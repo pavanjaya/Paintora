@@ -79,32 +79,56 @@ export default function PaintingDetail({ id }: { id: string }) {
 
           {/* Info panel */}
           <div className="painting-detail-info">
-            <span className="painting-detail-style">{art.style}</span>
             <h1 className="painting-detail-title">{art.name}</h1>
-            <div className="painting-detail-price">{price}</div>
+            <p className="painting-detail-collection">{art.style} · Paintora Collection</p>
 
-            <div className="painting-detail-meta">
-              {art.medium && <div className="painting-meta-row"><span>Medium</span><span>{art.medium}</span></div>}
-              {art.dim    && <div className="painting-meta-row"><span>Size</span><span>{art.dim}</span></div>}
-              <div className="painting-meta-row"><span>Style</span><span>{art.style}</span></div>
+            {/* Metadata grid */}
+            <div className="painting-detail-meta-grid">
+              <div className="painting-meta-cell">
+                <span className="painting-meta-cell-label">Resolution</span>
+                <span className="painting-meta-cell-value">3000 × 4000px</span>
+              </div>
+              <div className="painting-meta-cell">
+                <span className="painting-meta-cell-label">Format</span>
+                <span className="painting-meta-cell-value">JPG / PNG</span>
+              </div>
+              <div className="painting-meta-cell">
+                <span className="painting-meta-cell-label">License</span>
+                <span className="painting-meta-cell-value">Commercial</span>
+              </div>
+              <div className="painting-meta-cell">
+                <span className="painting-meta-cell-label">Style</span>
+                <span className="painting-meta-cell-value">{art.style}</span>
+              </div>
+              {art.medium && (
+                <div className="painting-meta-cell">
+                  <span className="painting-meta-cell-label">Medium</span>
+                  <span className="painting-meta-cell-value">{art.medium}</span>
+                </div>
+              )}
+              {art.dim && (
+                <div className="painting-meta-cell">
+                  <span className="painting-meta-cell-label">Size</span>
+                  <span className="painting-meta-cell-value">{art.dim}</span>
+                </div>
+              )}
             </div>
 
-            <p className="painting-detail-desc">
-              A stunning piece that brings depth and character to any interior. Perfect for executive offices, legal firms, and refined living spaces. Arrives ready to hang with a certificate of authenticity.
-            </p>
-
+            {/* Actions */}
             <div className="painting-detail-actions">
-              <button className="btn-dark painting-detail-cta" style={{ border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)', flex: 1 }}>
-                Enquire Now
+              <button
+                className="painting-download-btn"
+                onClick={() => { if (!user) { setAuthMode('signup'); setAuthOpen(true); return } window.open(art.img, '_blank') }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Free Download
               </button>
               <button
-                className={`painting-save-large${saved ? ' saved' : ''}`}
+                className={`painting-save-btn-large${saved ? ' saved' : ''}`}
                 onClick={() => { if (!user) { setAuthMode('login'); setAuthOpen(true); return } setSaved(s => !s) }}
-                title={saved ? 'Unsave' : 'Save'}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                {saved ? 'Saved' : 'Save to Collection'}
               </button>
             </div>
           </div>
