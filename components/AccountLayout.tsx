@@ -48,7 +48,7 @@ export default function AccountLayout({ active, user, children }: Props) {
           </div>
 
           {/* Nav */}
-          <nav style={{ padding: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div style={{ padding: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {NAV.map(({ key, label, href, icon }) => (
               <Link
                 key={key}
@@ -67,7 +67,7 @@ export default function AccountLayout({ active, user, children }: Props) {
                 {label}
               </Link>
             ))}
-          </nav>
+          </div>
         </aside>
 
         {/* Content */}
