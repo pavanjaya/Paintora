@@ -1500,9 +1500,5 @@ img.loaded { opacity: 1; }
 }
 
 .page-transition {
-  opacity: 0;
-}
-
-.page-transition.page-entered {
-  animation: pageEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: pageEnter 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
