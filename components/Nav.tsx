@@ -262,6 +262,11 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
               </>
             )}
 
+            {/* Mobile search icon — shown only on mobile */}
+            <button className="nav-mobile-search-icon" aria-label="Search" onClick={() => router.push('/search')}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+
             <button className={`nav-hamburger${mobileOpen ? ' open' : ''}`} aria-label="Menu" onClick={() => setMobileOpen(o => !o)}>
               <span /><span /><span />
             </button>

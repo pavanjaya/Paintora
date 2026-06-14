@@ -1592,9 +1592,19 @@ img.loaded { opacity: 1; }
    ══════════════════════════════════════════════════════════════ */
 
 /* ── NAV mobile ── */
+.nav-mobile-search-icon {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: none; border: none; cursor: pointer;
+  color: var(--ink); transition: background 0.15s;
+}
+.nav-mobile-search-icon:hover { background: var(--bg-soft); }
+
 @media (max-width: 960px) {
   .nav-search-center { display: none !important; }
   .nav-hamburger { display: flex !important; }
+  .nav-mobile-search-icon { display: flex; }
   .nav-login, .nav-cta { display: none; }
   .nav-text-btn { display: none; }
   .nav-divider { display: none; }
