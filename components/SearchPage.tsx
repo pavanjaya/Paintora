@@ -12,6 +12,7 @@ import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
 
 const PAGE_SIZE = 16
+const FREE_LIMIT = 12
 
 const STYLE_OPTIONS   = ['Abstract', 'Minimalist', 'Contemporary', 'Impressionism', 'Geometric', 'Landscape']
 const MEDIUM_OPTIONS  = ['Oil', 'Watercolor', 'Acrylic', 'Mixed Media']
@@ -71,8 +72,9 @@ export default function SearchPage({ query }: { query: string }) {
         return a.name.toLowerCase().includes(q) || a.style.toLowerCase().includes(q) || (a.medium ?? '').toLowerCase().includes(q)
       })
     : ALL_ARTWORKS
-  const visible = artworks.slice(0, visibleCount)
-  const hasMore = visibleCount < artworks.length
+  const gated = !user && artworks.length > FREE_LIMIT
+  const visible = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
+  const hasMore = !gated && visibleCount < artworks.length
 
   const setFilter = (key: keyof FilterState, val: string) => {
     setFilters(f => ({ ...f, [key]: f[key] === val ? '' : val }))
@@ -201,6 +203,23 @@ export default function SearchPage({ query }: { query: string }) {
               </Link>
             ))}
           </div>
+
+          {gated && (
+            <div className="browse-login-gate">
+              <div className="browse-gate-blur" />
+              <div className="browse-gate-content">
+                <div className="browse-gate-lock">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <h3 className="browse-gate-title">Log in to see more</h3>
+                <p className="browse-gate-sub">Explore the full collection — {artworks.length}+ curated contemporary works, high-resolution downloads, and more.</p>
+                <div className="browse-gate-actions">
+                  <button className="browse-gate-cta-primary" onClick={() => { setAuthMode('signup'); setAuthOpen(true) }}>Create free account</button>
+                  <button className="browse-gate-cta-secondary" onClick={() => { setAuthMode('login'); setAuthOpen(true) }}>Log in</button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {hasMore && (
             <div className="browse-load-more">
