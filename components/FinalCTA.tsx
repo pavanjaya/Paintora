@@ -27,7 +27,7 @@ export default function FinalCTA({ onSignup, onGallery }: { onSignup: () => void
         </p>
         <div className="fcta-actions">
           <button className="fcta-btn-primary" onClick={onSignup}>Start for free</button>
-          <button className="fcta-btn-ghost" onClick={onGallery}>Browse paintings</button>
+          <Link href="/trending" className="fcta-btn-ghost" style={{ textDecoration: 'none' }}>Browse paintings</Link>
         </div>
       </div>
     </div>
