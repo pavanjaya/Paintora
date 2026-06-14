@@ -1247,4 +1247,4 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 
 /* ── SMOOTH IMAGE LOAD ── */
 img { opacity: 0; transition: opacity 0.4s ease; }
-img.loaded, img[loading="eager"] { opacity: 1; }
+img.loaded { opacity: 1; }
