@@ -65,7 +65,12 @@ export default function SearchPage({ query }: { query: string }) {
     setSaved(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   }, [user])
 
-  const artworks: ArtItem[] = ALL_ARTWORKS
+  const artworks: ArtItem[] = query.trim()
+    ? ALL_ARTWORKS.filter(a => {
+        const q = query.toLowerCase()
+        return a.name.toLowerCase().includes(q) || a.style.toLowerCase().includes(q) || (a.medium ?? '').toLowerCase().includes(q)
+      })
+    : ALL_ARTWORKS
   const visible = artworks.slice(0, visibleCount)
   const hasMore = visibleCount < artworks.length
 
@@ -100,7 +105,7 @@ export default function SearchPage({ query }: { query: string }) {
             <h1 className="browse-title">
               {query ? `"${query}"` : 'All Paintings'}
             </h1>
-            <span className="browse-count">{artworks.length}+ paintings</span>
+            <span className="browse-count">{artworks.length} painting{artworks.length !== 1 ? 's' : ''}</span>
           </div>
         </div>
 
@@ -159,6 +164,14 @@ export default function SearchPage({ query }: { query: string }) {
 
         {/* Grid */}
         <div className="browse-grid-section">
+          {artworks.length === 0 && (
+            <div className="browse-empty-state">
+              <p className="browse-empty-icon">🎨</p>
+              <h2 className="browse-empty-title">No paintings found for &ldquo;{query}&rdquo;</h2>
+              <p className="browse-empty-sub">Try a different style, space, or artist name.</p>
+              <Link href="/" className="browse-empty-cta">Browse all paintings</Link>
+            </div>
+          )}
           <div className="feed-grid">
             {visible.map((art, i) => (
               <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>

@@ -83,7 +83,7 @@ function Card({ t }: { t: typeof TESTIMONIALS[0] }) {
       <Stars />
       <p className="testimonial-quote">{t.quote}</p>
       <div className="testimonial-author">
-        <img src={t.img} alt={t.name} className="testimonial-avatar loaded" />
+        <img src={t.img} alt={t.name} className="testimonial-avatar loaded" loading="lazy" decoding="async" />
         <div className="testimonial-author-info">
           <span className="testimonial-name">{t.name}</span>
           <span className="testimonial-title">{t.title} · {t.location}</span>

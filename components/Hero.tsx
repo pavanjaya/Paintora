@@ -50,7 +50,7 @@ export default function Hero({ onGallery }: { onGallery: () => void }) {
           <Img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80" alt="Featured artwork" />
           <div className="hero-art-credit">
             <div className="hero-art-thumb">
-              <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=64&q=80" alt="" className="loaded" />
+              <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=64&q=80" alt="" className="loaded" loading="lazy" decoding="async" />
             </div>
             <div>
               <div className="hero-art-name">Abstract No. 7</div>

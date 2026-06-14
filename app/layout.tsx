@@ -3,8 +3,26 @@ import './globals.css'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
-  title: 'Paintora — Contemporary AI-Curated Paintings',
-  description: 'Curated contemporary paintings for modern homes, offices, and spaces of intention.',
+  title: { default: 'Paintora — Contemporary Paintings for Every Space', template: '%s | Paintora' },
+  description: 'Discover and buy curated contemporary paintings for homes, offices, hospitality, and thoughtfully designed interiors.',
+  keywords: ['paintings', 'contemporary art', 'buy art online', 'interior art', 'curated paintings', 'wall art India'],
+  authors: [{ name: 'Paintora' }],
+  metadataBase: new URL('https://paintora.vercel.app'),
+  openGraph: {
+    type: 'website',
+    siteName: 'Paintora',
+    title: 'Paintora — Contemporary Paintings for Every Space',
+    description: 'Discover and buy curated contemporary paintings for homes, offices, and thoughtfully designed interiors.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Paintora' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Paintora — Contemporary Paintings for Every Space',
+    description: 'Discover and buy curated contemporary paintings for every space.',
+    images: ['/og-image.png'],
+  },
+  themeColor: '#0F0F14',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
 }
 
 export default function RootLayout({

@@ -21,6 +21,8 @@ export default function Img({
       alt={alt}
       className={className}
       style={style}
+      loading="lazy"
+      decoding="async"
       onLoad={() => ref.current?.classList.add('loaded')}
     />
   )

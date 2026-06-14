@@ -71,6 +71,8 @@ export default function PaintingDetail({ id }: { id: string }) {
               src={art.img}
               alt={art.name}
               className={imgLoaded ? 'loaded' : ''}
+              loading="eager"
+              decoding="async"
               onLoad={() => setImgLoaded(true)}
             />
           </div>

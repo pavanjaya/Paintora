@@ -48,7 +48,10 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
   const searchRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
+    const handler = () => {
+      setScrolled(window.scrollY > 20)
+      if (window.scrollY > 80) setMobileOpen(false)
+    }
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])

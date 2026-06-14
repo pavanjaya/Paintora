@@ -48,7 +48,7 @@ function ArtCol({ title, items, baseHref, exploreHref }: {
               <div className="style-name">{item.name}</div>
               <span className="style-tag">{item.tag}</span>
             </div>
-            <img src={item.img} alt={item.name} className="loaded" />
+            <img src={item.img} alt={item.name} className="loaded" loading="lazy" decoding="async" />
           </Link>
         ))}
       </div>
