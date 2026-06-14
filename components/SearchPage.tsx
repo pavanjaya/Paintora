@@ -173,7 +173,12 @@ export default function SearchPage({ query }: { query: string }) {
             {visible.map((art, i) => (
               <div key={`${art.id}-${i}`} className="artwork-card">
                 <div className="artwork-img-wrap">
-                  <img src={art.img} alt={art.name} loading="lazy" onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')} />
+                  <img
+                    src={art.img}
+                    alt={art.name}
+                    ref={el => { if (el?.complete) el.classList.add('loaded') }}
+                    onLoad={e => (e.target as HTMLImageElement).classList.add('loaded')}
+                  />
                   <div className="artwork-overlay">
                     <button className="artwork-view-btn" onClick={() => router.push(`/paintings/${art.id}`)}>View Details</button>
                   </div>
