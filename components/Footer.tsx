@@ -17,7 +17,6 @@ const NAV_COLS = [
     links: [
       { label: 'About', href: '#' },
       { label: 'Contact', href: '#' },
-      { label: 'For Artists', href: '#' },
     ],
   },
   {
