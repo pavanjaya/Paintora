@@ -5,38 +5,22 @@ import { type ArtItem, FEED_ARTWORKS } from '@/lib/data'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
-import Nav            from '@/components/Nav'
-import Hero           from '@/components/Hero'
-import Marquee        from '@/components/Marquee'
-import Collections    from '@/components/Collections'
-import Spaces         from '@/components/Spaces'
-import StylesSection  from '@/components/StylesSection'
-import ArtworkFeed    from '@/components/ArtworkFeed'
-import InSitu         from '@/components/InSitu'
-import Testimonials   from '@/components/Testimonials'
-import Membership     from '@/components/Membership'
-import Footer         from '@/components/Footer'
+import Nav                 from '@/components/Nav'
+import Hero                from '@/components/Hero'
+import TrendingPaintings   from '@/components/TrendingPaintings'
+import SpacesGrid          from '@/components/SpacesGrid'
+import FeaturedCollections from '@/components/FeaturedCollections'
+import ExploreArt          from '@/components/ExploreArt'
+import InSitu              from '@/components/InSitu'
+import Testimonials        from '@/components/Testimonials'
+import FinalCTA            from '@/components/FinalCTA'
+import Footer              from '@/components/Footer'
 import AuthModal      from '@/components/AuthModal'
 import GalleryPage    from '@/components/GalleryPage'
 import StylesPage     from '@/components/StylesPage'
 import SpacePage      from '@/components/SpacePage'
 import PreviewModal   from '@/components/PreviewModal'
 
-function Licensing({ onSignup }: { onSignup: () => void }) {
-  return (
-    <div className="licensing-outer">
-      <div className="licensing-label">Licensing</div>
-      <h2 className="licensing-title">Use it anywhere.<br />License it properly.</h2>
-      <p className="licensing-sub">
-        Every artwork on Paintora comes with a clear, straightforward license. From personal
-        projects to commercial campaigns — we have you covered.
-      </p>
-      <button className="btn-dark" onClick={onSignup} style={{ fontFamily: 'var(--sans)', cursor: 'pointer', border: 'none' }}>
-        Explore licensing options
-      </button>
-    </div>
-  )
-}
 
 export default function Home() {
   const [authMode, setAuthMode]           = useState<'login' | 'signup'>('login')
@@ -83,16 +67,14 @@ export default function Home() {
       />
 
       <main>
-        <Hero        onGallery={() => setGalleryOpen(true)} />
-        <Marquee />
-        <Collections onGallery={() => setGalleryOpen(true)} />
-        <Spaces      onSpacePage={() => setSpaceOpen(true)} />
-        <StylesSection onStylesPage={() => setStylesOpen(true)} />
-        <ArtworkFeed onPreview={openPreview} onGallery={() => setGalleryOpen(true)} onLogin={openLogin} />
+        <Hero                onGallery={() => setGalleryOpen(true)} />
+        <TrendingPaintings   onPreview={openPreview} onGallery={() => setGalleryOpen(true)} />
+        <SpacesGrid          onSpacePage={() => setSpaceOpen(true)} />
+        <FeaturedCollections onGallery={() => setGalleryOpen(true)} />
+        <ExploreArt          onGallery={() => setGalleryOpen(true)} onStylesPage={() => setStylesOpen(true)} />
         <InSitu />
         <Testimonials />
-        <Membership  onSignup={openSignup} />
-        <Licensing   onSignup={openSignup} />
+        <FinalCTA            onSignup={openSignup} onGallery={() => setGalleryOpen(true)} />
       </main>
 
       <Footer />
