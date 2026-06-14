@@ -97,11 +97,6 @@ export default function SearchPage({ query }: { query: string }) {
       <main className="browse-main">
         <div className="browse-header">
           <div className="browse-header-inner">
-            <div className="browse-breadcrumb">
-              <a href="/">Home</a>
-              <span>/</span>
-              <span>Search</span>
-            </div>
             <h1 className="browse-title">
               {query ? `"${query}"` : 'All Paintings'}
             </h1>

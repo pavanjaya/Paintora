@@ -1356,7 +1356,7 @@ img.loaded { opacity: 1; }
 .browse-breadcrumb a:hover { color: var(--ink); }
 .browse-breadcrumb span { color: var(--muted); }
 
-.browse-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 42px); font-weight: 600; color: var(--ink); margin: 0 0 0.4rem; line-height: 1.15; }
+.browse-title { font-family: var(--serif); font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: var(--ink); margin: 0 0 0.4rem; line-height: 1.15; }
 .browse-desc { font-size: 15px; color: var(--muted); margin: 0 0 0.75rem; }
 .browse-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 

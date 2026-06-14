@@ -109,13 +109,6 @@ export default function BrowsePage({
         {/* Page header */}
         <div className="browse-header">
           <div className="browse-header-inner">
-            <div className="browse-breadcrumb">
-              <a href="/">Home</a>
-              <span>/</span>
-              <a href={`/${category}`}>{CATEGORY_LABELS[category]}</a>
-              <span>/</span>
-              <span>{data.title}</span>
-            </div>
             <h1 className="browse-title">{data.title} Paintings</h1>
             <p className="browse-desc">{data.description}</p>
             <span className="browse-count">{data.count} paintings</span>

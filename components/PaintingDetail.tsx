@@ -63,15 +63,6 @@ export default function PaintingDetail({ id }: { id: string }) {
       />
 
       <main className="painting-detail-main">
-        {/* Breadcrumb */}
-        <div className="painting-breadcrumb">
-          <a href="/">Home</a>
-          <span>/</span>
-          <a href={`/styles/${art.style.toLowerCase().replace(/\s+/g, '-')}`}>{art.style}</a>
-          <span>/</span>
-          <span>{art.name}</span>
-        </div>
-
         {/* Main content */}
         <div className="painting-detail-grid">
           {/* Image */}
