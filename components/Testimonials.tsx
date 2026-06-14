@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const TESTIMONIALS = [
   {
@@ -88,6 +88,13 @@ export default function Testimonials() {
   const totalPages = Math.ceil(TESTIMONIALS.length / PER_PAGE)
   const visible = TESTIMONIALS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE)
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPage(p => (p + 1) % totalPages)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [totalPages])
+
   return (
     <section className="testimonials-section">
       <div className="testimonials-head">
@@ -98,17 +105,14 @@ export default function Testimonials() {
         <div className="testimonials-nav">
           <button
             className="testimonials-nav-btn"
-            onClick={() => setPage(p => Math.max(0, p - 1))}
-            disabled={page === 0}
+            onClick={() => setPage(p => (p - 1 + totalPages) % totalPages)}
             aria-label="Previous"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6"/></svg>
           </button>
-          <span className="testimonials-nav-count">{page + 1} / {totalPages}</span>
           <button
             className="testimonials-nav-btn"
-            onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-            disabled={page === totalPages - 1}
+            onClick={() => setPage(p => (p + 1) % totalPages)}
             aria-label="Next"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6"/></svg>
