@@ -6,10 +6,9 @@ export default function Collections({ onGallery }: { onGallery: () => void }) {
     <section id="collections">
       <div className="section-head">
         <div>
-          <div className="section-label">Collections</div>
-          <h2 className="section-title">Curated series<br />for every taste</h2>
+          <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Most popular paintings</h2>
         </div>
-        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all collections</button>
+        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
       </div>
       <div className="collections-grid">
         {COLLECTIONS.map((c, i) => (

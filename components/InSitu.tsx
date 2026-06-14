@@ -6,11 +6,9 @@ export default function InSitu() {
     <div className="insitu-outer">
       <div className="insitu-inner">
         <div style={{ maxWidth: 560 }}>
-          <div className="section-label" style={{ color: 'var(--sky)', background: 'var(--sky-light)' }}>In Situ</div>
-          <h2 className="insitu-title">See it in<br />your space first.</h2>
+          <h2 className="insitu-title">Painted for the room<br />it lives in.</h2>
           <p className="insitu-sub">
-            Every artwork is visualized in real home environments — so you can see exactly how it
-            will feel before you commit.
+            Every piece in our archive is conceived alongside the architecture it inhabits — light, scale, material, intention.
           </p>
         </div>
         <div className="insitu-grid">

@@ -14,10 +14,9 @@ export default function Spaces({ onSpacePage }: { onSpacePage: () => void }) {
       <div className="spaces-inner">
         <div className="section-head">
           <div>
-            <div className="section-label" style={{ color: 'var(--sage)', background: 'var(--sage-light)' }}>Spaces</div>
-            <h2 className="section-title">Art for every<br />room in your home</h2>
+            <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Browse by space.</h2>
           </div>
-          <button className="view-all" onClick={onSpacePage} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>Explore all spaces</button>
+          <button className="view-all" onClick={onSpacePage} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
         </div>
         <div className="spaces-grid">
           {SPACES.map((s, i) => (

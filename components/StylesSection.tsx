@@ -7,10 +7,9 @@ export default function StylesSection({ onStylesPage }: { onStylesPage: () => vo
       <div className="styles-inner">
         <div className="section-head">
           <div>
-            <div className="section-label" style={{ color: 'var(--amber)', background: 'var(--amber-light)' }}>Art Styles</div>
-            <h2 className="section-title">Explore by<br />artistic movement</h2>
+            <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Browse by painting style.</h2>
           </div>
-          <button className="view-all" onClick={onStylesPage} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>All styles</button>
+          <button className="view-all" onClick={onStylesPage} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
         </div>
         <div className="styles-scroll">
           {STYLES.map((s, i) => (

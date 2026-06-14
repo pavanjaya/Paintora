@@ -10,10 +10,9 @@ export default function ArtworkFeed({ onPreview, onGallery, onLogin }: {
     <section id="artworks">
       <div className="section-head">
         <div>
-          <div className="section-label">New Arrivals</div>
-          <h2 className="section-title">Fresh artworks<br />this week</h2>
+          <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>A curated visual silence.</h2>
         </div>
-        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>See all artworks</button>
+        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
       </div>
       <div className="feed-grid">
         {FEED_ARTWORKS.map((a, i) => (
