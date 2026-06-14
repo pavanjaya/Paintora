@@ -2114,3 +2114,68 @@ img.loaded { opacity: 1; }
   text-decoration: none; font-family: var(--sans);
 }
 
+
+/* ── UPGRADE MODAL ── */
+.upgrade-modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.upgrade-modal {
+  background: var(--white); border-radius: 24px;
+  padding: 2.5rem 2rem; max-width: 440px; width: 100%;
+  position: relative; text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+}
+.upgrade-modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: var(--bg-soft); border: none; border-radius: 50%;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink-muted);
+}
+.upgrade-modal-close:hover { color: var(--ink); }
+.upgrade-modal-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--ink); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+.upgrade-modal-title {
+  font-family: var(--serif); font-size: 26px; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.upgrade-modal-sub {
+  font-size: 14px; color: var(--ink-muted); margin-bottom: 1.5rem; line-height: 1.6;
+}
+.upgrade-modal-features {
+  text-align: left; display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 1.75rem;
+}
+.upgrade-modal-feature {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--ink); font-weight: 500;
+}
+.upgrade-modal-feature svg { color: var(--ink); flex-shrink: 0; }
+.upgrade-modal-price {
+  display: flex; align-items: baseline; justify-content: center; gap: 4px;
+  margin-bottom: 1.25rem;
+}
+.upgrade-modal-amount { font-size: 36px; font-weight: 800; color: var(--ink); font-family: var(--sans); }
+.upgrade-modal-period { font-size: 15px; color: var(--ink-muted); }
+.upgrade-modal-error { color: #e53e3e; font-size: 13px; margin-bottom: 0.75rem; }
+.upgrade-modal-cta {
+  width: 100%; padding: 15px; border-radius: 100px;
+  background: var(--ink); color: #fff; border: none;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  font-family: var(--sans); margin-bottom: 0.75rem;
+  transition: opacity 0.15s;
+}
+.upgrade-modal-cta:disabled { opacity: 0.6; cursor: not-allowed; }
+.upgrade-modal-cta:not(:disabled):hover { opacity: 0.85; }
+.upgrade-modal-note { font-size: 12px; color: var(--ink-muted); }
+
+@media (max-width: 480px) {
+  .upgrade-modal { padding: 2rem 1.25rem; border-radius: 20px 20px 0 0; }
+  .upgrade-modal-overlay { align-items: flex-end; padding: 0; }
+}

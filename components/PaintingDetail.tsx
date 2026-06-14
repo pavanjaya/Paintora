@@ -9,6 +9,7 @@ import Img from '@/components/Img'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
+import UpgradeModal from '@/components/UpgradeModal'
 
 const ALL: ArtItem[] = [...FEED_ARTWORKS, ...GALLERY_IMGS]
 
@@ -19,15 +20,30 @@ const PRICES: Record<number, string> = {
 
 export default function PaintingDetail({ id }: { id: string }) {
   const router = useRouter()
-  const [user, setUser] = useState<{ email?: string } | null>(null)
+  const [user, setUser] = useState<{ id?: string; email?: string } | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
   const [saved, setSaved] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
+  const [isPro, setIsPro] = useState(false)
+  const [upgradeOpen, setUpgradeOpen] = useState(false)
+
+  const checkPro = async (userId: string) => {
+    const { data } = await supabase.from('subscriptions').select('status, current_period_end').eq('user_id', userId).single()
+    if (data?.status === 'active' && new Date(data.current_period_end) > new Date()) setIsPro(true)
+  }
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setUser(s?.user ?? null))
+    supabase.auth.getSession().then(async ({ data }) => {
+      const u = data.session?.user ?? null
+      setUser(u)
+      if (u) checkPro(u.id)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
+      const u = s?.user ?? null
+      setUser(u)
+      if (u) checkPro(u.id)
+    })
     return () => subscription.unsubscribe()
   }, [])
 
@@ -118,10 +134,14 @@ export default function PaintingDetail({ id }: { id: string }) {
             <div className="painting-detail-actions">
               <button
                 className="painting-download-btn"
-                onClick={() => { if (!user) { setAuthMode('signup'); setAuthOpen(true); return } window.open(art.img, '_blank') }}
+                onClick={() => {
+                  if (!user) { setAuthMode('signup'); setAuthOpen(true); return }
+                  if (!isPro) { setUpgradeOpen(true); return }
+                  window.open(art.img, '_blank')
+                }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Free Download
+                {isPro ? 'Download' : 'Download — Pro'}
               </button>
               <button
                 className={`painting-save-btn-large${saved ? ' saved' : ''}`}
@@ -194,6 +214,16 @@ export default function PaintingDetail({ id }: { id: string }) {
         onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
         onSuccess={() => {}}
       />
+
+      {user && (
+        <UpgradeModal
+          open={upgradeOpen}
+          onClose={() => setUpgradeOpen(false)}
+          userId={user.id ?? ''}
+          userEmail={user.email}
+          onSuccess={() => setIsPro(true)}
+        />
+      )}
     </>
   )
 }
