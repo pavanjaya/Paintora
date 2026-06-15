@@ -309,7 +309,13 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   padding: 9px 18px; border-radius: 24px; border: 1.5px solid var(--border);
   transition: all 0.2s; flex-shrink: 0;
 }
-.view-all::after { content: '→'; }
+.view-all::after {
+  content: '\e5c8';
+  font-family: 'Material Icons';
+  font-size: 16px;
+  line-height: 1;
+  font-feature-settings: 'liga';
+}
 .view-all:hover { border-color: var(--ink); background: var(--bg-soft); }
 
 /* ── COLLECTIONS ── */
