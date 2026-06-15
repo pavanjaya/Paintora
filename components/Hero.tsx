@@ -14,8 +14,7 @@ export default function Hero() {
         <p className="hero-eyebrow">Curated contemporary art</p>
         <h1 className="hero-title">Paintings that<br />define a space.</h1>
         <p className="hero-sub">
-          Discover works chosen for how they live in rooms —<br />
-          homes, offices, hotels, and every space in between.
+          Curated contemporary paintings designed through artistic direction and AI-assisted creativity. For modern homes, offices, and spaces of intention.
         </p>
         <div className="hero-ctas">
           <Link href="/discover" className="hero-cta-primary">Browse paintings</Link>
