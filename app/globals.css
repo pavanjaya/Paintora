@@ -187,8 +187,8 @@ mark { background: var(--violet-light); color: var(--violet); border-radius: 3px
 .hero-badge {
   display: inline-flex; align-items: center;
   font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
-  color: var(--ink); background: var(--bg-soft);
-  border: 1.5px solid var(--border);
+  color: #CF4BFF; background: rgba(207,75,255,0.08);
+  border: 1.5px solid rgba(207,75,255,0.3);
   border-radius: 100px; padding: 5px 14px;
   margin-bottom: 1.25rem; width: fit-content;
 }
