@@ -8,11 +8,11 @@ const MOSAIC = [
 ]
 
 const SPACES = [
-  { label: 'Living Room', href: '/spaces/living-room' },
-  { label: 'Office',      href: '/spaces/office' },
-  { label: 'Hotel Lobby', href: '/spaces/hotel' },
-  { label: 'Bedroom',     href: '/spaces/bedroom' },
-  { label: 'Café',        href: '/spaces/cafe' },
+  { label: 'For living rooms',  href: '/spaces/living-room' },
+  { label: 'For offices',       href: '/spaces/office' },
+  { label: 'For hotel lobbies', href: '/spaces/hotel' },
+  { label: 'For bedrooms',      href: '/spaces/bedroom' },
+  { label: 'For cafés',         href: '/spaces/cafe' },
 ]
 
 export default function Hero() {
@@ -32,10 +32,6 @@ export default function Hero() {
         </div>
         <div className="hero-stats">
           <span>12,400+ paintings</span>
-          <span className="hero-stat-dot" />
-          <span>340 artists</span>
-          <span className="hero-stat-dot" />
-          <span>Free delivery</span>
         </div>
       </div>
 
