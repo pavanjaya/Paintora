@@ -1530,7 +1530,7 @@ img.loaded { opacity: 1; }
 }
 
 /* ─── Painting Detail Page ───────────────────────────────────────────── */
-.painting-detail-main { padding-top: 80px; min-height: 100vh; }
+.painting-detail-main { padding-top: 68px; min-height: 100vh; }
 
 .painting-breadcrumb { max-width: 1280px; margin: 0 auto; padding: 1rem 2rem; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
 .painting-breadcrumb a { color: var(--muted); text-decoration: none; }
@@ -1538,9 +1538,26 @@ img.loaded { opacity: 1; }
 
 .painting-detail-grid { max-width: 1280px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: start; }
 
-.painting-detail-img-wrap { border-radius: 16px; overflow: hidden; background: var(--bg-soft); }
-.painting-detail-img-wrap img { width: 100%; display: block; opacity: 0; transition: opacity 0.4s; }
+.painting-detail-img-col { display: flex; flex-direction: column; gap: 12px; }
+.painting-variant-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.painting-variant-tab {
+  padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: none; font-family: var(--sans); font-size: 13px; font-weight: 600;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.15s;
+}
+.painting-variant-tab:hover { border-color: var(--ink); color: var(--ink); }
+.painting-variant-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.painting-detail-img-wrap { border-radius: 16px; overflow: hidden; background: var(--bg-soft); transition: aspect-ratio 0.3s; }
+.painting-detail-img-wrap img { width: 100%; display: block; opacity: 0; transition: opacity 0.4s; object-fit: cover; }
 .painting-detail-img-wrap img.loaded { opacity: 1; }
+
+/* Variant aspect ratios */
+.painting-detail-img-wrap.variant-vertical  { aspect-ratio: 3/4; }
+.painting-detail-img-wrap.variant-horizontal { aspect-ratio: 4/3; }
+.painting-detail-img-wrap.variant-square    { aspect-ratio: 1/1; }
+.painting-detail-img-wrap.variant-space     { aspect-ratio: 3/4; background: #f5f5f0; padding: 2rem; }
+.painting-detail-img-wrap.variant-space img { border-radius: 8px; width: 100%; height: 100%; object-fit: contain; }
 
 .painting-detail-style { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .painting-detail-title { font-family: var(--serif); font-size: clamp(24px, 3vw, 38px); font-weight: 600; color: var(--ink); margin: 0.5rem 0 0; line-height: 1.2; }

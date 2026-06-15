@@ -24,6 +24,7 @@ export default function PaintingDetail({ id }: { id: string }) {
   const [isPro, setIsPro] = useState(false)
   const [upgradeOpen, setUpgradeOpen] = useState(false)
   const [downloadOpen, setDownloadOpen] = useState(false)
+  const [variant, setVariant] = useState<'vertical' | 'horizontal' | 'square' | 'space'>('vertical')
   const [art, setArt] = useState<ArtItem | null>(null)
   const [artLoading, setArtLoading] = useState(true)
   const [allArtworks, setAllArtworks] = useState<ArtItem[]>([...FEED_ARTWORKS, ...GALLERY_IMGS])
@@ -143,16 +144,29 @@ export default function PaintingDetail({ id }: { id: string }) {
 
         {/* Main content */}
         <div className="painting-detail-grid">
-          {/* Image */}
-          <div className="painting-detail-img-wrap">
-            <img
-              src={art.img}
-              alt={art.name}
-              className={imgLoaded ? 'loaded' : ''}
-              loading="eager"
-              decoding="async"
-              onLoad={() => setImgLoaded(true)}
-            />
+          {/* Image + Variant Tabs */}
+          <div className="painting-detail-img-col">
+            <div className="painting-variant-tabs">
+              {(['vertical', 'horizontal', 'square', 'space'] as const).map(v => (
+                <button
+                  key={v}
+                  className={`painting-variant-tab${variant === v ? ' active' : ''}`}
+                  onClick={() => setVariant(v)}
+                >
+                  {v === 'vertical' ? 'Vertical' : v === 'horizontal' ? 'Horizontal' : v === 'square' ? 'Square' : 'With Space'}
+                </button>
+              ))}
+            </div>
+            <div className={`painting-detail-img-wrap variant-${variant}`}>
+              <img
+                src={art.img}
+                alt={art.name}
+                className={imgLoaded ? 'loaded' : ''}
+                loading="eager"
+                decoding="async"
+                onLoad={() => setImgLoaded(true)}
+              />
+            </div>
           </div>
 
           {/* Info panel */}
@@ -199,7 +213,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                   <button
                     className="painting-download-btn"
                     onClick={() => {
-                      if (!user) { setAuthMode('signup'); setAuthOpen(true); return }
+                      if (!user) { setAuthMode('login'); setAuthOpen(true); return }
                       setDownloadOpen(o => !o)
                     }}
                   >
