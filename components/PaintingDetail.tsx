@@ -133,13 +133,13 @@ export default function PaintingDetail({ id }: { id: string }) {
 
       <main className="painting-detail-main">
         {/* Breadcrumb */}
-        <nav className="painting-breadcrumb" aria-label="Breadcrumb">
+        <div className="painting-breadcrumb" role="navigation" aria-label="Breadcrumb">
           <a href="/">Home</a>
           <span aria-hidden="true">›</span>
           <a href="/trending">Paintings</a>
           <span aria-hidden="true">›</span>
           <span>{art.name}</span>
-        </nav>
+        </div>
 
         {/* Main content */}
         <div className="painting-detail-grid">
