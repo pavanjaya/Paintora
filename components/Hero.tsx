@@ -1,61 +1,47 @@
-'use client'
-
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Img from './Img'
 
-const SUGGESTIONS = [
-  { label: 'Living Room', href: '/spaces/living-room' },
-  { label: 'Law Office',  href: '/spaces/office' },
-  { label: 'Abstract',    href: '/styles/abstract' },
-  { label: 'Hotel Lobby', href: '/spaces/hotel' },
-  { label: 'Minimalist',  href: '/styles/minimalist' },
+const MOSAIC = [
+  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=85', alt: 'Abstract painting' },
+  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=85', alt: 'Impressionist work' },
+  { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85', alt: 'Geometric art' },
 ]
 
 export default function Hero() {
-  const router = useRouter()
-  const [q, setQ] = useState('')
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (q.trim()) router.push(`/search?q=${encodeURIComponent(q.trim())}`)
-  }
-
   return (
     <section className="hero">
       <div className="hero-left">
-        <h1 className="hero-title">Find the perfect painting<br />for every space.</h1>
+        <p className="hero-eyebrow">Curated contemporary art</p>
+        <h1 className="hero-title">Paintings that<br />define a space.</h1>
         <p className="hero-sub">
-          Curated contemporary paintings for homes, offices, hospitality, and thoughtfully designed interiors.
+          Discover works chosen for how they live in rooms —<br />
+          homes, offices, hotels, and every space in between.
         </p>
-        <form className="hero-search" onSubmit={handleSearch}>
-          <div className="hero-search-inner">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input className="hero-search-input" placeholder="Search by space, style, collection or subject..." value={q} onChange={e => setQ(e.target.value)} />
-          </div>
-          <button type="submit" className="hero-search-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-        </form>
-        <div className="hero-tags">
-          <span className="hero-tags-label">Popular:</span>
-          {SUGGESTIONS.map(s => (
-            <Link key={s.label} className="hero-tag" href={s.href}>{s.label}</Link>
-          ))}
+        <div className="hero-ctas">
+          <Link href="/discover" className="hero-cta-primary">Browse paintings</Link>
+          <Link href="/collections" className="hero-cta-secondary">View collections</Link>
+        </div>
+        <div className="hero-stats">
+          <span>12,400+ paintings</span>
+          <span className="hero-stat-dot" />
+          <span>340 artists</span>
+          <span className="hero-stat-dot" />
+          <span>Free delivery</span>
         </div>
       </div>
-      <div className="hero-right">
-        <div className="hero-art-card">
-          <Img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80" alt="Featured artwork" />
-          <div className="hero-art-credit">
-            <div className="hero-art-thumb">
-              <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=64&q=80" alt="" className="loaded" loading="lazy" decoding="async" />
-            </div>
-            <div>
-              <div className="hero-art-name">Abstract No. 7</div>
-              <div className="hero-art-style">Featured Artwork</div>
-            </div>
+
+      <div className="hero-mosaic">
+        <div className="hero-mosaic-col hero-mosaic-col-a">
+          <div className="hero-mosaic-img hero-mosaic-img-tall">
+            <Img src={MOSAIC[0].src} alt={MOSAIC[0].alt} />
+          </div>
+        </div>
+        <div className="hero-mosaic-col hero-mosaic-col-b">
+          <div className="hero-mosaic-img hero-mosaic-img-sm">
+            <Img src={MOSAIC[1].src} alt={MOSAIC[1].alt} />
+          </div>
+          <div className="hero-mosaic-img hero-mosaic-img-sm">
+            <Img src={MOSAIC[2].src} alt={MOSAIC[2].alt} />
           </div>
         </div>
       </div>
