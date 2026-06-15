@@ -415,7 +415,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .insitu-outer { background: var(--white); padding: 4rem 0 0; overflow: hidden; }
 .insitu-header {
   display: flex; align-items: flex-end; justify-content: space-between;
-  padding: 0 2rem 2rem; max-width: 1280px; margin: 0 auto;
+  padding: 0 2rem 2rem;
 }
 .insitu-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
 .insitu-sub { font-size: 14px; color: var(--ink-muted); margin-top: 0.75rem; max-width: 400px; line-height: 1.7; }
@@ -433,7 +433,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   display: flex; gap: 14px;
   overflow-x: auto; scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; padding: 0 2rem 2.5rem;
+  scrollbar-width: none; padding: 0 2rem 2.5rem 2rem;
 }
 .insitu-track::-webkit-scrollbar { display: none; }
 
