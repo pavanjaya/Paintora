@@ -9,8 +9,7 @@ export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
         src="/paintings/painting-2.jpg"
         alt=""
         className="fcta-bg"
-        loading="lazy"
-        decoding="async"
+        loading="eager"
       />
       <div className="fcta-overlay" />
       <div className="fcta-content">

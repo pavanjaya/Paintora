@@ -623,7 +623,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 }
 .fcta-overlay {
   position: absolute; inset: 0;
-  background: rgba(25, 25, 71, 0.52);
+  background: rgba(25, 25, 71, 0.38);
 }
 .fcta-content { position: relative; z-index: 2; text-align: center; padding: 6rem 1.5rem; max-width: 580px; }
 .fcta-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 1.25rem; }
