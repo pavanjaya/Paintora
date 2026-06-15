@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Img from './Img'
 
 const MOSAIC = [
-  { src: '/paintings/painting-2.png', alt: 'Victoria Memorial' },
-  { src: '/paintings/painting-1.jpg', alt: 'Watercolor portrait' },
-  { src: '/paintings/painting-1.jpg', alt: 'Watercolor portrait' },
+  { src: '/paintings/painting-1.jpg', alt: 'Tagore portrait' },
+  { src: '/paintings/painting-2.jpg', alt: 'Victoria Memorial watercolor' },
+  { src: '/paintings/painting-3.png', alt: 'Victoria Memorial gouache' },
 ]
 
 export default function Hero() {
