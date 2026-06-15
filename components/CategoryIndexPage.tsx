@@ -34,7 +34,7 @@ export default function CategoryIndexPage({ category, title, subtitle, images, b
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-        onGallery={() => {}} onStylesPage={() => {}}
+        onStylesPage={() => {}}
         isLoggedIn={!!user} userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
       />

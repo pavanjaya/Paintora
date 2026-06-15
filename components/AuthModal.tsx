@@ -80,6 +80,7 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
             <img src="/logo.svg" alt="Paintora" style={{ height: 28, width: 'auto', display: 'block' }} />
           </div>
 
+          <div className="auth-left-scroll">
           {effectiveView === 'forgot' ? (
             <>
               <h2 className="auth-heading">Reset password.</h2>
@@ -186,17 +187,19 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
               </p>
             </>
           )}
+          </div>
         </div>
 
         <div className="auth-right">
-          <div className="auth-right-inner">
-            <div className="auth-artwork-stack">
-              <div className="auth-art auth-art-1" />
-              <div className="auth-art auth-art-2" />
-              <div className="auth-art auth-art-3" />
-            </div>
-            <div className="auth-right-title">50,000+ artworks<br />waiting for you.</div>
-            <p className="auth-right-sub">Join 12,400+ collectors discovering the world&apos;s best contemporary art.</p>
+          <img
+            src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80&fit=crop"
+            alt="Contemporary artwork"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          <div className="auth-right-overlay" />
+          <div className="auth-right-inner" style={{ position: 'relative', zIndex: 1 }}>
+            <div className="auth-right-title" style={{ color: '#fff' }}>50,000+ artworks<br />waiting for you.</div>
+            <p className="auth-right-sub" style={{ color: 'rgba(255,255,255,0.75)' }}>Join 12,400+ collectors discovering the world&apos;s best contemporary art.</p>
           </div>
         </div>
       </div>

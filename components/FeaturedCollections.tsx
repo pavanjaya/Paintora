@@ -10,7 +10,7 @@ const FEATURED = [
   { title: 'Nature & Botanical', slug: 'floral',      base: 'subjects', count: '360+ paintings', img: 'https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=900&q=80&fit=crop' },
 ]
 
-export default function FeaturedCollections({ onGallery }: { onGallery: () => void }) {
+export default function FeaturedCollections() {
   return (
     <section id="collections">
       <div className="section-head">

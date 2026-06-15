@@ -161,7 +161,7 @@ export default function BrowsePage({
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-        onGallery={() => {}}
+       
         onStylesPage={() => {}}
         isLoggedIn={!!user}
         userEmail={user?.email}

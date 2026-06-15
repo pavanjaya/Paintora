@@ -801,12 +801,19 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 }
 .auth-close:hover { background: var(--white); border-color: var(--ink); }
 .auth-left {
-  padding: 2.25rem 2rem 2rem;
   display: flex; flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
   min-height: 0;
 }
-.auth-logo { margin-bottom: 1.75rem; }
+.auth-logo {
+  padding: 2.25rem 2rem 0;
+  flex-shrink: 0;
+  margin-bottom: 1.75rem;
+}
+.auth-left-scroll {
+  flex: 1; overflow-y: auto; padding: 0 2rem 2rem;
+  min-height: 0;
+}
 .auth-heading {
   font-size: clamp(24px, 3vw, 32px); font-weight: 800;
   color: var(--ink); letter-spacing: -0.03em; line-height: 1.1;
@@ -874,12 +881,16 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 }
 .auth-terms a { color: var(--ink-muted); }
 .auth-right {
-  background: var(--white);
-  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
   overflow: hidden;
   min-height: 480px;
 }
-.auth-right-inner { padding: 2.5rem 2rem; text-align: center; }
+.auth-right-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
+}
+.auth-right-inner { padding: 2rem; text-align: center; width: 100%; }
 .auth-artwork-stack {
   display: flex; justify-content: center; gap: -12px;
   margin-bottom: 2rem; position: relative; height: 200px;
@@ -1965,6 +1976,29 @@ img.loaded { opacity: 1; }
 }
 .nav-mobile-search-icon:hover { background: var(--bg-soft); }
 
+/* ── MOBILE SEARCH OVERLAY ── */
+.mobile-search-overlay {
+  display: flex; align-items: center; gap: 10px;
+  position: absolute; inset: 0; padding: 0 12px;
+  background: #fff; z-index: 100;
+  animation: page-fade-in 0.15s ease forwards;
+}
+.mobile-search-overlay-form {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  background: #f4f4f5; border-radius: 12px; padding: 0 12px; height: 40px;
+}
+.mobile-search-overlay-input {
+  flex: 1; border: none; background: none; outline: none;
+  font-size: 15px; font-family: var(--sans); color: var(--ink);
+}
+.mobile-search-overlay-input::placeholder { color: var(--ink-muted); }
+.mobile-search-overlay-cancel {
+  background: none; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  font-family: var(--sans); padding: 0 4px; white-space: nowrap;
+  flex-shrink: 0;
+}
+
 @media (max-width: 960px) {
   .nav-search-center { display: none !important; }
   .nav-hamburger { display: flex !important; }
@@ -2552,10 +2586,10 @@ main {
 }
 
 /* ── FOCUS/KEYBOARD STYLES ── */
-:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible { outline: none; }
+
 button:focus-visible,
 a:focus-visible,
 [role="button"]:focus-visible {

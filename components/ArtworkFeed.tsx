@@ -1,9 +1,9 @@
+import Link from 'next/link'
 import Img from './Img'
 import { FEED_ARTWORKS, type ArtItem } from '@/lib/data'
 
-export default function ArtworkFeed({ onPreview, onGallery, onLogin }: {
+export default function ArtworkFeed({ onPreview, onLogin }: {
   onPreview: (idx: number, list: ArtItem[]) => void
-  onGallery: () => void
   onLogin: () => void
 }) {
   return (
@@ -12,7 +12,7 @@ export default function ArtworkFeed({ onPreview, onGallery, onLogin }: {
         <div>
           <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>A curated visual silence.</h2>
         </div>
-        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
+        <Link href="/browse" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
       </div>
       <div className="feed-grid">
         {FEED_ARTWORKS.map((a, i) => (

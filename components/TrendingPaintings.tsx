@@ -4,10 +4,9 @@ import Link from 'next/link'
 import Img from './Img'
 import { FEED_ARTWORKS, type ArtItem } from '@/lib/data'
 
-export default function TrendingPaintings({ artworks, onPreview, onGallery, savedIds, onToggleSave }: {
+export default function TrendingPaintings({ artworks, onPreview, savedIds, onToggleSave }: {
   artworks?: ArtItem[]
   onPreview: (idx: number, list: ArtItem[]) => void
-  onGallery: () => void
   savedIds?: Set<string>
   onToggleSave?: (id: string) => void
 }) {

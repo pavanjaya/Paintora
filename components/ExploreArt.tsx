@@ -63,7 +63,7 @@ function ArtCol({ title, items, baseHref, exploreHref }: {
   )
 }
 
-export default function ExploreArt({ onGallery, onStylesPage }: { onGallery: () => void; onStylesPage: () => void }) {
+export default function ExploreArt({ onStylesPage }: { onStylesPage: () => void }) {
   return (
     <div className="styles-outer">
       <div className="styles-inner">

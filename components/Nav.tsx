@@ -28,10 +28,9 @@ const DISCOVER_ITEMS = [
   { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',   href: '/subjects' },
 ]
 
-export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, userEmail, onLogout }: {
+export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLogout }: {
   onLogin: () => void
   onSignup: () => void
-  onGallery: () => void
   onStylesPage: () => void
   isLoggedIn: boolean
   userEmail?: string
@@ -44,6 +43,9 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
   const [searchQ, setSearchQ] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
+  const [mobileSearchQ, setMobileSearchQ] = useState('')
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null)
   const discoverRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
 
@@ -266,7 +268,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
             )}
 
             {/* Mobile search icon — shown only on mobile */}
-            <button className="nav-mobile-search-icon" aria-label="Search" onClick={() => router.push('/search')}>
+            <button className="nav-mobile-search-icon" aria-label="Search" onClick={() => { setMobileSearchOpen(true); setMobileOpen(false); setTimeout(() => mobileSearchInputRef.current?.focus(), 50) }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
             </button>
 
@@ -276,6 +278,41 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
           </div>
 
         </div>
+
+        {/* Mobile search overlay */}
+        {mobileSearchOpen && (
+          <div className="mobile-search-overlay">
+            <form
+              className="mobile-search-overlay-form"
+              onSubmit={e => {
+                e.preventDefault()
+                const q = mobileSearchQ.trim()
+                if (q) { setMobileSearchOpen(false); setMobileSearchQ(''); router.push(`/search?q=${encodeURIComponent(q)}`) }
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: 'var(--ink-muted)', flexShrink: 0 }}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input
+                ref={mobileSearchInputRef}
+                className="mobile-search-overlay-input"
+                placeholder="Search paintings, styles, spaces…"
+                value={mobileSearchQ}
+                onChange={e => setMobileSearchQ(e.target.value)}
+                autoComplete="off"
+              />
+              {mobileSearchQ && (
+                <button type="button" onClick={() => setMobileSearchQ('')} style={{ background: 'none', border: 'none', padding: 4, cursor: 'pointer', color: 'var(--ink-muted)', display: 'flex', alignItems: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+              )}
+            </form>
+            <button
+              className="mobile-search-overlay-cancel"
+              onClick={() => { setMobileSearchOpen(false); setMobileSearchQ('') }}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
       </nav>
 
       {/* Mobile drawer */}
@@ -289,10 +326,20 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
             {item.label}
           </a>
         ))}
-        {isLoggedIn
-          ? <button className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={onLogout}>Sign out</button>
-          : <button type="button" className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={() => { setMobileOpen(false); onSignup() }}>Start Free</button>
-        }
+        {isLoggedIn ? (
+          <>
+            {userEmail && <div style={{ padding: '4px 0 12px', fontSize: 12, color: 'var(--ink-muted)', fontFamily: 'var(--sans)' }}>{userEmail}</div>}
+            {[['Profile', '/profile'], ['Saved', '/saved'], ['Downloads', '/downloads'], ['Settings', '/settings']].map(([label, href]) => (
+              <a key={label} href={href} className="mobile-nav-link" onClick={() => setMobileOpen(false)}>{label}</a>
+            ))}
+            <button className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)', background: 'none', color: '#E53E3E', fontWeight: 700, textAlign: 'left', padding: '14px 0', fontSize: 16, width: '100%' }} onClick={() => { setMobileOpen(false); onLogout() }}>Sign out</button>
+          </>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
+            <button type="button" className="mobile-nav-cta" style={{ cursor: 'pointer', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', background: 'none', color: 'var(--ink)' }} onClick={() => { setMobileOpen(false); onLogin() }}>Log in</button>
+            <button type="button" className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={() => { setMobileOpen(false); onSignup() }}>Sign up free</button>
+          </div>
+        )}
       </div>
     </>
   )

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { type ArtItem, FEED_ARTWORKS } from '@/lib/data'
-import { fetchFeedArtworks, fetchArtworks } from '@/lib/artworks'
+import { fetchFeedArtworks } from '@/lib/artworks'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
@@ -17,7 +17,6 @@ import Testimonials        from '@/components/Testimonials'
 import FinalCTA            from '@/components/FinalCTA'
 import Footer              from '@/components/Footer'
 import AuthModal      from '@/components/AuthModal'
-import GalleryPage    from '@/components/GalleryPage'
 import StylesPage     from '@/components/StylesPage'
 import SpacePage      from '@/components/SpacePage'
 import PreviewModal   from '@/components/PreviewModal'
@@ -30,8 +29,6 @@ export default function Home() {
   const [savedIds, setSavedIds]           = useState<Set<string>>(new Set())
   const isLoggedIn = user !== null
   const [artworks, setArtworks]           = useState<ArtItem[] | undefined>(undefined)
-  const [allArtworks, setAllArtworks]     = useState<ArtItem[]>(FEED_ARTWORKS)
-  const [galleryOpen, setGalleryOpen]     = useState(false)
   const [stylesOpen, setStylesOpen]       = useState(false)
   const [spaceOpen, setSpaceOpen]         = useState(false)
   const [previewOpen, setPreviewOpen]     = useState(false)
@@ -45,7 +42,6 @@ export default function Home() {
 
   useEffect(() => {
     fetchFeedArtworks().then(setArtworks)
-    fetchArtworks().then(setAllArtworks)
   }, [])
 
   useEffect(() => {
@@ -91,7 +87,6 @@ export default function Home() {
       <Nav
         onLogin={openLogin}
         onSignup={openSignup}
-        onGallery={() => setGalleryOpen(true)}
         onStylesPage={() => setStylesOpen(true)}
         isLoggedIn={isLoggedIn}
         userEmail={user?.email}
@@ -99,14 +94,14 @@ export default function Home() {
       />
 
       <main>
-        <Hero                onGallery={() => setGalleryOpen(true)} />
-        <TrendingPaintings   artworks={artworks} onPreview={openPreview} onGallery={() => setGalleryOpen(true)} savedIds={savedIds} onToggleSave={toggleSave} />
+        <Hero />
+        <TrendingPaintings   artworks={artworks} onPreview={openPreview} savedIds={savedIds} onToggleSave={toggleSave} />
         <SpacesGrid          onSpacePage={() => setSpaceOpen(true)} />
-        <FeaturedCollections onGallery={() => setGalleryOpen(true)} />
-        <ExploreArt          onGallery={() => setGalleryOpen(true)} onStylesPage={() => setStylesOpen(true)} />
+        <FeaturedCollections />
+        <ExploreArt          onStylesPage={() => setStylesOpen(true)} />
         <InSitu />
         <Testimonials />
-        <FinalCTA            onSignup={openSignup} onGallery={() => setGalleryOpen(true)} />
+        <FinalCTA            onSignup={openSignup} />
       </main>
 
       <Footer />
@@ -118,13 +113,6 @@ export default function Home() {
         onClose={() => setAuthOpen(false)}
         onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
         onSuccess={() => {}}
-      />
-      <GalleryPage
-        open={galleryOpen}
-        onClose={() => setGalleryOpen(false)}
-        onPreview={openPreview}
-        onLogin={openLogin}
-        artworks={allArtworks}
       />
       <StylesPage
         open={stylesOpen}

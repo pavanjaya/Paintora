@@ -85,7 +85,6 @@ export default function DiscoverPage({
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-        onGallery={() => router.push('/')}
         onStylesPage={() => router.push('/')}
         isLoggedIn={!!user}
         userEmail={user?.email}

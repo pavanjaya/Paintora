@@ -1,18 +1,19 @@
+import Link from 'next/link'
 import Img from './Img'
 import { COLLECTIONS } from '@/lib/data'
 
-export default function Collections({ onGallery }: { onGallery: () => void }) {
+export default function Collections() {
   return (
     <section id="collections">
       <div className="section-head">
         <div>
           <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Most popular paintings</h2>
         </div>
-        <button className="view-all" onClick={onGallery} style={{ background: 'none', border: '1.5px solid var(--border)', cursor: 'pointer', fontFamily: 'var(--sans)' }}>View all</button>
+        <Link href="/browse" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
       </div>
       <div className="collections-grid">
         {COLLECTIONS.map((c, i) => (
-          <div key={i} className="collection-card" onClick={onGallery}>
+          <Link key={i} href="/browse" className="collection-card" style={{ textDecoration: 'none' }}>
             <Img src={c.img} alt={c.title} />
             <div className="col-overlay">
               <div>
@@ -24,7 +25,7 @@ export default function Collections({ onGallery }: { onGallery: () => void }) {
                 <span className="col-arrow">→</span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

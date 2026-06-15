@@ -13,7 +13,7 @@ const SUGGESTIONS = [
   { label: 'Minimalist',  href: '/styles/minimalist' },
 ]
 
-export default function Hero({ onGallery }: { onGallery: () => void }) {
+export default function Hero() {
   const router = useRouter()
   const [q, setQ] = useState('')
 

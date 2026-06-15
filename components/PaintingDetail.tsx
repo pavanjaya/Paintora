@@ -67,7 +67,7 @@ export default function PaintingDetail({ id }: { id: string }) {
   if (artLoading) {
     return (
       <>
-        <Nav onLogin={() => {}} onSignup={() => {}} onGallery={() => {}} onStylesPage={() => {}} isLoggedIn={false} onLogout={() => {}} />
+        <Nav onLogin={() => {}} onSignup={() => {}} onStylesPage={() => {}} isLoggedIn={false} onLogout={() => {}} />
         <main className="painting-detail-main">
           {/* breadcrumb skeleton */}
           <div className="painting-breadcrumb">
@@ -109,7 +109,7 @@ export default function PaintingDetail({ id }: { id: string }) {
   if (!art) {
     return (
       <>
-        <Nav onLogin={() => {}} onSignup={() => {}} onGallery={() => {}} onStylesPage={() => {}} isLoggedIn={false} onLogout={() => {}} />
+        <Nav onLogin={() => {}} onSignup={() => {}} onStylesPage={() => {}} isLoggedIn={false} onLogout={() => {}} />
         <main style={{ paddingTop: 68, minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
           <h1 style={{ fontFamily: 'var(--serif)', fontSize: 28 }}>Painting not found</h1>
           <button className="btn-dark" onClick={() => router.push('/')} style={{ border: 'none', cursor: 'pointer', fontFamily: 'var(--sans)' }}>Back to Home</button>
@@ -124,7 +124,7 @@ export default function PaintingDetail({ id }: { id: string }) {
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-        onGallery={() => {}}
+       
         onStylesPage={() => {}}
         isLoggedIn={!!user}
         userEmail={user?.email}

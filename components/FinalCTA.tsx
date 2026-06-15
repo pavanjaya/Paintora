@@ -11,7 +11,7 @@ const COLLAGE = [
   'https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
 ]
 
-export default function FinalCTA({ onSignup, onGallery }: { onSignup: () => void; onGallery: () => void }) {
+export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
   return (
     <div className="fcta-outer">
       {/* Painting collage grid */}
