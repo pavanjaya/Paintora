@@ -19,7 +19,7 @@ export default function StylesPage({ open, onClose, onLogin }: {
   const style = activeStyle !== null ? STYLES_PAGE_DATA[activeStyle] : null
 
   return (
-    <div className={`styles-page${open ? ' open' : ''}`}>
+    <div className={`styles-page${open ? ' open' : ''}`} role="dialog" aria-modal="true" aria-label="Styles">
       <div className="styles-page-nav">
         <div className="styles-page-nav-left">
           {activeStyle !== null && (

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { fetchArtworks } from '@/lib/artworks'
 import { ALL_ARTWORKS, type BrowsePageData, type BrowseCategory, CATEGORY_LABELS } from '@/lib/browse-data'
 import type { ArtItem } from '@/lib/browse-data'
 import Img from '@/components/Img'
@@ -39,7 +40,8 @@ export default function BrowsePage({
   const [user, setUser] = useState<{ email?: string } | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
-  const [saved, setSaved] = useState<Set<number>>(new Set())
+  const [saved, setSaved] = useState<Set<string>>(new Set())
+  const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [filters, setFilters] = useState<FilterState>({ style: '', medium: '', subject: '', sort: 'Trending' })
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
@@ -52,7 +54,7 @@ export default function BrowsePage({
       setUser(u)
       if (u) {
         const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
-        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: string }) => r.artwork_id)))
       }
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_e, s) => {
@@ -60,7 +62,7 @@ export default function BrowsePage({
       setUser(u)
       if (u) {
         const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
-        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: string }) => r.artwork_id)))
       } else {
         setSaved(new Set())
       }
@@ -85,7 +87,9 @@ export default function BrowsePage({
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const toggleSave = useCallback(async (id: number) => {
+  useEffect(() => { fetchArtworks().then(setDbArtworks) }, [])
+
+  const toggleSave = useCallback(async (id: string) => {
     if (!user) { setAuthMode('login'); setAuthOpen(true); return }
     const isSaved = saved.has(id)
     setSaved(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
@@ -96,7 +100,8 @@ export default function BrowsePage({
     }
   }, [user, saved])
 
-  const artworks: ArtItem[] = ALL_ARTWORKS
+  const isLoading = dbArtworks === undefined
+  const artworks: ArtItem[] = dbArtworks ?? []
   const gated = !user && artworks.length > FREE_LIMIT
   const visibleArtworks = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const visible = visibleArtworks
@@ -114,6 +119,42 @@ export default function BrowsePage({
   }
 
   const hasActiveFilters = filters.style || filters.medium || filters.subject
+
+  const gridContent = isLoading
+    ? Array.from({ length: 16 }).map((_, i) => (
+        <div key={i} className="skeleton-card">
+          <div className="skeleton-img" />
+          <div className="skeleton skeleton-text" />
+          <div className="skeleton skeleton-text short" />
+        </div>
+      ))
+    : visible.map((art, i) => (
+        <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
+          <div className="artwork-img-wrap">
+            <Img src={art.img} alt={art.name} />
+            <div className="artwork-overlay">
+              <div className="artwork-overlay-top">
+                <button
+                  className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
+                  onClick={e => { e.preventDefault(); e.stopPropagation(); toggleSave(art.id) }}
+                  title={saved.has(art.id) ? 'Unsave' : 'Save'}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="artwork-overlay-bottom">
+                <div className="artwork-overlay-info">
+                  <span className="artwork-overlay-name">{art.name}</span>
+                  <span className="artwork-overlay-style">{art.style}</span>
+                </div>
+                <span className="artwork-view-btn">View</span>
+              </div>
+            </div>
+          </div>
+        </Link>
+      ))
 
   return (
     <>
@@ -200,33 +241,7 @@ export default function BrowsePage({
         {/* Painting grid */}
         <div className="browse-grid-section">
           <div className="feed-grid">
-            {visible.map((art, i) => (
-              <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
-                <div className="artwork-img-wrap">
-                  <Img src={art.img} alt={art.name} />
-                  <div className="artwork-overlay">
-                    <div className="artwork-overlay-top">
-                      <button
-                        className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
-                        onClick={e => { e.preventDefault(); e.stopPropagation(); toggleSave(art.id) }}
-                        title={saved.has(art.id) ? 'Unsave' : 'Save'}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="artwork-overlay-bottom">
-                      <div className="artwork-overlay-info">
-                        <span className="artwork-overlay-name">{art.name}</span>
-                        <span className="artwork-overlay-style">{art.style}</span>
-                      </div>
-                      <span className="artwork-view-btn">View</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+            {gridContent}
           </div>
 
           {gated && (

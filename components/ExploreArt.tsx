@@ -74,9 +74,9 @@ export default function ExploreArt({ onGallery, onStylesPage }: { onGallery: () 
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginTop: '1.5rem' }}>
-          <ArtCol title="Styles"   items={STYLES_LIST}   baseHref="/styles"   exploreHref="/styles/abstract" />
-          <ArtCol title="Mediums"  items={MEDIUMS_LIST}  baseHref="/mediums"  exploreHref="/mediums/oil" />
-          <ArtCol title="Subjects" items={SUBJECTS_LIST} baseHref="/subjects" exploreHref="/subjects/landscape" />
+          <ArtCol title="Styles"   items={STYLES_LIST}   baseHref="/styles"   exploreHref="/styles" />
+          <ArtCol title="Mediums"  items={MEDIUMS_LIST}  baseHref="/mediums"  exploreHref="/mediums" />
+          <ArtCol title="Subjects" items={SUBJECTS_LIST} baseHref="/subjects" exploreHref="/subjects" />
         </div>
       </div>
     </div>

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { ALL_ARTWORKS } from '@/lib/browse-data'
+import { fetchArtworks } from '@/lib/artworks'
+import type { ArtItem } from '@/lib/data'
 import Nav from '@/components/Nav'
 
 import AuthModal from '@/components/AuthModal'
@@ -16,16 +17,19 @@ export default function SavedPage() {
   const [user, setUser] = useState<{ id?: string; email?: string } | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
-  const [savedIds, setSavedIds] = useState<Set<number>>(new Set())
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set())
+  const [confirmId, setConfirmId] = useState<string | null>(null)
+  const [allArtworks, setAllArtworks] = useState<ArtItem[]>([])
   const [loading, setLoading] = useState(true)
 
   const loadSaves = async (userId: string) => {
     const { data } = await supabase.from('saves').select('artwork_id').eq('user_id', userId)
-    setSavedIds(new Set((data ?? []).map((r: { artwork_id: number }) => r.artwork_id)))
+    setSavedIds(new Set((data ?? []).map((r: { artwork_id: string }) => r.artwork_id)))
     setLoading(false)
   }
 
   useEffect(() => {
+    fetchArtworks().then(setAllArtworks)
     supabase.auth.getSession().then(({ data }) => {
       const u = data.session?.user ?? null
       if (!u) { router.push('/'); return }
@@ -39,12 +43,12 @@ export default function SavedPage() {
     return () => subscription.unsubscribe()
   }, [])
 
-  const unsave = async (id: number) => {
+  const unsave = async (id: string) => {
     if (!user) return
     setSavedIds(prev => { const n = new Set(prev); n.delete(id); return n })
     await supabase.from('saves').delete().eq('user_id', (user as { id?: string }).id!).eq('artwork_id', id)
   }
-  const savedArtworks = ALL_ARTWORKS.filter(a => savedIds.has(a.id))
+  const savedArtworks = allArtworks.filter(a => savedIds.has(a.id))
 
   return (
     <>
@@ -91,9 +95,16 @@ export default function SavedPage() {
                     <span className="ap-art-name">{art.name}</span>
                     <span className="ap-art-style">{art.style}</span>
                   </div>
-                  <button className="ap-art-remove" onClick={() => unsave(art.id)} title="Remove">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
+                  {confirmId === art.id ? (
+                    <div className="ap-art-confirm">
+                      <button className="ap-art-confirm-yes" onClick={() => { unsave(art.id); setConfirmId(null) }}>Remove</button>
+                      <button className="ap-art-confirm-no" onClick={() => setConfirmId(null)}>Keep</button>
+                    </div>
+                  ) : (
+                    <button className="ap-art-remove" onClick={() => setConfirmId(art.id)} title="Remove">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

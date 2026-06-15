@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { fetchArtworks } from '@/lib/artworks'
 import { ALL_ARTWORKS } from '@/lib/browse-data'
 import type { ArtItem } from '@/lib/browse-data'
 import Img from '@/components/Img'
@@ -27,12 +28,15 @@ export default function SearchPage({ query }: { query: string }) {
   const [user, setUser] = useState<{ id?: string; email?: string } | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
-  const [saved, setSaved] = useState<Set<number>>(new Set())
+  const [saved, setSaved] = useState<Set<string>>(new Set())
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [filters, setFilters] = useState<FilterState>({ style: '', medium: '', subject: '', sort: 'Trending' })
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
+  const [dbArtworks, setDbArtworks] = useState<ArtItem[]>(ALL_ARTWORKS)
+
+  useEffect(() => { fetchArtworks().then(setDbArtworks) }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
@@ -40,7 +44,7 @@ export default function SearchPage({ query }: { query: string }) {
       setUser(u)
       if (u) {
         const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
-        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: string }) => r.artwork_id)))
       }
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_e, s) => {
@@ -48,7 +52,7 @@ export default function SearchPage({ query }: { query: string }) {
       setUser(u)
       if (u) {
         const { data: rows } = await supabase.from('saves').select('artwork_id').eq('user_id', u.id)
-        if (rows) setSaved(new Set(rows.map((r: { artwork_id: number }) => r.artwork_id)))
+        if (rows) setSaved(new Set(rows.map((r: { artwork_id: string }) => r.artwork_id)))
       } else {
         setSaved(new Set())
       }
@@ -77,7 +81,7 @@ export default function SearchPage({ query }: { query: string }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const toggleSave = useCallback(async (id: number) => {
+  const toggleSave = useCallback(async (id: string) => {
     if (!user) { setAuthMode('login'); setAuthOpen(true); return }
     const isSaved = saved.has(id)
     setSaved(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
@@ -89,11 +93,11 @@ export default function SearchPage({ query }: { query: string }) {
   }, [user, saved])
 
   const artworks: ArtItem[] = query.trim()
-    ? ALL_ARTWORKS.filter(a => {
+    ? dbArtworks.filter(a => {
         const q = query.toLowerCase()
         return a.name.toLowerCase().includes(q) || a.style.toLowerCase().includes(q) || (a.medium ?? '').toLowerCase().includes(q)
       })
-    : ALL_ARTWORKS
+    : dbArtworks
   const gated = !user && artworks.length > FREE_LIMIT
   const visible = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const hasMore = !gated && visibleCount < artworks.length

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { fetchArtworkById, fetchArtworks } from '@/lib/artworks'
 import { FEED_ARTWORKS, GALLERY_IMGS } from '@/lib/data'
 import type { ArtItem } from '@/lib/data'
 import Img from '@/components/Img'
@@ -11,12 +12,7 @@ import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
 import UpgradeModal from '@/components/UpgradeModal'
 
-const ALL: ArtItem[] = [...FEED_ARTWORKS, ...GALLERY_IMGS]
-
-const PRICES: Record<number, string> = {
-  1: '₹18,000', 2: '₹24,000', 3: '₹15,500', 4: '₹12,000',
-  5: '₹21,000', 6: '₹32,000', 7: '₹19,500', 8: '₹28,000',
-}
+const DEFAULT_PRICE = '₹18,000'
 
 export default function PaintingDetail({ id }: { id: string }) {
   const router = useRouter()
@@ -28,6 +24,9 @@ export default function PaintingDetail({ id }: { id: string }) {
   const [isPro, setIsPro] = useState(false)
   const [upgradeOpen, setUpgradeOpen] = useState(false)
   const [downloadOpen, setDownloadOpen] = useState(false)
+  const [art, setArt] = useState<ArtItem | null>(null)
+  const [artLoading, setArtLoading] = useState(true)
+  const [allArtworks, setAllArtworks] = useState<ArtItem[]>([...FEED_ARTWORKS, ...GALLERY_IMGS])
 
   const checkPro = async (userId: string) => {
     const { data } = await supabase.from('subscriptions').select('status, current_period_end').eq('user_id', userId).single()
@@ -35,9 +34,17 @@ export default function PaintingDetail({ id }: { id: string }) {
   }
 
   const checkSaved = async (userId: string, artId: string) => {
-    const { data } = await supabase.from('saves').select('id').eq('user_id', userId).eq('artwork_id', Number(artId)).maybeSingle()
+    const { data } = await supabase.from('saves').select('id').eq('user_id', userId).eq('artwork_id', artId).maybeSingle()
     setSaved(!!data)
   }
+
+  useEffect(() => {
+    fetchArtworkById(id).then(a => {
+      setArt(a)
+      setArtLoading(false)
+    })
+    fetchArtworks().then(setAllArtworks)
+  }, [id])
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
@@ -54,9 +61,50 @@ export default function PaintingDetail({ id }: { id: string }) {
     return () => subscription.unsubscribe()
   }, [id])
 
-  const art = ALL.find(a => String(a.id) === id)
-  const related = ALL.filter(a => a.style === art?.style && String(a.id) !== id).slice(0, 8)
-  const similar = ALL.filter(a => String(a.id) !== id && a.style !== art?.style).slice(0, 8)
+  const related = art ? allArtworks.filter(a => a.style === art.style && a.id !== id).slice(0, 8) : []
+  const similar = art ? allArtworks.filter(a => a.id !== id && a.style !== art.style).slice(0, 8) : []
+
+  if (artLoading) {
+    return (
+      <>
+        <Nav onLogin={() => {}} onSignup={() => {}} onGallery={() => {}} onStylesPage={() => {}} isLoggedIn={false} onLogout={() => {}} />
+        <main className="painting-detail-main">
+          {/* breadcrumb skeleton */}
+          <div className="painting-breadcrumb">
+            <div className="skeleton" style={{ width: 32, height: 12, borderRadius: 4 }} />
+            <span style={{ color: 'var(--border)' }}>›</span>
+            <div className="skeleton" style={{ width: 60, height: 12, borderRadius: 4 }} />
+            <span style={{ color: 'var(--border)' }}>›</span>
+            <div className="skeleton" style={{ width: 120, height: 12, borderRadius: 4 }} />
+          </div>
+          {/* two-column grid skeleton */}
+          <div className="painting-detail-grid">
+            {/* image col */}
+            <div className="skeleton" style={{ aspectRatio: '3/4', borderRadius: 16, width: '100%' }} />
+            {/* info col */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 8 }}>
+              <div className="skeleton" style={{ height: 13, width: '40%', borderRadius: 4 }} />
+              <div className="skeleton" style={{ height: 38, width: '85%', borderRadius: 6 }} />
+              <div className="skeleton" style={{ height: 16, width: '60%', borderRadius: 4 }} />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 8 }}>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <div className="skeleton" style={{ height: 10, width: '50%', borderRadius: 3 }} />
+                    <div className="skeleton" style={{ height: 14, width: '70%', borderRadius: 3 }} />
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+                <div className="skeleton" style={{ height: 48, flex: 1, borderRadius: 10 }} />
+                <div className="skeleton" style={{ height: 48, flex: 1, borderRadius: 10 }} />
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
 
   if (!art) {
     return (
@@ -71,8 +119,6 @@ export default function PaintingDetail({ id }: { id: string }) {
     )
   }
 
-  const price = PRICES[art.id] ?? '₹16,000'
-
   return (
     <>
       <Nav
@@ -86,6 +132,15 @@ export default function PaintingDetail({ id }: { id: string }) {
       />
 
       <main className="painting-detail-main">
+        {/* Breadcrumb */}
+        <nav className="painting-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">›</span>
+          <a href="/trending">Paintings</a>
+          <span aria-hidden="true">›</span>
+          <span>{art.name}</span>
+        </nav>
+
         {/* Main content */}
         <div className="painting-detail-grid">
           {/* Image */}
@@ -158,9 +213,9 @@ export default function PaintingDetail({ id }: { id: string }) {
                       const next = !saved
                       setSaved(next)
                       if (next) {
-                        await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: Number(id) })
+                        await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: id })
                       } else {
-                        await supabase.from('saves').delete().eq('user_id', user.id!).eq('artwork_id', Number(id))
+                        await supabase.from('saves').delete().eq('user_id', user.id!).eq('artwork_id', id)
                       }
                     }}
                   >
@@ -244,7 +299,7 @@ export default function PaintingDetail({ id }: { id: string }) {
         {similar.length > 0 && (
           <section className="painting-related">
             <div className="painting-related-inner">
-              <h2 className="section-title" style={{ fontSize: 'clamp(16px,2vw,22px)', marginBottom: '1.5rem' }}>You may also like</h2>
+              <h2 className="section-title" style={{ fontSize: 'clamp(16px,2vw,22px)', marginBottom: '1.5rem' }}>You May Also Like</h2>
               <div className="feed-grid">
                 {similar.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
@@ -275,16 +330,7 @@ export default function PaintingDetail({ id }: { id: string }) {
         onSwitch={() => setAuthMode(m => m === 'login' ? 'signup' : 'login')}
         onSuccess={() => {}}
       />
-
-      {user && (
-        <UpgradeModal
-          open={upgradeOpen}
-          onClose={() => setUpgradeOpen(false)}
-          userId={user.id ?? ''}
-          userEmail={user.email}
-          onSuccess={() => setIsPro(true)}
-        />
-      )}
+      <UpgradeModal open={upgradeOpen} onClose={() => setUpgradeOpen(false)} userId={user?.id ?? ''} userEmail={user?.email} onSuccess={() => { setUpgradeOpen(false); setIsPro(true) }} />
     </>
   )
 }

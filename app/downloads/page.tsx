@@ -10,10 +10,10 @@ import AuthModal from '@/components/AuthModal'
 import AccountLayout from '@/components/AccountLayout'
 
 type DownloadRecord = {
-  id: number
+  id: string
   painting_name: string
   painting_img: string
-  painting_id: number
+  painting_id: string
   size: string
   downloaded_at: string
 }

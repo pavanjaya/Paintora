@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { type ArtItem, FEED_ARTWORKS } from '@/lib/data'
+import { fetchFeedArtworks, fetchArtworks } from '@/lib/artworks'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
@@ -26,8 +27,10 @@ export default function Home() {
   const [authMode, setAuthMode]           = useState<'login' | 'signup'>('login')
   const [authOpen, setAuthOpen]           = useState(false)
   const [user, setUser]                   = useState<User | null>(null)
-  const [savedIds, setSavedIds]           = useState<Set<number>>(new Set())
+  const [savedIds, setSavedIds]           = useState<Set<string>>(new Set())
   const isLoggedIn = user !== null
+  const [artworks, setArtworks]           = useState<ArtItem[] | undefined>(undefined)
+  const [allArtworks, setAllArtworks]     = useState<ArtItem[]>(FEED_ARTWORKS)
   const [galleryOpen, setGalleryOpen]     = useState(false)
   const [stylesOpen, setStylesOpen]       = useState(false)
   const [spaceOpen, setSpaceOpen]         = useState(false)
@@ -37,8 +40,13 @@ export default function Home() {
 
   const loadSaves = async (userId: string) => {
     const { data } = await supabase.from('saves').select('artwork_id').eq('user_id', userId)
-    if (data) setSavedIds(new Set(data.map((r: { artwork_id: number }) => r.artwork_id)))
+    if (data) setSavedIds(new Set(data.map((r: { artwork_id: string }) => r.artwork_id)))
   }
+
+  useEffect(() => {
+    fetchFeedArtworks().then(setArtworks)
+    fetchArtworks().then(setAllArtworks)
+  }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -58,7 +66,7 @@ export default function Home() {
   const openLogin  = useCallback(() => { setAuthMode('login');  setAuthOpen(true) }, [])
   const openSignup = useCallback(() => { setAuthMode('signup'); setAuthOpen(true) }, [])
 
-  const toggleSave = useCallback(async (id: number) => {
+  const toggleSave = useCallback(async (id: string) => {
     if (!user) { setAuthMode('login'); setAuthOpen(true); return }
     const isSaved = savedIds.has(id)
     setSavedIds(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
@@ -92,7 +100,7 @@ export default function Home() {
 
       <main>
         <Hero                onGallery={() => setGalleryOpen(true)} />
-        <TrendingPaintings   onPreview={openPreview} onGallery={() => setGalleryOpen(true)} savedIds={savedIds} onToggleSave={toggleSave} />
+        <TrendingPaintings   artworks={artworks} onPreview={openPreview} onGallery={() => setGalleryOpen(true)} savedIds={savedIds} onToggleSave={toggleSave} />
         <SpacesGrid          onSpacePage={() => setSpaceOpen(true)} />
         <FeaturedCollections onGallery={() => setGalleryOpen(true)} />
         <ExploreArt          onGallery={() => setGalleryOpen(true)} onStylesPage={() => setStylesOpen(true)} />
@@ -116,6 +124,7 @@ export default function Home() {
         onClose={() => setGalleryOpen(false)}
         onPreview={openPreview}
         onLogin={openLogin}
+        artworks={allArtworks}
       />
       <StylesPage
         open={stylesOpen}

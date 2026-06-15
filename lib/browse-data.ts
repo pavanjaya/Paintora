@@ -205,8 +205,8 @@ export const CATEGORY_LABELS: Record<BrowseCategory, string> = {
 
 // Nav Discover items for dropdown + mobile drawer
 export const DISCOVER_NAV_ITEMS = [
-  { label: 'Spaces',   desc: 'Browse by room or environment',   href: '/spaces/office' },
-  { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…',  href: '/styles/abstract' },
-  { label: 'Mediums',  desc: 'Oil, Watercolor, Acrylic…',       href: '/mediums/oil' },
-  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',    href: '/subjects/landscape' },
+  { label: 'Spaces',   desc: 'Browse by room or environment',   href: '/spaces' },
+  { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…',  href: '/styles' },
+  { label: 'Mediums',  desc: 'Oil, Watercolor, Acrylic…',       href: '/mediums' },
+  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',    href: '/subjects' },
 ]

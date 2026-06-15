@@ -22,10 +22,10 @@ function highlight(text: string, q: string): React.ReactNode {
 }
 
 const DISCOVER_ITEMS = [
-  { label: 'Spaces',   desc: 'Browse by room or environment',  href: '/spaces/office' },
-  { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…', href: '/styles/abstract' },
-  { label: 'Mediums',  desc: 'Oil, Watercolor, Acrylic…',      href: '/mediums/oil' },
-  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',   href: '/subjects/landscape' },
+  { label: 'Spaces',   desc: 'Browse by room or environment',  href: '/spaces' },
+  { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…', href: '/styles' },
+  { label: 'Mediums',  desc: 'Oil, Watercolor, Acrylic…',      href: '/mediums' },
+  { label: 'Subjects', desc: 'Landscape, Portrait, Floral…',   href: '/subjects' },
 ]
 
 export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLoggedIn, userEmail, onLogout }: {
@@ -291,7 +291,7 @@ export default function Nav({ onLogin, onSignup, onGallery, onStylesPage, isLogg
         ))}
         {isLoggedIn
           ? <button className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={onLogout}>Sign out</button>
-          : <a href="#" className="mobile-nav-cta" onClick={e => { e.preventDefault(); setMobileOpen(false); onSignup() }}>Start Free</a>
+          : <button type="button" className="mobile-nav-cta" style={{ cursor: 'pointer', border: 'none', fontFamily: 'var(--sans)' }} onClick={() => { setMobileOpen(false); onSignup() }}>Start Free</button>
         }
       </div>
     </>
