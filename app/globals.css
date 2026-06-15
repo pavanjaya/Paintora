@@ -411,21 +411,54 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .artwork-info { display: none; }
 
 /* ── IN SITU ── */
-.insitu-outer { background: var(--white); padding: 4rem 0; }
-.insitu-inner { max-width: 100%; margin: 0; padding: 0 1.5rem; }
-.insitu-title { font-size: clamp(34px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
-.insitu-sub { font-size: 15px; font-weight: 300; color: var(--ink-light); margin-top: 1rem; max-width: 480px; line-height: 1.85; }
-.insitu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 3rem; }
-.insitu-img-wrap { overflow: hidden; position: relative; border-radius: 16px; }
-.insitu-img-wrap img { width: 100%; height: 380px; object-fit: cover; display: block; transition: transform 0.45s; }
-.insitu-img-wrap:hover img { transform: scale(1.04); }
-.insitu-caption {
-  position: absolute; bottom: 0; left: 0; right: 0; border-radius: 0 0 16px 16px;
-  background: linear-gradient(transparent, rgba(15,15,20,0.72));
-  padding: 2.5rem 1.75rem 1.5rem;
+/* ── IN SITU – horizontal scroll strip ── */
+.insitu-outer { background: var(--white); padding: 4rem 0 0; overflow: hidden; }
+.insitu-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 2rem 2rem; max-width: 1280px; margin: 0 auto;
 }
-.insitu-caption p { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
-.insitu-caption strong { font-size: 20px; font-weight: 600; color: white; display: block; margin-top: 4px; }
+.insitu-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
+.insitu-sub { font-size: 14px; color: var(--ink-muted); margin-top: 0.75rem; max-width: 400px; line-height: 1.7; }
+.insitu-nav { display: flex; gap: 8px; flex-shrink: 0; }
+.insitu-nav-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink);
+  transition: border-color 0.15s, background 0.15s;
+}
+.insitu-nav-btn:hover { border-color: var(--ink); background: var(--bg-soft); }
+
+.insitu-track {
+  display: flex; gap: 14px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding: 0 2rem 2.5rem;
+}
+.insitu-track::-webkit-scrollbar { display: none; }
+
+.insitu-card {
+  flex: 0 0 380px; scroll-snap-align: start;
+  border-radius: 18px; overflow: hidden; position: relative;
+  cursor: pointer;
+}
+.insitu-card-img { position: relative; height: 260px; overflow: hidden; }
+.insitu-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.insitu-card:hover .insitu-card-img img { transform: scale(1.06); }
+.insitu-card-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.85) 0%, rgba(10,10,15,0.3) 60%, transparent 100%);
+  padding: 2.5rem 1.25rem 1.25rem;
+  border-radius: 0 0 18px 18px;
+}
+.insitu-card-tag {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.12); border-radius: 20px;
+  padding: 3px 10px; margin-bottom: 6px;
+}
+.insitu-card-label { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.6); letter-spacing: 0.04em; margin-bottom: 2px; }
+.insitu-card-title { font-size: 17px; font-weight: 700; color: #fff; display: block; letter-spacing: -0.01em; line-height: 1.25; }
 
 /* ── TESTIMONIALS ── */
 /* ── Testimonials marquee ── */
@@ -717,14 +750,15 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-image { display: none; }
   section { padding: 3.5rem 1.5rem; }
-  .spaces-inner, .insitu-inner, .styles-inner { padding: 0 1.5rem; }
-  .spaces-outer, .insitu-outer { padding: 3.5rem 0; }
+  .spaces-inner, .styles-inner { padding: 0 1.5rem; }
+  .spaces-outer { padding: 3.5rem 0; }
   .section-head { flex-wrap: wrap; gap: 1rem; align-items: flex-start; }
   .collections-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .spaces-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .feed-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .styles-scroll { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .insitu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .insitu-card { flex: 0 0 300px; }
+  .insitu-card-img { height: 210px; }
   .testimonials-track-item { width: 300px; }
   .footer-brand-row { flex-direction: column; gap: 2rem; }
   .footer-nav-cols { gap: 2rem; flex-wrap: wrap; }
@@ -737,8 +771,8 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .nav-search-wrap { display: none; }
   .nav-mobile-search { display: flex; }
   section { padding: 2.5rem 1rem; }
-  .spaces-inner, .insitu-inner, .styles-inner { padding: 0 1rem; }
-  .spaces-outer, .insitu-outer { padding: 2.5rem 0; }
+  .spaces-inner, .styles-inner { padding: 0 1rem; }
+  .spaces-outer { padding: 2.5rem 0; }
   .section-title { font-size: clamp(26px, 7vw, 36px); }
   .licensing-outer { padding: 3rem 1rem; }
   .licensing-title { font-size: clamp(28px, 8vw, 42px); }
@@ -749,7 +783,7 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .spaces-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .feed-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .styles-scroll { grid-template-columns: repeat(1, 1fr); gap: 10px; }
-  .insitu-grid { grid-template-columns: 1fr; gap: 10px; }
+  .insitu-card { flex: 0 0 260px; }
   .testimonials-track-item { width: 260px; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
   .col-title { font-size: 12px; }
@@ -760,8 +794,7 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   .space-desc { display: none; }
   .style-name { font-size: 11px; }
   .style-tag { display: none; }
-  .insitu-title { font-size: clamp(26px, 7vw, 36px); }
-  .insitu-img-wrap img { height: 240px; }
+  .insitu-title { font-size: clamp(24px, 7vw, 34px); }
   .testimonial-quote { font-size: 17px; }
   .footer-brand-row { gap: 1.5rem; }
   .footer-nav-cols { flex-direction: column; gap: 1.5rem; }
