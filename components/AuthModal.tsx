@@ -77,7 +77,13 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
 
         <div className="auth-left">
           <div className="auth-logo">
-            <img src="/logo.svg" alt="Paintora" style={{ height: 28, width: 'auto', display: 'block' }} />
+            <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+              <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 70C60 86.5685 46.5685 100 30 100C13.4315 100 0 86.5685 0 70V60H60V70Z" fill="#CF4BFF"/>
+                <path d="M70 0C86.5685 0 100 13.4315 100 30C100 46.5685 86.5685 60 70 60H60V30H30V60H0V0H70Z" fill="#6D24FF"/>
+              </svg>
+              <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--ink)', letterSpacing: '-0.03em', fontFamily: 'var(--sans)' }}>Paintora</span>
+            </a>
           </div>
 
           <div className="auth-left-scroll">
