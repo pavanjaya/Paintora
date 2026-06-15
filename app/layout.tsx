@@ -40,11 +40,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={jakarta.variable}>
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
-      <body className={jakarta.variable}><PageTransition>{children}</PageTransition></body>
+      <body><PageTransition>{children}</PageTransition></body>
     </html>
   )
 }
