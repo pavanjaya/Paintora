@@ -19,7 +19,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-left">
-        <p className="hero-eyebrow">Curated contemporary art</p>
+        <div className="hero-badge">#1 Painting Platform in India</div>
         <h1 className="hero-title">Paintings that<br />define a space.</h1>
         <p className="hero-sub">
           Curated contemporary paintings designed through artistic direction and AI-assisted creativity. For modern homes, offices, and spaces of intention.
