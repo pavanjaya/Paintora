@@ -6,7 +6,7 @@ export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
   return (
     <div className="fcta-outer">
       <img
-        src="/paintings/painting-2.jpg"
+        src="/paintings/painting-3.png"
         alt=""
         className="fcta-bg"
         loading="eager"
