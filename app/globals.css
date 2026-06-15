@@ -614,17 +614,32 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 
 /* FinalCTA */
 .fcta-outer {
-  position: relative; overflow: hidden;
-  min-height: 560px; display: flex; align-items: center; justify-content: center;
-  background: #F8F7FF;
+  overflow: hidden; background: #F8F7FF;
+  display: flex; flex-direction: column; align-items: center;
 }
-.fcta-floater {
-  position: absolute; border-radius: 12px; overflow: hidden;
-  box-shadow: 0 12px 40px rgba(25,25,71,0.14);
-  transition: transform 0.4s ease;
+.fcta-strip-wrap {
+  width: 100%; overflow: hidden; position: relative;
+  padding: 2.5rem 0 0;
 }
-.fcta-floater:hover { transform: rotate(0deg) scale(1.04) !important; }
-.fcta-floater img { width: 100%; height: 140px; display: block; object-fit: cover; }
+.fcta-strip-wrap::before,
+.fcta-strip-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+}
+.fcta-strip-wrap::before { left: 0; background: linear-gradient(to right, #F8F7FF, transparent); }
+.fcta-strip-wrap::after  { right: 0; background: linear-gradient(to left, #F8F7FF, transparent); }
+.fcta-strip {
+  display: flex; gap: 12px; width: max-content;
+  animation: fcta-scroll 30s linear infinite;
+}
+@keyframes fcta-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.fcta-strip-img {
+  width: 200px; height: 140px; border-radius: 12px; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(25,25,71,0.1);
+}
+.fcta-strip-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .fcta-content { position: relative; z-index: 2; text-align: center; padding: 6rem 1.5rem; max-width: 520px; }
 .fcta-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #CF4BFF; margin-bottom: 1.25rem; }
 .fcta-title { font-size: clamp(32px, 4.5vw, 54px); font-weight: 800; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
