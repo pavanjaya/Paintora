@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: 'Discover and buy curated contemporary paintings for every space.',
     images: ['/og-image.png'],
   },
-  themeColor: '#0F0F14',
+  themeColor: '#191947',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
 }
 

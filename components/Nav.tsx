@@ -242,7 +242,7 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
             {isLoggedIn ? (
               <>
                 <div style={{ position: 'relative' }}>
-                  <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#0F0F14', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 700 }}>
+                  <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#191947', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 700 }}>
                     {userEmail ? userEmail[0].toUpperCase() : 'U'}
                   </button>
                   {profileOpen && (

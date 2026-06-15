@@ -37,11 +37,11 @@ export default function AccountLayout({ active, user, children }: Props) {
         <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
           <aside style={{ flexShrink: 0, width: 210, background: '#fff', borderRadius: 16, border: '1px solid #e2e2e6', boxShadow: 'none', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '1rem', borderBottom: '1px solid #e2e2e6', background: '#f8f8fa' }}>
-              <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#0F0F14', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0 }}>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#191947', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0 }}>
                 {initial}
               </div>
               <div style={{ overflow: 'hidden' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#0F0F14', lineHeight: 1.3 }}>{user?.email?.split('@')[0] ?? 'Account'}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#191947', lineHeight: 1.3 }}>{user?.email?.split('@')[0] ?? 'Account'}</div>
                 <div style={{ fontSize: 11, color: '#71717a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</div>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function AccountLayout({ active, user, children }: Props) {
                   padding: '9px 12px', borderRadius: 10,
                   fontSize: 13.5, fontWeight: active === key ? 600 : 500,
                   color: active === key ? '#fff' : '#52525b',
-                  background: active === key ? '#0F0F14' : 'transparent',
+                  background: active === key ? '#191947' : 'transparent',
                   textDecoration: 'none', fontFamily: 'var(--sans)',
                   transition: 'background 0.12s, color 0.12s',
                 }}>
