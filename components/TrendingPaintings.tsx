@@ -19,7 +19,7 @@ export default function TrendingPaintings({ artworks, onPreview, savedIds, onTog
         <div>
           <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Trending paintings.</h2>
         </div>
-        <Link href="/trending" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
+        <Link href="/trending" className="view-all">View all</Link>
       </div>
       <div className="feed-grid">
         {isLoading

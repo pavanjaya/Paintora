@@ -12,7 +12,7 @@ export default function ArtworkFeed({ onPreview, onLogin }: {
         <div>
           <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>A curated visual silence.</h2>
         </div>
-        <Link href="/browse" className="view-all" style={{ background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none' }}>View all</Link>
+        <Link href="/browse" className="view-all">View all</Link>
       </div>
       <div className="feed-grid">
         {FEED_ARTWORKS.map((a, i) => (

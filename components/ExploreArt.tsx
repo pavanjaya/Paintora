@@ -55,7 +55,7 @@ function ArtCol({ title, items, baseHref, exploreHref }: {
       <Link
         href={exploreHref}
         className="view-all"
-        style={{ marginTop: '1rem', background: 'none', border: '1.5px solid var(--border)', fontFamily: 'var(--sans)', textDecoration: 'none', display: 'inline-block' }}
+        style={{ marginTop: '1rem' }}
       >
         Explore more
       </Link>
