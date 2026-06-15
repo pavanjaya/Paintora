@@ -16,6 +16,7 @@ const NAV_COLS = [
     title: 'Company',
     links: [
       { label: 'About', href: '/about' },
+      { label: 'Pricing', href: '/pricing' },
       { label: 'Contact', href: '/contact' },
     ],
   },
@@ -64,7 +65,7 @@ export default function Footer() {
         </div>
         <div className="footer-divider" />
         <div className="footer-bottom">
-          <p className="footer-make">© 2025 Paintora. All rights reserved.</p>
+          <p className="footer-make">Paintora by <a href="https://hueness.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>Hueness</a> · © 2026 All rights reserved.</p>
           <div className="footer-legal-links">
             <a href="/privacy">Privacy</a>
             <a href="/terms">Terms</a>

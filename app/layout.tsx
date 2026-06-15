@@ -1,6 +1,15 @@
 import type { Metadata } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-jakarta',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: { default: 'Paintora — Contemporary Paintings for Every Space', template: '%s | Paintora' },
@@ -35,7 +44,7 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
-      <body><PageTransition>{children}</PageTransition></body>
+      <body className={jakarta.variable}><PageTransition>{children}</PageTransition></body>
     </html>
   )
 }

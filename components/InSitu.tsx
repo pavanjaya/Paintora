@@ -44,7 +44,6 @@ export default function InSitu() {
               <Img src={item.img} alt={item.title} />
             </div>
             <div className="insitu-card-caption">
-              <span className="insitu-card-tag">{item.tag}</span>
               <p className="insitu-card-label">{item.label}</p>
               <strong className="insitu-card-title">{item.title}</strong>
             </div>

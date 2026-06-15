@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { }
 html, body { overflow-x: hidden; max-width: 100vw; }
@@ -25,7 +23,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   --amber-light: #FFF8EC;
   --accent: #000000;
   --accent2: #000000;
-  --sans: 'Plus Jakarta Sans', sans-serif;
+  --sans: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
 }
 body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
 
@@ -2658,3 +2656,45 @@ a:focus-visible,
 }
 /* Don't show focus ring on mouse click */
 :focus:not(:focus-visible) { outline: none; }
+
+/* ── PRICING PAGE ── */
+.pricing-hero { text-align: center; padding: 5rem 1.5rem 3rem; max-width: 600px; margin: 0 auto; }
+.pricing-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #CF4BFF; margin-bottom: 1rem; }
+.pricing-title { font-size: clamp(36px, 5vw, 64px); font-weight: 800; color: var(--ink); letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
+.pricing-sub { font-size: 17px; color: var(--ink-muted); }
+
+.pricing-cards { display: flex; gap: 1.5rem; justify-content: center; padding: 0 1.5rem 5rem; max-width: 860px; margin: 0 auto; }
+.pricing-card { flex: 1; border: 1.5px solid var(--border); border-radius: 20px; padding: 2.5rem; background: #fff; position: relative; }
+.pricing-card-pro { border-color: #CF4BFF; box-shadow: 0 0 0 1px #CF4BFF20, 0 8px 32px rgba(207,75,255,0.10); }
+.pricing-pro-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: #CF4BFF; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
+
+.pricing-card-top { margin-bottom: 2rem; }
+.pricing-plan-name { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; }
+.pricing-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 0.75rem; }
+.pricing-amount { font-size: 48px; font-weight: 800; color: var(--ink); letter-spacing: -0.03em; line-height: 1; }
+.pricing-period { font-size: 15px; color: var(--ink-muted); }
+.pricing-plan-desc { font-size: 14px; color: var(--ink-muted); margin-bottom: 1.5rem; line-height: 1.5; }
+
+.pricing-cta-free { width: 100%; padding: 13px; border-radius: 100px; border: 1.5px solid var(--border); background: none; font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer; transition: border-color 0.2s, transform 0.15s; }
+.pricing-cta-free:hover { border-color: var(--ink); transform: translateY(-1px); }
+.pricing-cta-pro { width: 100%; padding: 13px; border-radius: 100px; border: none; background: var(--ink); font-family: var(--sans); font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
+.pricing-cta-pro:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.pricing-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--border); padding-top: 1.75rem; }
+.pricing-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink); }
+.pricing-feature svg { color: #CF4BFF; flex-shrink: 0; }
+.pricing-feature-inherit { font-weight: 600; }
+
+.pricing-faq-section { max-width: 640px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+.pricing-faq-title { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 2rem; }
+.pricing-faq-list { display: flex; flex-direction: column; }
+.pricing-faq-item { border-top: 1px solid var(--border); }
+.pricing-faq-item:last-child { border-bottom: 1px solid var(--border); }
+.pricing-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 0; background: none; border: none; font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; text-align: left; }
+.pricing-faq-icon { flex-shrink: 0; transition: transform 0.2s; color: var(--ink-muted); }
+.pricing-faq-item.open .pricing-faq-icon { transform: rotate(180deg); }
+.pricing-faq-a { font-size: 14px; color: var(--ink-muted); line-height: 1.7; padding-bottom: 1.25rem; margin: 0; }
+
+@media (max-width: 640px) {
+  .pricing-cards { flex-direction: column; }
+}
