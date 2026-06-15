@@ -1,18 +1,24 @@
 'use client'
 
 import Link from 'next/link'
-import { FEED_ARTWORKS } from '@/lib/data'
 
-const COLLAGE = FEED_ARTWORKS.slice(0, 6)
+const COLLAGE = [
+  'https://images.pexels.com/photos/1585325/pexels-photo-1585325.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+  'https://images.pexels.com/photos/3246665/pexels-photo-3246665.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+  'https://images.pexels.com/photos/1183992/pexels-photo-1183992.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+  'https://images.pexels.com/photos/2119706/pexels-photo-2119706.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+  'https://images.pexels.com/photos/1070536/pexels-photo-1070536.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+  'https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+]
 
 export default function FinalCTA({ onSignup, onGallery }: { onSignup: () => void; onGallery: () => void }) {
   return (
     <div className="fcta-outer">
       {/* Painting collage grid */}
       <div className="fcta-collage" aria-hidden="true">
-        {COLLAGE.map((art, i) => (
-          <div key={art.id} className={`fcta-col-img fcta-col-img-${i}`}>
-            <img src={art.img} alt="" loading="lazy" decoding="async" />
+        {COLLAGE.map((src, i) => (
+          <div key={i} className={`fcta-col-img fcta-col-img-${i}`}>
+            <img src={src} alt="" loading="lazy" decoding="async" />
           </div>
         ))}
         <div className="fcta-overlay" />

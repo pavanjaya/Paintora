@@ -180,10 +180,20 @@ export default function PaintingDetail({ id }: { id: string }) {
                       <button
                         key={label}
                         className="download-size-row"
-                        onClick={() => {
+                        onClick={async () => {
                           if (pro && !isPro) { setDownloadOpen(false); setUpgradeOpen(true); return }
                           window.open(art.img, '_blank')
                           setDownloadOpen(false)
+                          if (user?.id) {
+                            await supabase.from('downloads').insert({
+                              user_id: user.id,
+                              painting_id: art.id,
+                              painting_name: art.name,
+                              painting_img: art.img,
+                              size: label,
+                              downloaded_at: new Date().toISOString(),
+                            })
+                          }
                         }}
                       >
                         <span className="download-size-label">{label}</span>
