@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Img from './Img'
 
 const MOSAIC = [
+  { src: '/paintings/painting-2.png', alt: 'Victoria Memorial' },
+  { src: '/paintings/painting-1.jpg', alt: 'Watercolor portrait' },
   { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=85', alt: 'Abstract painting' },
-  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=85', alt: 'Impressionist work' },
-  { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85', alt: 'Geometric art' },
 ]
 
 export default function Hero() {
