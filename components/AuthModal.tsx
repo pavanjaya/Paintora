@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
-type View = 'login' | 'signup' | 'forgot'
+type View = 'login' | 'signup' | 'forgot' | 'confirm'
 
 export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: {
   mode: 'login' | 'signup'
@@ -53,6 +53,9 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
           options: { data: { full_name: name } },
         })
         if (error) { setError(error.message); return }
+        reset()
+        setView('confirm')
+        return
       }
       reset()
       onSuccess()
@@ -91,7 +94,21 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
           </div>
 
           <div className="auth-left-scroll">
-          {effectiveView === 'forgot' ? (
+          {effectiveView === 'confirm' ? (
+            <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, #6D24FF, #CF4BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <h2 className="auth-heading" style={{ marginBottom: '0.75rem' }}>Check your email.</h2>
+              <p style={{ fontSize: 14, color: '#9898A6', lineHeight: 1.7, marginBottom: '2rem' }}>
+                We sent a confirmation link to your email address. Click it to activate your account.
+              </p>
+              <p style={{ fontSize: 12, color: '#9898A6' }}>
+                Didn&apos;t get it? Check your spam folder or{' '}
+                <button type="button" onClick={() => setView('signup')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink)', fontWeight: 600, fontSize: 'inherit', padding: 0, fontFamily: 'var(--sans)', textDecoration: 'underline' }}>try again</button>.
+              </p>
+            </div>
+          ) : effectiveView === 'forgot' ? (
             <>
               <h2 className="auth-heading">Reset password.</h2>
               <p style={{ fontSize: 13, color: '#9898A6', marginBottom: '1.5rem', lineHeight: 1.6 }}>
