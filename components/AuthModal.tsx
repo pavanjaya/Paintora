@@ -47,12 +47,17 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) { setError(error.message); return }
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data: signUpData, error } = await supabase.auth.signUp({
           email,
           password,
           options: { data: { full_name: name } },
         })
         if (error) { setError(error.message); return }
+        // If identities is empty, email is already registered
+        if (signUpData.user && signUpData.user.identities?.length === 0) {
+          setError('An account with this email already exists. Try signing in instead.')
+          return
+        }
         reset()
         setView('confirm')
         return
