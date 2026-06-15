@@ -199,25 +199,23 @@ mark { background: var(--violet-light); color: var(--violet); border-radius: 3px
   line-height: 1.8; margin-bottom: 2.5rem;
 }
 .hero-sub br { display: block; }
-.hero-ctas {
-  display: flex; align-items: center; gap: 12px;
+.hero-chips-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-muted);
+  margin-bottom: 0.75rem;
+}
+.hero-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
   margin-bottom: 2.5rem;
 }
-.hero-cta-primary {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  color: white; background: var(--ink);
-  padding: 13px 28px; border-radius: 100px;
-  text-decoration: none; transition: background 0.18s, transform 0.18s;
+.hero-chip {
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  color: var(--ink); text-decoration: none;
+  border: 1.5px solid var(--border); border-radius: 100px;
+  padding: 7px 16px; background: none;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
 }
-.hero-cta-primary:hover { background: #333; transform: translateY(-1px); }
-.hero-cta-secondary {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  color: var(--ink); background: none;
-  border: 1.5px solid var(--border);
-  padding: 12px 28px; border-radius: 100px;
-  text-decoration: none; transition: border-color 0.18s, background 0.18s, transform 0.18s;
-}
-.hero-cta-secondary:hover { border-color: var(--ink); background: var(--bg-soft); transform: translateY(-1px); }
+.hero-chip:hover { border-color: var(--ink); background: var(--bg-soft); transform: translateY(-1px); }
 .hero-stats {
   display: flex; align-items: center; gap: 10px;
   font-size: 12px; font-weight: 500; color: var(--ink-muted);

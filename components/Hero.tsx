@@ -7,6 +7,14 @@ const MOSAIC = [
   { src: '/paintings/painting-2.jpg', alt: 'Victoria Memorial watercolor' },
 ]
 
+const SPACES = [
+  { label: 'Living Room', href: '/spaces/living-room' },
+  { label: 'Office',      href: '/spaces/office' },
+  { label: 'Hotel Lobby', href: '/spaces/hotel' },
+  { label: 'Bedroom',     href: '/spaces/bedroom' },
+  { label: 'Café',        href: '/spaces/cafe' },
+]
+
 export default function Hero() {
   return (
     <section className="hero">
@@ -16,9 +24,11 @@ export default function Hero() {
         <p className="hero-sub">
           Curated contemporary paintings designed through artistic direction and AI-assisted creativity. For modern homes, offices, and spaces of intention.
         </p>
-        <div className="hero-ctas">
-          <Link href="/discover" className="hero-cta-primary">Browse paintings</Link>
-          <Link href="/collections" className="hero-cta-secondary">View collections</Link>
+        <div className="hero-chips-label">Popular spaces</div>
+        <div className="hero-chips">
+          {SPACES.map(s => (
+            <Link key={s.label} href={s.href} className="hero-chip">{s.label}</Link>
+          ))}
         </div>
         <div className="hero-stats">
           <span>12,400+ paintings</span>
