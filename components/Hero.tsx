@@ -4,7 +4,7 @@ import Img from './Img'
 const MOSAIC = [
   { src: '/paintings/painting-2.png', alt: 'Victoria Memorial' },
   { src: '/paintings/painting-1.jpg', alt: 'Watercolor portrait' },
-  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=85', alt: 'Abstract painting' },
+  { src: '/paintings/painting-1.jpg', alt: 'Watercolor portrait' },
 ]
 
 export default function Hero() {
