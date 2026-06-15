@@ -263,6 +263,7 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
             ) : (
               <>
                 <button className="nav-login" onClick={onLogin}>Log in</button>
+                <div style={{ width: 6 }} />
                 <button className="nav-cta" onClick={onSignup}>Sign up</button>
               </>
             )}

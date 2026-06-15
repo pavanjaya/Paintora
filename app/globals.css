@@ -151,10 +151,10 @@ mark { background: var(--violet-light); color: var(--violet); border-radius: 3px
 .nav-text-btn {
   display: flex; align-items: center; gap: 4px;
   font-size: 14px; font-weight: 500; color: var(--ink); background: none; border: none;
-  cursor: pointer; padding: 8px 12px; border-radius: 8px; white-space: nowrap;
-  font-family: var(--sans); transition: background 0.15s;
+  cursor: pointer; padding: 8px 14px; border-radius: 100px; white-space: nowrap;
+  font-family: var(--sans); transition: background 0.18s;
 }
-.nav-text-btn:hover { background: var(--bg-soft); }
+.nav-text-btn:hover { background: #F0F0F5; }
 .nav-cta {
   font-size: 14px; font-weight: 600; color: #fff; background: #191947;
   border: none; border-radius: 24px; padding: 9px 20px;
