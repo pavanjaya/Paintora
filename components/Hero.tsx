@@ -19,14 +19,19 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-left">
-        <h1 className="hero-title">Paintings made<br />for the room.</h1>
+        <p className="hero-eyebrow">Curated contemporary art</p>
+        <h1 className="hero-title">Paintings that<br />define a space.</h1>
         <p className="hero-sub">
-          Every piece is directed for a specific space — the light, the wall, the mood it needs to carry. Where will yours hang?
+          Curated contemporary paintings designed through artistic direction and AI-assisted creativity. For modern homes, offices, and spaces of intention.
         </p>
+        <div className="hero-chips-label">Popular spaces</div>
         <div className="hero-chips">
           {SPACES.map(s => (
             <Link key={s.label} href={s.href} className="hero-chip">{s.label}</Link>
           ))}
+        </div>
+        <div className="hero-stats">
+          <span>12,400+ paintings</span>
         </div>
       </div>
 
