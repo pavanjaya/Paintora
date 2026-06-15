@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
 type View = 'login' | 'signup' | 'forgot'
@@ -21,8 +21,12 @@ export default function AuthModal({ mode, open, onClose, onSwitch, onSuccess }: 
   const [success, setSuccess]    = useState('')
   const [loading, setLoading]    = useState(false)
 
-  // Sync view when modal mode changes
-  const effectiveView: View = open ? view : mode
+  // Sync view when modal opens with a new mode
+  useEffect(() => {
+    if (open) setView(mode)
+  }, [open, mode])
+
+  const effectiveView: View = view
 
   const reset = () => { setName(''); setEmail(''); setPassword(''); setError(''); setSuccess('') }
 
