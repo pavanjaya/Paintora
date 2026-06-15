@@ -3,12 +3,12 @@
 import Link from 'next/link'
 
 const FLOATERS = [
-  { src: '/paintings/painting-3.png',  style: { top: '8%',  left: '2%',  width: 160, rotate: '-6deg'  } },
-  { src: '/paintings/painting-1.png',  style: { top: '55%', left: '5%',  width: 130, rotate: '5deg'   } },
-  { src: '/paintings/painting-2.jpg',  style: { top: '20%', left: '18%', width: 110, rotate: '-3deg'  } },
-  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&q=80', style: { top: '5%',  right: '3%',  width: 150, rotate: '7deg'   } },
-  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&q=80', style: { top: '52%', right: '6%',  width: 140, rotate: '-5deg'  } },
-  { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', style: { top: '22%', right: '19%', width: 100, rotate: '4deg'   } },
+  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80', top: '6%',  left: '1%',   right: undefined, width: 180, rotate: '-7deg'  },
+  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80', top: '50%', left: '4%',   right: undefined, width: 150, rotate: '6deg'   },
+  { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', top: '18%', left: '17%',  right: undefined, width: 120, rotate: '-3deg'  },
+  { src: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&q=80',    top: '4%',  left: undefined, right: '1%',  width: 170, rotate: '8deg'   },
+  { src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80', top: '52%', left: undefined, right: '4%',  width: 155, rotate: '-6deg'  },
+  { src: 'https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=600&q=80', top: '20%', left: undefined, right: '17%', width: 115, rotate: '4deg'   },
 ]
 
 export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
@@ -18,15 +18,9 @@ export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
         <div
           key={i}
           className="fcta-floater"
-          style={{
-            top: f.style.top,
-            left: 'left' in f.style ? f.style.left : undefined,
-            right: 'right' in f.style ? f.style.right : undefined,
-            width: f.style.width,
-            transform: `rotate(${f.style.rotate})`,
-          }}
+          style={{ top: f.top, left: f.left, right: f.right, width: f.width, transform: `rotate(${f.rotate})` }}
         >
-          <img src={f.src} alt="" loading="lazy" decoding="async" />
+          <img src={f.src} alt="" loading="lazy" decoding="async" onLoad={e => (e.target as HTMLImageElement).style.opacity = '1'} style={{ opacity: 0, transition: 'opacity 0.4s' }} />
         </div>
       ))}
 
