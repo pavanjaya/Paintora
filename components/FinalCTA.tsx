@@ -2,29 +2,34 @@
 
 import Link from 'next/link'
 
-const COLLAGE = [
-  'https://images.pexels.com/photos/1585325/pexels-photo-1585325.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
-  'https://images.pexels.com/photos/3246665/pexels-photo-3246665.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
-  'https://images.pexels.com/photos/1183992/pexels-photo-1183992.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
-  'https://images.pexels.com/photos/2119706/pexels-photo-2119706.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
-  'https://images.pexels.com/photos/1070536/pexels-photo-1070536.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
-  'https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop',
+const FLOATERS = [
+  { src: '/paintings/painting-3.png',  style: { top: '8%',  left: '2%',  width: 160, rotate: '-6deg'  } },
+  { src: '/paintings/painting-1.png',  style: { top: '55%', left: '5%',  width: 130, rotate: '5deg'   } },
+  { src: '/paintings/painting-2.jpg',  style: { top: '20%', left: '18%', width: 110, rotate: '-3deg'  } },
+  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&q=80', style: { top: '5%',  right: '3%',  width: 150, rotate: '7deg'   } },
+  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&q=80', style: { top: '52%', right: '6%',  width: 140, rotate: '-5deg'  } },
+  { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', style: { top: '22%', right: '19%', width: 100, rotate: '4deg'   } },
 ]
 
 export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
   return (
     <div className="fcta-outer">
-      {/* Painting collage grid */}
-      <div className="fcta-collage" aria-hidden="true">
-        {COLLAGE.map((src, i) => (
-          <div key={i} className={`fcta-col-img fcta-col-img-${i}`}>
-            <img src={src} alt="" loading="lazy" decoding="async" />
-          </div>
-        ))}
-        <div className="fcta-overlay" />
-      </div>
+      {FLOATERS.map((f, i) => (
+        <div
+          key={i}
+          className="fcta-floater"
+          style={{
+            top: f.style.top,
+            left: 'left' in f.style ? f.style.left : undefined,
+            right: 'right' in f.style ? f.style.right : undefined,
+            width: f.style.width,
+            transform: `rotate(${f.style.rotate})`,
+          }}
+        >
+          <img src={f.src} alt="" loading="lazy" decoding="async" />
+        </div>
+      ))}
 
-      {/* Content on top */}
       <div className="fcta-content">
         <div className="fcta-eyebrow">Free to explore</div>
         <h2 className="fcta-title">Art for every space,<br />at every scale.</h2>
@@ -33,7 +38,7 @@ export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
         </p>
         <div className="fcta-actions">
           <button className="fcta-btn-primary" onClick={onSignup}>Start for free</button>
-          <Link href="/trending" className="fcta-btn-ghost" style={{ textDecoration: 'none' }}>Browse paintings</Link>
+          <Link href="/discover" className="fcta-btn-ghost" style={{ textDecoration: 'none' }}>Browse paintings</Link>
         </div>
       </div>
     </div>
