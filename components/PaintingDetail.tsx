@@ -182,7 +182,13 @@ export default function PaintingDetail({ id }: { id: string }) {
                         className="download-size-row"
                         onClick={async () => {
                           if (pro && !isPro) { setDownloadOpen(false); setUpgradeOpen(true); return }
-                          window.open(art.img, '_blank')
+                          const a = document.createElement('a')
+                          a.href = art.img
+                          a.download = `${art.name.replace(/\s+/g, '-').toLowerCase()}-${label.toLowerCase()}.jpg`
+                          a.target = '_blank'
+                          document.body.appendChild(a)
+                          a.click()
+                          document.body.removeChild(a)
                           setDownloadOpen(false)
                           if (user?.id) {
                             await supabase.from('downloads').insert({
