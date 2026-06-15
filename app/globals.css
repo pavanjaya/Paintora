@@ -673,8 +673,8 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 }
 .mobile-nav-link:hover { color: var(--ink-light); }
 .mobile-nav-cta {
-  margin-top: 2rem; font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--white); background: var(--ink);
+  margin-top: 2rem; font-size: 14px; font-weight: 700; letter-spacing: normal;
+  text-transform: none; color: var(--white); background: var(--ink);
   padding: 14px 28px; border-radius: 8px; text-decoration: none; display: inline-block;
   text-align: center;
 }
