@@ -337,7 +337,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 }
 .col-title { font-size: 14px; font-weight: 700; color: white; line-height: 1.2; margin-bottom: 0.2rem; letter-spacing: -0.01em; }
 .col-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; }
-.col-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
+.col-footer { display: none; }
 .col-count { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.5); }
 .col-arrow {
   width: 24px; height: 24px; border-radius: 50%; background: var(--coral);
