@@ -452,15 +452,16 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 /* ── Testimonials marquee ── */
 /* ── Testimonials ── */
 .testi-section {
-  background: #191947; padding: 6rem 2rem;
+  background: #fff; padding: 6rem 2rem;
+  border-top: 1px solid var(--border);
 }
 .testi-inner {
-  max-width: 760px; margin: 0 auto; text-align: center;
+  max-width: 720px; margin: 0 auto; text-align: center;
   display: flex; flex-direction: column; align-items: center;
 }
 .testi-label {
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; color: var(--ink-muted);
   margin-bottom: 2.5rem;
 }
 .testi-quote-wrap {
@@ -468,12 +469,12 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 }
 .testi-quote-wrap.fading { opacity: 0; }
 .testi-mark {
-  font-family: Georgia, serif; font-size: 96px; line-height: 0.6;
-  color: #CF4BFF; margin-bottom: 1.5rem; user-select: none;
+  font-family: Georgia, serif; font-size: 80px; line-height: 0.6;
+  color: #CF4BFF; margin-bottom: 1.25rem; user-select: none;
 }
 .testi-quote {
-  font-size: clamp(18px, 2.5vw, 26px); font-weight: 400; line-height: 1.65;
-  color: rgba(255,255,255,0.92); letter-spacing: -0.01em;
+  font-size: clamp(18px, 2.2vw, 24px); font-weight: 400; line-height: 1.7;
+  color: var(--ink); letter-spacing: -0.01em;
   margin: 0 0 2.5rem;
 }
 .testi-author {
@@ -481,24 +482,24 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 }
 .testi-avatar {
   width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.15);
+  border: 2px solid var(--border);
 }
 .testi-name {
-  font-size: 14px; font-weight: 700; color: #fff; text-align: left;
+  font-size: 14px; font-weight: 700; color: var(--ink); text-align: left;
 }
 .testi-role {
-  font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; text-align: left;
+  font-size: 12px; color: var(--ink-muted); margin-top: 2px; text-align: left;
 }
 .testi-dots {
   display: flex; gap: 8px; margin-top: 3rem;
 }
 .testi-dot {
   width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,0.2); border: none; cursor: pointer;
+  background: var(--border); border: none; cursor: pointer;
   transition: background 0.2s, transform 0.2s; padding: 0;
 }
 .testi-dot.active { background: #CF4BFF; transform: scale(1.3); }
-.testi-dot:hover { background: rgba(255,255,255,0.5); }
+.testi-dot:hover { background: var(--ink-muted); }
 
 /* ── MEMBERSHIP ── */
 .membership-outer { background: #FAFAF8; padding: 6rem 1.5rem; }
