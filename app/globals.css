@@ -412,7 +412,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 
 /* ── IN SITU ── */
 /* ── IN SITU – horizontal scroll strip ── */
-.insitu-outer { background: var(--white); padding: 4rem 0 0; overflow: hidden; }
+.insitu-outer { background: var(--white); padding: 4rem 0 0; }
 .insitu-header {
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 0 2rem 2rem;
@@ -434,6 +434,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   overflow-x: auto; scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; padding: 0 2rem 2.5rem 2rem;
+  scroll-padding-left: 2rem;
 }
 .insitu-track::-webkit-scrollbar { display: none; }
 
