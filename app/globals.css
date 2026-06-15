@@ -1532,7 +1532,7 @@ img.loaded { opacity: 1; }
 /* ─── Painting Detail Page ───────────────────────────────────────────── */
 .painting-detail-main { padding-top: 80px; min-height: 100vh; }
 
-.painting-breadcrumb { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.painting-breadcrumb { max-width: 1280px; margin: 0 auto; padding: 1rem 2rem; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
 .painting-breadcrumb a { color: var(--muted); text-decoration: none; }
 .painting-breadcrumb a:hover { color: var(--ink); }
 
@@ -1553,7 +1553,7 @@ img.loaded { opacity: 1; }
 
 .painting-detail-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0 0 1.5rem; }
 
-.painting-detail-actions { display: flex; gap: 12px; align-items: center; }
+.painting-detail-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 .painting-detail-cta { padding: 14px 28px; font-size: 14px; font-weight: 600; border-radius: 10px; }
 .painting-save-large { width: 48px; height: 48px; border-radius: 10px; border: 1.5px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink); flex-shrink: 0; transition: border-color 0.15s; }
 .painting-save-large:hover, .painting-save-large.saved { border-color: #e53e3e; color: #e53e3e; }
@@ -2241,9 +2241,9 @@ img.loaded { opacity: 1; }
 }
 
 /* ── DOWNLOAD SIZE PANEL ── */
-.painting-download-wrap { position: relative; }
+.painting-download-wrap { position: relative; width: 100%; }
 .painting-download-row {
-  display: flex; gap: 10px;
+  display: flex; gap: 10px; width: 100%;
 }
 .painting-download-row .painting-download-btn {
   flex: 1; margin-bottom: 0;
