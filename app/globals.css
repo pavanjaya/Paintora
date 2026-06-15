@@ -159,16 +159,16 @@ mark { background: var(--violet-light); color: var(--violet); border-radius: 3px
   font-size: 14px; font-weight: 600; color: #fff; background: #000;
   border: none; border-radius: 24px; padding: 9px 20px;
   cursor: pointer; font-family: var(--sans); white-space: nowrap; flex-shrink: 0;
-  transition: background 0.15s;
+  transition: background 0.18s, transform 0.18s;
 }
-.nav-cta:hover { background: #222; }
+.nav-cta:hover { background: #222; transform: translateY(-1px); }
 .nav-login {
   font-size: 14px; font-weight: 600; color: var(--ink); background: none;
   border: 1.5px solid var(--border); cursor: pointer; padding: 8px 18px; border-radius: 24px;
   font-family: var(--sans); white-space: nowrap; flex-shrink: 0;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
 }
-.nav-login:hover { border-color: var(--ink); background: var(--bg-soft); }
+.nav-login:hover { border-color: var(--ink); background: var(--bg-soft); transform: translateY(-1px); }
 
 /* ── HERO ── */
 /* ── Hero ─────────────────────────────────── */
@@ -294,7 +294,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   line-height: 1;
   font-feature-settings: 'liga';
 }
-.view-all:hover { border-color: var(--ink); background: var(--bg-soft); }
+.view-all:hover { border-color: var(--ink); background: var(--bg-soft); transform: translateY(-1px); }
 
 /* ── COLLECTIONS ── */
 .collections-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
@@ -541,9 +541,9 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   font-family: var(--sans); font-size: 14px; font-weight: 700;
   color: var(--ink); background: white; border: none;
   padding: 13px 24px; border-radius: 10px; text-decoration: none;
-  cursor: pointer; transition: background 0.2s;
+  cursor: pointer; transition: background 0.18s, transform 0.18s;
 }
-.mem-plan-cta-solid:hover { background: #f0f0f0; }
+.mem-plan-cta-solid:hover { background: #f0f0f0; transform: translateY(-1px); }
 .mem-plan-cta-ghost {
   display: block; text-align: center; width: 100%;
   font-family: var(--sans); font-size: 14px; font-weight: 700;
@@ -552,7 +552,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
   cursor: pointer; transition: all 0.2s;
   box-sizing: border-box;
 }
-.mem-plan-cta-ghost:hover { border-color: var(--ink); }
+.mem-plan-cta-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
 .mem-plan-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
 .mem-plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .mem-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 400; color: var(--ink-light); line-height: 1.5; }
@@ -599,10 +599,10 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .fcta-title { font-size: clamp(36px, 5vw, 58px); font-weight: 800; color: #fff; letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 1.25rem; font-family: var(--serif); }
 .fcta-sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.8; max-width: 420px; margin: 0 auto 2.25rem; }
 .fcta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.fcta-btn-primary { background: #fff; color: #0F0F14; border: none; border-radius: 100px; padding: 13px 28px; font-size: 14px; font-weight: 700; font-family: var(--sans); cursor: pointer; transition: opacity 0.15s; }
-.fcta-btn-primary:hover { opacity: 0.9; }
-.fcta-btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.35); border-radius: 100px; padding: 13px 28px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: border-color 0.15s; }
-.fcta-btn-ghost:hover { border-color: rgba(255,255,255,0.7); }
+.fcta-btn-primary { background: #fff; color: #0F0F14; border: none; border-radius: 100px; padding: 13px 28px; font-size: 14px; font-weight: 700; font-family: var(--sans); cursor: pointer; transition: opacity 0.18s, transform 0.18s; }
+.fcta-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.fcta-btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.35); border-radius: 100px; padding: 13px 28px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: border-color 0.18s, transform 0.18s; }
+.fcta-btn-ghost:hover { border-color: rgba(255,255,255,0.7); transform: translateY(-1px); }
 .btn-dark {
   font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   color: white; background: #000000; padding: 15px 40px; border-radius: 10px;
