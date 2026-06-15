@@ -681,10 +681,10 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
 .style-card {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--white); border: 1px solid var(--border);
-  border-radius: 14px; padding: 1rem 0 1rem 1.25rem;
+  border-radius: 14px; padding: 1rem 1rem 1rem 1.25rem;
   cursor: pointer; overflow: hidden; position: relative;
   transition: box-shadow 0.2s, border-color 0.2s;
-  min-height: 88px;
+  min-height: 88px; gap: 1rem;
 }
 .style-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-color: rgba(15,15,20,0.18); }
 .style-card-info { flex: 1; min-width: 0; }
@@ -698,14 +698,12 @@ footer { background: var(--white); border-top: 1px solid var(--border); padding:
   margin-top: 3px; display: block;
 }
 .style-card img {
-  width: 100px; height: 88px; object-fit: cover;
-  border-radius: 0 13px 13px 0;
-  flex-shrink: 0; display: block; align-self: stretch;
-  filter: saturate(0.88);
-  transition: filter 0.3s, transform 0.3s;
-  margin-left: auto;
+  width: 72px; height: 72px; object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0; display: block;
+  transition: transform 0.3s;
 }
-.style-card:hover img { filter: saturate(1.05); transform: scale(1.04); }
+.style-card:hover img { transform: scale(1.06); }
 .style-overlay, .style-active-dot { display: none !important; }
 
 /* ── RESPONSIVE ── */

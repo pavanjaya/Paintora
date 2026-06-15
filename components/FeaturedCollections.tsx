@@ -27,7 +27,6 @@ export default function FeaturedCollections() {
                 <div className="col-name">{c.count}</div>
               </div>
               <div className="col-footer">
-                <span className="col-count">Explore</span>
                 <span className="col-arrow">→</span>
               </div>
             </div>
