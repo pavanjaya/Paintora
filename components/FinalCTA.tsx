@@ -4,13 +4,7 @@ import Link from 'next/link'
 
 export default function FinalCTA({ onSignup }: { onSignup: () => void }) {
   return (
-    <div className="fcta-outer">
-      <img
-        src="/paintings/painting-3.png"
-        alt=""
-        className="fcta-bg"
-        loading="eager"
-      />
+    <div className="fcta-outer" style={{ backgroundImage: 'url(/paintings/painting-3.png)' }}>
       <div className="fcta-overlay" />
       <div className="fcta-content">
         <div className="fcta-eyebrow">Free to explore</div>
