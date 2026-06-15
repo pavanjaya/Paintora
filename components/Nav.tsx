@@ -111,32 +111,40 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
 
               <div className={`nav-search-dropdown${searchOpen ? ' open' : ''}${anyResults ? ' has-results' : ''}`}>
                 <div className="search-default-pane">
-                  <div className="search-section-label">Suggestions</div>
-                  <div className="search-pills-row">
+                  <div className="search-section-label">Trending</div>
+                  {[
+                    { label: 'Abstract paintings for living room', href: '/styles/abstract' },
+                    { label: 'Minimalist art for office',          href: '/spaces/office' },
+                    { label: 'Landscape watercolor paintings',     href: '/subjects/landscape' },
+                    { label: 'Portrait oil paintings',             href: '/subjects/portrait' },
+                    { label: 'Botanical prints for bedroom',       href: '/subjects/floral' },
+                  ].map(t => (
+                    <button key={t.label} className="search-trending-row" onClick={() => { setSearchOpen(false); router.push(t.href) }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="search-trending-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      <span>{t.label}</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="search-trending-arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                  ))}
+                  <div className="search-browse-row">
+                    <span className="search-browse-label">Spaces:</span>
                     {[
                       { label: 'Living Room', href: '/spaces/living-room' },
-                      { label: 'Law Office',  href: '/spaces/office' },
-                      { label: 'Abstract',    href: '/styles/abstract' },
-                      { label: 'Hotel Lobby', href: '/spaces/hotel' },
-                      { label: 'Minimalist',  href: '/styles/minimalist' },
-                    ].map(p => (
-                      <button key={p.label} className="search-pill" onClick={() => { setSearchOpen(false); router.push(p.href) }}>{p.label}</button>
+                      { label: 'Office',      href: '/spaces/office' },
+                      { label: 'Hotel',       href: '/spaces/hotel' },
+                      { label: 'Bedroom',     href: '/spaces/bedroom' },
+                    ].map(s => (
+                      <button key={s.label} className="search-browse-chip" onClick={() => { setSearchOpen(false); router.push(s.href) }}>{s.label}</button>
                     ))}
                   </div>
-                  <div className="search-section-label">Browse by style</div>
-                  <div className="search-cat-row">
+                  <div className="search-browse-row">
+                    <span className="search-browse-label">Styles:</span>
                     {[
-                      { icon: '🎨', label: 'Abstract',  href: '/styles/abstract' },
-                      { icon: '🌿', label: 'Botanical', href: '/subjects/floral' },
-                      { icon: '🏙️', label: 'Urban',     href: '/subjects/architecture' },
-                      { icon: '🌅', label: 'Landscape', href: '/subjects/landscape' },
-                      { icon: '👤', label: 'Portrait',  href: '/subjects/portrait' },
-                      { icon: '⬡',  label: 'Geometric', href: '/styles/geometric' },
-                    ].map(c => (
-                      <button key={c.label} className="search-cat-item" onClick={() => { setSearchOpen(false); router.push(c.href) }}>
-                        <span className="search-cat-icon">{c.icon}</span>
-                        {c.label}
-                      </button>
+                      { label: 'Abstract',   href: '/styles/abstract' },
+                      { label: 'Minimalist', href: '/styles/minimalist' },
+                      { label: 'Geometric',  href: '/styles/geometric' },
+                      { label: 'Landscape',  href: '/subjects/landscape' },
+                    ].map(s => (
+                      <button key={s.label} className="search-browse-chip" onClick={() => { setSearchOpen(false); router.push(s.href) }}>{s.label}</button>
                     ))}
                   </div>
                 </div>
