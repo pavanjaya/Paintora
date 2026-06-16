@@ -2517,7 +2517,7 @@ img.loaded { opacity: 1; }
 .ap-btn-ghost {
   display: inline-flex; align-items: center;
   padding: 9px 22px; border-radius: 100px;
-  background: transparent; color: var(--ink); border: none;
+  background: transparent; color: var(--ink); border: 1.5px solid var(--ink);
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
   transition: opacity 0.12s;
 }
