@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { searchArtworks } from '@/lib/artworks'
@@ -14,42 +14,6 @@ import AuthModal from '@/components/AuthModal'
 const PAGE_SIZE = 16
 const FREE_LIMIT = 12
 
-const ORIENTATION_OPTIONS = ['Any', 'Horizontal', 'Vertical', 'Square']
-const COLOR_OPTIONS = [
-  { label: 'Red',    value: 'red',    hex: '#E53935' },
-  { label: 'Orange', value: 'orange', hex: '#FB8C00' },
-  { label: 'Yellow', value: 'yellow', hex: '#FDD835' },
-  { label: 'Green',  value: 'green',  hex: '#43A047' },
-  { label: 'Cyan',   value: 'cyan',   hex: '#26C6DA' },
-  { label: 'Blue',   value: 'blue',   hex: '#1E40FF' },
-  { label: 'Purple', value: 'purple', hex: '#8E24AA' },
-  { label: 'Pink',   value: 'pink',   hex: '#F48FB1' },
-  { label: 'White',  value: 'white',  hex: '#FFFFFF' },
-  { label: 'Gray',   value: 'gray',   hex: '#9E9E9E' },
-  { label: 'Black',  value: 'black',  hex: '#1A1A1A' },
-  { label: 'Brown',  value: 'brown',  hex: '#8D6E63' },
-]
-
-type FilterState = { orientation: string; color: string; blackAndWhite: boolean }
-type ActiveDropdown = 'filters' | null
-
-// Related searches shown as chips below the title
-const RELATED: Record<string, string[]> = {
-  'pour painting':    ['Fluid Art', 'Acrylic', 'Abstract', 'Colorful', 'Texture'],
-  'acrylic abstract': ['Bold Colors', 'Abstract', 'Contemporary', 'Geometric', 'Textured'],
-  'oil on canvas':    ['Realism', 'Impressionism', 'Portrait', 'Landscape', 'Still Life'],
-  'minimalist':       ['Line Art', 'Monochrome', 'Geometric', 'Scandinavian', 'White Space'],
-  'landscape':        ['Mountain', 'Ocean', 'Forest', 'Countryside', 'Sky'],
-  'floral':           ['Roses', 'Botanical', 'Wildflowers', 'Peonies', 'Abstract Floral'],
-}
-
-function getRelated(q: string): string[] {
-  const key = q.toLowerCase()
-  for (const [k, v] of Object.entries(RELATED)) {
-    if (key.includes(k) || k.includes(key)) return v
-  }
-  return ['Abstract', 'Minimalist', 'Landscape', 'Floral', 'Contemporary']
-}
 
 export default function SearchPage({ query }: { query: string }) {
   const [user, setUser] = useState<{ id?: string; email?: string } | null>(null)
@@ -57,10 +21,6 @@ export default function SearchPage({ query }: { query: string }) {
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
   const [saved, setSaved] = useState<Set<string>>(new Set())
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const [filters, setFilters] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false })
-  const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
-  const filterBarRef = useRef<HTMLDivElement>(null)
-  const [sticky, setSticky] = useState(false)
   const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
 
   useEffect(() => {
@@ -91,24 +51,7 @@ export default function SearchPage({ query }: { query: string }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  useEffect(() => {
-    const bar = filterBarRef.current
-    if (!bar) return
-    const threshold = bar.offsetTop
-    const onScroll = () => setSticky(window.scrollY > threshold)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (!(e.target as Element).closest('.browse-filter-bar')) setActiveDropdown(null)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const toggleSave = useCallback(async (id: string) => {
+const toggleSave = useCallback(async (id: string) => {
     if (!user) { setAuthMode('login'); setAuthOpen(true); return }
     const isSaved = saved.has(id)
     setSaved(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
@@ -124,11 +67,6 @@ export default function SearchPage({ query }: { query: string }) {
   const gated = !user && artworks.length > FREE_LIMIT
   const visible = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const hasMore = !gated && visibleCount < artworks.length
-  const hasActiveFilters = (filters.orientation && filters.orientation !== 'Any') || filters.color || filters.blackAndWhite
-  const relatedSearches = getRelated(query)
-
-  const resetFilters = () => setFilters({ orientation: 'Any', color: '', blackAndWhite: false })
-
   return (
     <>
       <Nav
@@ -147,76 +85,6 @@ export default function SearchPage({ query }: { query: string }) {
             {query && <p className="browse-desc">Browse curated paintings matching &ldquo;{query}&rdquo;.</p>}
             <span className="browse-count">{artworks.length} paintings</span>
           </div>
-        </div>
-
-        <div ref={filterBarRef} className={`browse-filter-bar${sticky ? ' sticky' : ''}`}>
-          <div className="browse-filter-inner">
-            <div className="browse-tags-scroll">
-              {relatedSearches.map(q => (
-                <Link key={q} href={`/search?q=${encodeURIComponent(q)}`} className={`browse-popular-tag${query === q ? ' active' : ''}`}>
-                  {q}
-                </Link>
-              ))}
-            </div>
-            <div className="browse-filter-right">
-              <button
-                className={`browse-filter-toggle${activeDropdown === 'filters' ? ' active' : ''}`}
-                onClick={() => setActiveDropdown(v => v === 'filters' ? null : 'filters')}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
-                Filters
-                {hasActiveFilters && (
-                  <span className="browse-filter-badge">
-                    {[filters.orientation !== 'Any' ? filters.orientation : '', filters.color, filters.blackAndWhite ? 'bw' : ''].filter(Boolean).length}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {activeDropdown === 'filters' && (
-            <div className="browse-filter-panel">
-              <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Orientation</div>
-                <div className="browse-filter-orientation-grid">
-                  {ORIENTATION_OPTIONS.map(o => (
-                    <button
-                      key={o}
-                      className={`browse-filter-orient-btn${filters.orientation === o ? ' active' : ''}`}
-                      onClick={() => setFilters(f => ({ ...f, orientation: o }))}
-                    >
-                      {o !== 'Any' && <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />}
-                      {o}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Color</div>
-                <div className="browse-filter-color-checks">
-                  <label className="browse-filter-check-row">
-                    <span>Black and white</span>
-                    <input type="checkbox" checked={filters.blackAndWhite} onChange={e => setFilters(f => ({ ...f, blackAndWhite: e.target.checked }))} />
-                  </label>
-                </div>
-                <div className="browse-filter-color-swatches">
-                  {COLOR_OPTIONS.map(c => (
-                    <button
-                      key={c.value}
-                      title={c.label}
-                      className={`browse-filter-swatch${filters.color === c.value ? ' active' : ''}`}
-                      style={{ background: c.hex, border: c.value === 'white' ? '1.5px solid #e0e0e0' : 'none' }}
-                      onClick={() => setFilters(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="browse-filter-panel-footer">
-                <button className="browse-filter-clear" onClick={resetFilters}>Clear all</button>
-                <button className="browse-filter-apply" onClick={() => setActiveDropdown(null)}>Apply</button>
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="browse-grid-section">
@@ -239,35 +107,37 @@ export default function SearchPage({ query }: { query: string }) {
               <Link href="/" className="browse-empty-cta">Browse all paintings</Link>
             </div>
           )}
-          {!isLoading && <div className="feed-grid">
-            {visible.map((art, i) => (
-              <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
-                <div className="artwork-img-wrap">
-                  <Img src={art.img} alt={art.name} />
-                  <div className="artwork-overlay">
-                    <div className="artwork-overlay-top">
-                      <button
-                        className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
-                        onClick={e => { e.preventDefault(); e.stopPropagation(); toggleSave(art.id) }}
-                        title={saved.has(art.id) ? 'Unsave' : 'Save'}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="artwork-overlay-bottom">
-                      <div className="artwork-overlay-info">
-                        <span className="artwork-overlay-name">{art.name}</span>
-                        <span className="artwork-overlay-style">{art.style}</span>
+          {!isLoading && (
+            <div className="feed-grid">
+              {visible.map((art, i) => (
+                <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
+                  <div className="artwork-img-wrap">
+                    <Img src={art.img} alt={art.name} />
+                    <div className="artwork-overlay">
+                      <div className="artwork-overlay-top">
+                        <button
+                          className={`artwork-save-btn${saved.has(art.id) ? ' saved' : ''}`}
+                          onClick={e => { e.preventDefault(); e.stopPropagation(); toggleSave(art.id) }}
+                          title={saved.has(art.id) ? 'Unsave' : 'Save'}
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill={saved.has(art.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                          </svg>
+                        </button>
                       </div>
-                      <span className="artwork-view-btn">View</span>
+                      <div className="artwork-overlay-bottom">
+                        <div className="artwork-overlay-info">
+                          <span className="artwork-overlay-name">{art.name}</span>
+                          <span className="artwork-overlay-style">{art.style}</span>
+                        </div>
+                        <span className="artwork-view-btn">View</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>}
+                </Link>
+              ))}
+            </div>
+          )}
 
           {gated && (
             <div className="browse-login-gate">
