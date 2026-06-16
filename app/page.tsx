@@ -28,6 +28,7 @@ export default function Home() {
   const [user, setUser]                   = useState<User | null>(null)
   const [savedIds, setSavedIds]           = useState<Set<string>>(new Set())
   const isLoggedIn = user !== null
+  const [isPro, setIsPro]                 = useState(false)
   const [artworks, setArtworks]           = useState<ArtItem[] | undefined>(undefined)
   const [stylesOpen, setStylesOpen]       = useState(false)
   const [spaceOpen, setSpaceOpen]         = useState(false)
@@ -45,16 +46,26 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       const u = data.session?.user ?? null
       setUser(u)
-      if (u) loadSaves(u.id)
+      if (u) {
+        loadSaves(u.id)
+        const { data: sub } = await supabase.from('subscriptions').select('status, current_period_end').eq('user_id', u.id).single()
+        setIsPro(sub?.status === 'active' && new Date(sub.current_period_end) > new Date())
+      }
     })
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       const u = session?.user ?? null
       setUser(u)
-      if (u) loadSaves(u.id)
-      else setSavedIds(new Set())
+      if (u) {
+        loadSaves(u.id)
+        const { data: sub } = await supabase.from('subscriptions').select('status, current_period_end').eq('user_id', u.id).single()
+        setIsPro(sub?.status === 'active' && new Date(sub.current_period_end) > new Date())
+      } else {
+        setSavedIds(new Set())
+        setIsPro(false)
+      }
     })
     return () => subscription.unsubscribe()
   }, [])
@@ -91,6 +102,7 @@ export default function Home() {
         isLoggedIn={isLoggedIn}
         userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
+        isPro={isPro}
       />
 
       <main>

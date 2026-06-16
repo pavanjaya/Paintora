@@ -130,6 +130,7 @@ export default function PaintingDetail({ id }: { id: string }) {
         isLoggedIn={!!user}
         userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
+        isPro={isPro}
       />
 
       <main className="painting-detail-main">
@@ -252,14 +253,21 @@ export default function PaintingDetail({ id }: { id: string }) {
                         className="download-size-row"
                         onClick={async () => {
                           if (pro && !isPro) { setDownloadOpen(false); setUpgradeOpen(true); return }
-                          const a = document.createElement('a')
-                          a.href = art.img
-                          a.download = `${art.name.replace(/\s+/g, '-').toLowerCase()}-${label.toLowerCase()}.jpg`
-                          a.target = '_blank'
-                          document.body.appendChild(a)
-                          a.click()
-                          document.body.removeChild(a)
                           setDownloadOpen(false)
+                          try {
+                            const blob = await fetch(art.img).then(r => r.blob())
+                            const url = URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.href = url
+                            a.download = `${art.name.replace(/\s+/g, '-').toLowerCase()}-${label.toLowerCase()}.jpg`
+                            document.body.appendChild(a)
+                            a.click()
+                            document.body.removeChild(a)
+                            URL.revokeObjectURL(url)
+                          } catch {
+                            // fallback for CORS-blocked URLs
+                            window.open(art.img, '_blank')
+                          }
                           if (user?.id) {
                             await supabase.from('downloads').insert({
                               user_id: user.id,
