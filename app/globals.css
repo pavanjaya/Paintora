@@ -63,12 +63,12 @@ nav {
 }
 .nav-search-input::placeholder { color: var(--ink-muted); font-weight: 400; }
 .nav-search-clear {
-  width: 26px; height: 26px; border-radius: 50%; background: var(--ink-muted); border: none;
+  width: 26px; height: 26px; border-radius: 50%; background: none; border: none;
   display: flex; align-items: center; justify-content: center; cursor: pointer;
-  color: white; opacity: 0; pointer-events: none; transition: all 0.15s; flex-shrink: 0;
+  color: var(--ink-muted); opacity: 0; pointer-events: none; transition: all 0.15s; flex-shrink: 0;
 }
 .nav-search-clear.visible { opacity: 1; pointer-events: all; }
-.nav-search-clear:hover { background: var(--ink); }
+.nav-search-clear:hover { color: var(--ink); background: none; }
 
 .nav-search-dropdown {
   position: absolute; top: calc(100% + 10px); left: 0; right: 0;
