@@ -255,7 +255,7 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
                     <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#191947', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 700 }}>
                       {userEmail ? userEmail[0].toUpperCase() : 'U'}
                     </button>
-                    {isPro && <span style={{ position: 'absolute', bottom: -2, right: -2, background: '#B87800', color: '#fff', fontSize: 8, fontWeight: 800, borderRadius: 4, padding: '1px 3px', lineHeight: 1.4, fontFamily: 'var(--sans)', letterSpacing: '0.02em' }}>PRO</span>}
+                    {isPro && <span style={{ position: 'absolute', bottom: -4, left: '50%', transform: 'translateX(-50%)', background: '#B87800', color: '#fff', fontSize: 8, fontWeight: 800, borderRadius: 3, padding: '1px 4px', lineHeight: 1.5, fontFamily: 'var(--sans)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>PRO</span>}
                   </div>
                   {profileOpen && (
                     <div style={{ position: 'absolute', top: 'calc(100% + 10px)', right: 0, minWidth: 200, background: '#fff', border: '1px solid rgba(15,15,20,0.08)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.12)', padding: '6px 0', zIndex: 200 }}>

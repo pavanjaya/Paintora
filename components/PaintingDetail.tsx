@@ -283,7 +283,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                         <span className="download-size-label">{label}</span>
                         <span className="download-size-fmt">{fmt}</span>
                         <span className="download-size-res">{res}</span>
-                        {pro && <span className="download-size-pro">Pro</span>}
+                        {pro && !isPro && <span className="download-size-pro">Pro</span>}
                       </button>
                     ))}
                   </div>
