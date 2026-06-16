@@ -278,7 +278,6 @@ export default function PaintingDetail({ id }: { id: string }) {
         {related.length > 0 && (
           <section className="painting-related">
             <div className="painting-related-inner">
-              <h2 className="section-title" style={{ fontSize: 'clamp(16px,2vw,22px)', marginBottom: '1.5rem' }}>Similar Paintings</h2>
               <div className="feed-grid">
                 {related.map((a, i) => (
                   <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
