@@ -36,7 +36,7 @@ export default function AccountLayout({ active, user: _user, avatarUrl: _avatarU
       <div className="al-desktop">
         <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2.5rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '2rem', alignItems: 'flex-start' }}>
           <aside style={{ flexShrink: 0, width: 200, background: '#fff', borderRadius: 14, border: '1px solid #e4e4e7', overflow: 'hidden' }}>
-            <nav style={{ padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <div style={{ padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
               {NAV.map(({ key, label, href, icon }) => (
                 <Link key={key} href={href} style={{
                   display: 'flex', alignItems: 'center', gap: 9,
@@ -51,7 +51,7 @@ export default function AccountLayout({ active, user: _user, avatarUrl: _avatarU
                   {label}
                 </Link>
               ))}
-            </nav>
+            </div>
           </aside>
           <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {children}
