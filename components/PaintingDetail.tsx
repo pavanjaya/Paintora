@@ -307,7 +307,7 @@ export default function PaintingDetail({ id }: { id: string }) {
 
       {toast && (
         <div style={{
-          position: 'fixed', bottom: 28, left: '50%', transform: 'translateX(-50%)',
+          position: 'fixed', top: 88, right: 24,
           background: '#fff', color: 'var(--ink)', padding: '12px 20px',
           borderRadius: 10, fontSize: 14, fontFamily: 'var(--sans)', fontWeight: 500,
           boxShadow: '0 4px 24px rgba(0,0,0,0.10)', border: '1px solid #e5e7eb', zIndex: 999,
