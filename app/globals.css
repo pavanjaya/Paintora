@@ -1561,11 +1561,14 @@ img.loaded { opacity: 1; }
 .collections-filter-chip:hover { border-color: var(--ink); }
 .collections-filter-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
+.collection-detail-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; font-family: var(--sans); }
+.collection-detail-about { font-size: 15px; color: var(--muted); line-height: 1.65; margin-top: 10px; max-width: 580px; font-family: var(--sans); }
+
 .col-rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; padding: 0 1.5rem 5rem; }
 .col-rank-card { display: flex; flex-direction: column; gap: 12px; border-radius: 16px; border: 1px solid var(--border); background: #fff; padding: 16px; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; }
 .col-rank-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
 .col-rank-header { display: flex; align-items: center; gap: 12px; }
-.col-rank-num { font-size: 22px; font-weight: 800; color: var(--ink); min-width: 28px; font-family: var(--sans); }
+.col-rank-emoji { font-size: 28px; line-height: 1; flex-shrink: 0; }
 .col-rank-meta { flex: 1; }
 .col-rank-title { display: block; font-size: 14px; font-weight: 700; color: var(--ink); font-family: var(--sans); }
 .col-rank-count { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; font-family: var(--sans); }
@@ -1576,7 +1579,7 @@ img.loaded { opacity: 1; }
 .col-rank-img--more { position: relative; }
 .col-rank-img--more img { filter: brightness(0.45); }
 .col-rank-more-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; font-family: var(--sans); }
-.col-rank-footer { display: flex; align-items: center; gap: 6px; padding-top: 4px; border-top: 1px solid var(--border); }
+.col-rank-footer { display: flex; align-items: center; gap: 6px; padding-top: 4px; }
 .col-rank-stat { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); font-family: var(--sans); }
 .col-rank-dot { color: var(--muted); font-size: 12px; }
 
