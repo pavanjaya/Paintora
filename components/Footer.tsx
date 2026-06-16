@@ -6,10 +6,9 @@ const NAV_COLS = [
     links: [
       { label: 'Spaces', href: '/spaces' },
       { label: 'Collections', href: '/collections' },
-      { label: 'Styles', href: '/styles/abstract' },
-      { label: 'Mediums', href: '/mediums/oil' },
-      { label: 'Subjects', href: '/subjects/landscape' },
-      { label: 'Trending', href: '/trending' },
+      { label: 'Styles', href: '/styles' },
+      { label: 'Mediums', href: '/mediums' },
+      { label: 'Subjects', href: '/subjects' },
     ],
   },
   {

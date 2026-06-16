@@ -15,15 +15,28 @@ import AuthModal from '@/components/AuthModal'
 const PAGE_SIZE = 16
 const FREE_LIMIT = 12
 
-const STYLE_OPTIONS  = ['Abstract', 'Minimalist', 'Contemporary', 'Impressionism', 'Geometric', 'Landscape']
-const MEDIUM_OPTIONS = ['Oil', 'Watercolor', 'Acrylic', 'Mixed Media']
-const SUBJECT_OPTIONS = ['Landscape', 'Portrait', 'Floral', 'Still Life', 'Nature', 'Architecture']
+const ORIENTATION_OPTIONS = ['Any', 'Horizontal', 'Vertical', 'Square']
 const SORT_OPTIONS   = ['Trending', 'Newest', "Editor's Picks", 'Price: Low to High', 'Price: High to Low']
 
+const COLOR_OPTIONS = [
+  { label: 'Red',    value: 'red',    hex: '#E53935' },
+  { label: 'Orange', value: 'orange', hex: '#FB8C00' },
+  { label: 'Yellow', value: 'yellow', hex: '#FDD835' },
+  { label: 'Green',  value: 'green',  hex: '#43A047' },
+  { label: 'Cyan',   value: 'cyan',   hex: '#26C6DA' },
+  { label: 'Blue',   value: 'blue',   hex: '#1E40FF' },
+  { label: 'Purple', value: 'purple', hex: '#8E24AA' },
+  { label: 'Pink',   value: 'pink',   hex: '#F48FB1' },
+  { label: 'White',  value: 'white',  hex: '#FFFFFF' },
+  { label: 'Gray',   value: 'gray',   hex: '#9E9E9E' },
+  { label: 'Black',  value: 'black',  hex: '#1A1A1A' },
+  { label: 'Brown',  value: 'brown',  hex: '#8D6E63' },
+]
+
 type FilterState = {
-  style: string
-  medium: string
-  subject: string
+  orientation: string
+  color: string
+  blackAndWhite: boolean
   sort: string
 }
 
@@ -43,7 +56,7 @@ export default function BrowsePage({
   const [saved, setSaved] = useState<Set<string>>(new Set())
   const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const [filters, setFilters] = useState<FilterState>({ style: '', medium: '', subject: '', sort: 'Trending' })
+  const [filters, setFilters] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
@@ -114,11 +127,11 @@ export default function BrowsePage({
   }
 
   const resetFilters = () => {
-    setFilters({ style: '', medium: '', subject: '', sort: 'Trending' })
+    setFilters({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
     setVisibleCount(PAGE_SIZE)
   }
 
-  const hasActiveFilters = filters.style || filters.medium || filters.subject
+  const hasActiveFilters = (filters.orientation && filters.orientation !== 'Any') || filters.color || filters.blackAndWhite
 
   const gridContent = isLoading
     ? Array.from({ length: 16 }).map((_, i) => (
@@ -197,7 +210,7 @@ export default function BrowsePage({
                 Filters
                 {hasActiveFilters && (
                   <span className="browse-filter-badge">
-                    {[filters.style, filters.medium, filters.subject].filter(Boolean).length}
+                    {[filters.orientation !== 'Any' ? filters.orientation : '', filters.color, filters.blackAndWhite ? 'bw' : ''].filter(Boolean).length}
                   </span>
                 )}
               </button>
@@ -207,26 +220,37 @@ export default function BrowsePage({
           {activeDropdown === 'filters' && (
             <div className="browse-filter-panel">
               <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Style</div>
-                <div className="browse-filter-panel-chips">
-                  {STYLE_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.style === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, style: f.style === o ? '' : o }))}>{o}</button>
+                <div className="browse-filter-panel-label">Orientation</div>
+                <div className="browse-filter-orientation-grid">
+                  {ORIENTATION_OPTIONS.map(o => (
+                    <button
+                      key={o}
+                      className={`browse-filter-orient-btn${filters.orientation === o ? ' active' : ''}`}
+                      onClick={() => setFilters(f => ({ ...f, orientation: o }))}
+                    >
+                      {o !== 'Any' && <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />}
+                      {o}
+                    </button>
                   ))}
                 </div>
               </div>
               <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Medium</div>
-                <div className="browse-filter-panel-chips">
-                  {MEDIUM_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.medium === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, medium: f.medium === o ? '' : o }))}>{o}</button>
-                  ))}
+                <div className="browse-filter-panel-label">Color</div>
+                <div className="browse-filter-color-checks">
+                  <label className="browse-filter-check-row">
+                    <span>Black and white</span>
+                    <input type="checkbox" checked={filters.blackAndWhite} onChange={e => setFilters(f => ({ ...f, blackAndWhite: e.target.checked }))} />
+                  </label>
                 </div>
-              </div>
-              <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Subject</div>
-                <div className="browse-filter-panel-chips">
-                  {SUBJECT_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.subject === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, subject: f.subject === o ? '' : o }))}>{o}</button>
+                <div className="browse-filter-color-swatches">
+                  {COLOR_OPTIONS.map(c => (
+                    <button
+                      key={c.value}
+                      title={c.label}
+                      className={`browse-filter-swatch${filters.color === c.value ? ' active' : ''}`}
+                      style={{ background: c.hex, border: c.value === 'white' ? '1.5px solid #e0e0e0' : 'none' }}
+                      onClick={() => setFilters(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
+                    />
                   ))}
                 </div>
               </div>
@@ -237,6 +261,35 @@ export default function BrowsePage({
             </div>
           )}
         </div>
+
+        {/* Active filter chips */}
+        {hasActiveFilters && (
+          <div className="browse-active-filters">
+            {filters.orientation !== 'Any' && (
+              <span className="browse-active-chip">
+                {filters.orientation}
+                <button onClick={() => setFilters(f => ({ ...f, orientation: 'Any' }))}>×</button>
+              </span>
+            )}
+            {filters.color && (() => {
+              const c = COLOR_OPTIONS.find(c => c.value === filters.color)
+              return (
+                <span className="browse-active-chip">
+                  <span className="browse-active-chip-dot" style={{ background: c?.hex, border: filters.color === 'white' ? '1px solid #e0e0e0' : 'none' }} />
+                  {c?.label}
+                  <button onClick={() => setFilters(f => ({ ...f, color: '' }))}>×</button>
+                </span>
+              )
+            })()}
+            {filters.blackAndWhite && (
+              <span className="browse-active-chip">
+                Black & white
+                <button onClick={() => setFilters(f => ({ ...f, blackAndWhite: false }))}>×</button>
+              </span>
+            )}
+            <button className="browse-active-clear" onClick={resetFilters}>Clear all</button>
+          </div>
+        )}
 
         {/* Painting grid */}
         <div className="browse-grid-section">

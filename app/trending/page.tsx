@@ -1,18 +1,19 @@
+import type { Metadata } from 'next'
 import BrowsePage from '@/components/BrowsePage'
+import type { BrowsePageData } from '@/lib/browse-data'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Trending Paintings — Paintora',
-  description: 'Discover the most popular paintings right now. Curated by views, saves, and editorial picks.',
+  description: 'Explore the most popular paintings on Paintora right now.',
 }
 
-const TRENDING_DATA = {
-  slug: 'trending',
+const TRENDING_DATA: BrowsePageData = {
   title: 'Trending',
-  description: 'The most loved paintings right now — curated by views, saves, and editorial picks.',
-  count: '4,800+',
-  popularSearches: ['Abstract', 'Large Format', 'Minimalist', 'Oil on Canvas', 'Warm Tones', 'Botanical'],
+  description: 'The most popular paintings on Paintora right now.',
+  count: '12,400+',
+  popularSearches: ['Abstract', 'Minimalist', 'Landscape', 'Portrait', 'Floral', 'Geometric'],
 }
 
 export default function Page() {
-  return <BrowsePage data={TRENDING_DATA} category="styles" />
+  return <BrowsePage data={TRENDING_DATA} category="spaces" />
 }
