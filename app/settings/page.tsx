@@ -71,33 +71,56 @@ export default function SettingsPage() {
           {isPro ? (
             <div className="ap-plan-row ap-plan-pro">
               <div className="ap-plan-icon ap-plan-icon-pro">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
               </div>
               <div className="ap-plan-info">
                 <div className="ap-plan-name">Paintora Pro <span className="ap-pro-badge">Active</span></div>
-                <div className="ap-plan-meta">Renews on {renewDate}</div>
+                <div className="ap-plan-meta">Renews on {renewDate} · Full 4K downloads included</div>
               </div>
               <div className="ap-plan-price">₹199<span>/mo</span></div>
             </div>
           ) : (
-            <>
-              <div className="ap-plan-row ap-plan-free">
-                <div className="ap-plan-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><circle cx="12" cy="12" r="10"/></svg>
+            <div className="ap-plan-compare">
+              {/* Free */}
+              <div className="ap-plan-tier">
+                <div className="ap-plan-tier-head">
+                  <div className="ap-plan-tier-icon ap-plan-tier-icon-free">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  </div>
+                  <div>
+                    <div className="ap-plan-tier-name">Free</div>
+                    <div className="ap-plan-tier-price">₹0<span>/mo</span></div>
+                  </div>
                 </div>
-                <div className="ap-plan-info">
-                  <div className="ap-plan-name">Free plan</div>
-                  <div className="ap-plan-meta">Browse paintings · Save to collection</div>
-                </div>
+                <ul className="ap-plan-features">
+                  <li><span className="ap-feat-check">✓</span> Browse all paintings</li>
+                  <li><span className="ap-feat-check">✓</span> Save to collection</li>
+                  <li><span className="ap-feat-muted">✗</span> <span style={{color:'#a1a1aa'}}>4K downloads</span></li>
+                  <li><span className="ap-feat-muted">✗</span> <span style={{color:'#a1a1aa'}}>Original resolution</span></li>
+                </ul>
+                <div className="ap-plan-tier-current">Current plan</div>
               </div>
-              <div className="ap-upgrade-banner">
-                <div className="ap-upgrade-banner-left">
-                  <div className="ap-upgrade-banner-title">Unlock full-resolution downloads</div>
-                  <div className="ap-upgrade-banner-sub">Download 4K paintings for print, décor, and personal use.</div>
+
+              {/* Pro */}
+              <div className="ap-plan-tier ap-plan-tier-pro">
+                <div className="ap-plan-tier-head">
+                  <div className="ap-plan-tier-icon ap-plan-tier-icon-pro">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                  </div>
+                  <div>
+                    <div className="ap-plan-tier-name">Pro</div>
+                    <div className="ap-plan-tier-price">₹199<span>/mo</span></div>
+                  </div>
                 </div>
-                <button className="ap-btn-primary" onClick={() => setUpgradeOpen(true)}>Upgrade — ₹199/mo</button>
+                <ul className="ap-plan-features">
+                  <li><span className="ap-feat-check">✓</span> Browse all paintings</li>
+                  <li><span className="ap-feat-check">✓</span> Save to collection</li>
+                  <li><span className="ap-feat-check">✓</span> 4K downloads</li>
+                  <li><span className="ap-feat-check">✓</span> Original resolution</li>
+                </ul>
+                <button className="ap-plan-upgrade-btn" onClick={() => setUpgradeOpen(true)}>Upgrade to Pro</button>
               </div>
-            </>
+            </div>
           )}
         </div>
 

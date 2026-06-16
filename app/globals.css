@@ -2654,6 +2654,46 @@ img.loaded { opacity: 1; }
 .ap-upgrade-banner-title { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
 .ap-upgrade-banner-sub { font-size: 12px; color: #71717a; }
 
+/* Plan comparison */
+.ap-plan-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ap-plan-tier {
+  border: 1.5px solid #e4e4e7; border-radius: 14px;
+  padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 1rem;
+}
+.ap-plan-tier-pro {
+  border-color: #7c3aed;
+  background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%);
+}
+.ap-plan-tier-head { display: flex; align-items: center; gap: 10px; }
+.ap-plan-tier-icon {
+  width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.ap-plan-tier-icon-free { background: #f4f4f6; color: #71717a; }
+.ap-plan-tier-icon-pro { background: #7c3aed; color: #fff; }
+.ap-plan-tier-name { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.ap-plan-tier-price { font-size: 13px; font-weight: 600; color: #71717a; }
+.ap-plan-tier-price span { font-size: 11px; font-weight: 400; }
+.ap-plan-features {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 12.5px; color: var(--ink); flex: 1;
+}
+.ap-feat-check { color: #16a34a; font-weight: 700; margin-right: 6px; }
+.ap-feat-muted { color: #d1d5db; margin-right: 6px; }
+.ap-plan-tier-current {
+  font-size: 12px; font-weight: 600; color: #a1a1aa;
+  text-align: center; padding: 7px; border-radius: 8px;
+  background: #f4f4f6; border: 1px solid #e4e4e7;
+}
+.ap-plan-upgrade-btn {
+  width: 100%; padding: 9px; border-radius: 9px;
+  background: #7c3aed; color: #fff; border: none; cursor: pointer;
+  font-size: 13px; font-weight: 700; font-family: var(--sans);
+  transition: opacity 0.15s;
+}
+.ap-plan-upgrade-btn:hover { opacity: 0.88; }
+
 /* Settings: Danger zone */
 .ap-danger-card { border-color: #fecaca; }
 .ap-danger-desc { font-size: 13.5px; color: #71717a; margin-bottom: 1.1rem; line-height: 1.6; }
