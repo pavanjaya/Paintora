@@ -62,6 +62,13 @@ const toggleSave = useCallback(async (id: string) => {
     }
   }, [user, saved])
 
+  // Clean query for display: remove "paintings", "painting", "for" so title reads naturally
+  const displayQuery = query
+    .replace(/\bpaintings?\b/gi, '')
+    .replace(/\bfor\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
   const isLoading = dbArtworks === undefined
   const artworks: ArtItem[] = dbArtworks ?? []
   const gated = !user && artworks.length > FREE_LIMIT
@@ -81,8 +88,8 @@ const toggleSave = useCallback(async (id: string) => {
       <main className="browse-main">
         <div className="browse-header">
           <div className="browse-header-inner">
-            <h1 className="browse-title">{query ? `${query} Paintings` : 'All Paintings'}</h1>
-            {query && <p className="browse-desc">Browse curated paintings matching &ldquo;{query}&rdquo;.</p>}
+            <h1 className="browse-title">{displayQuery ? `${displayQuery} Paintings` : 'All Paintings'}</h1>
+            {displayQuery && <p className="browse-desc">Browse curated paintings matching &ldquo;{displayQuery}&rdquo;.</p>}
             <span className="browse-count">{artworks.length} paintings</span>
           </div>
         </div>
@@ -102,7 +109,7 @@ const toggleSave = useCallback(async (id: string) => {
           {!isLoading && artworks.length === 0 && (
             <div className="browse-empty-state">
               <p className="browse-empty-icon">🎨</p>
-              <h2 className="browse-empty-title">No paintings found for &ldquo;{query}&rdquo;</h2>
+              <h2 className="browse-empty-title">No paintings found for &ldquo;{displayQuery}&rdquo;</h2>
               <p className="browse-empty-sub">Try a different style, space, or artist name.</p>
               <Link href="/" className="browse-empty-cta">Browse all paintings</Link>
             </div>

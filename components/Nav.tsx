@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { FEED_ARTWORKS, STYLES, SPACES } from '@/lib/data'
 
 function getSearchResults(q: string) {
@@ -38,10 +38,16 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
   isPro?: boolean
 }) {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [scrolled, setScrolled] = useState(false)
   const [discoverOpen, setDiscoverOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQ, setSearchQ] = useState('')
+  const [searchQ, setSearchQ] = useState(() =>
+    typeof window !== 'undefined' && window.location.pathname === '/search'
+      ? new URLSearchParams(window.location.search).get('q') ?? ''
+      : ''
+  )
   const [mobileOpen, setMobileOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
@@ -49,6 +55,14 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
   const mobileSearchInputRef = useRef<HTMLInputElement>(null)
   const discoverRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (pathname === '/search') {
+      setSearchQ(searchParams.get('q') ?? '')
+    } else {
+      setSearchQ('')
+    }
+  }, [pathname, searchParams])
 
   useEffect(() => {
     const handler = () => {
