@@ -195,9 +195,9 @@ export default function BrowsePage({
         <div ref={filterBarRef} className={`browse-filter-bar${sticky ? ' sticky' : ''}`}>
           <div className="browse-filter-inner">
             <div className="browse-tags-scroll">
-              {data.popularSearches.map(q => (
-                <Link key={q} href={`/search?q=${encodeURIComponent(q)}`} className="browse-popular-tag">
-                  {q}
+              {data.relatedLinks.map(l => (
+                <Link key={l.href} href={l.href} className="browse-popular-tag">
+                  {l.label}
                 </Link>
               ))}
             </div>

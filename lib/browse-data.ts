@@ -3,12 +3,14 @@ export type { ArtItem } from './data'
 
 export type BrowseCategory = 'spaces' | 'styles' | 'mediums' | 'subjects'
 
+export type RelatedLink = { label: string; href: string }
+
 export type BrowsePageData = {
   slug: string
   title: string
   description: string
   count: string
-  popularSearches: string[]
+  relatedLinks: RelatedLink[]
 }
 
 export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
@@ -18,56 +20,104 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       title: 'Living Room',
       description: 'Statement paintings that anchor your main space.',
       count: '2,400+',
-      popularSearches: ['Large Abstract', 'Warm Tones', 'Landscape', 'Minimalist', 'Oversized Canvas'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Floral', href: '/subjects/floral' },
+      ],
     },
     {
       slug: 'office',
       title: 'Office',
       description: 'Curated artwork for modern workspaces.',
       count: '2,456',
-      popularSearches: ['Law Office', 'Architect Office', 'Corporate Office', 'Executive Office', 'Home Office'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Geometric', href: '/styles/geometric' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+      ],
     },
     {
       slug: 'bedroom',
       title: 'Bedroom',
       description: 'Calm, restful paintings for personal sanctuaries.',
       count: '1,800+',
-      popularSearches: ['Soft Tones', 'Floral', 'Abstract', 'Minimalist', 'Nature'],
+      relatedLinks: [
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Abstract', href: '/styles/abstract' },
+      ],
     },
     {
       slug: 'dining-room',
       title: 'Dining Room',
       description: 'Conversation-starting art for shared meals.',
       count: '940+',
-      popularSearches: ['Still Life', 'Botanical', 'Warm Colors', 'Contemporary', 'Large Format'],
+      relatedLinks: [
+        { label: 'Still Life', href: '/subjects/still-life' },
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Abstract', href: '/styles/abstract' },
+      ],
     },
     {
       slug: 'hotel',
       title: 'Hotel',
       description: 'Sophisticated artwork for hospitality interiors.',
       count: '1,200+',
-      popularSearches: ['Lobby Art', 'Suite Decor', 'Luxury', 'Minimalist', 'Abstract'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+      ],
     },
     {
       slug: 'cafe',
       title: 'Café',
       description: 'Warm, inviting art for coffee shops and bistros.',
       count: '620+',
-      popularSearches: ['Botanical', 'Still Life', 'Urban', 'Watercolor', 'Small Format'],
+      relatedLinks: [
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Still Life', href: '/subjects/still-life' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Nature', href: '/subjects/nature' },
+      ],
     },
     {
       slug: 'retail',
       title: 'Retail',
       description: 'Distinctive paintings that enhance the shopping experience.',
       count: '480+',
-      popularSearches: ['Bold Colors', 'Geometric', 'Contemporary', 'Large Scale', 'Abstract'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Geometric', href: '/styles/geometric' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+      ],
     },
     {
       slug: 'spa',
       title: 'Spa',
       description: 'Serene, mindful artwork for wellness spaces.',
       count: '560+',
-      popularSearches: ['Nature', 'Soft Abstract', 'Zen', 'Watercolor', 'Floral'],
+      relatedLinks: [
+        { label: 'Nature', href: '/subjects/nature' },
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+      ],
     },
   ],
   styles: [
@@ -76,42 +126,78 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       title: 'Abstract',
       description: 'Expressive, emotion-driven paintings that transcend literal representation.',
       count: '3,200+',
-      popularSearches: ['Abstract Expressionism', 'Color Field', 'Gestural', 'Fluid Art', 'Minimalist Abstract'],
+      relatedLinks: [
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+        { label: 'Office', href: '/spaces/office' },
+      ],
     },
     {
       slug: 'minimalist',
       title: 'Minimalist',
       description: 'Restrained compositions that speak through form and negative space.',
       count: '1,800+',
-      popularSearches: ['Monochrome', 'Line Art', 'Geometric Minimal', 'Scandinavian', 'White Space'],
+      relatedLinks: [
+        { label: 'Geometric', href: '/styles/geometric' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Bedroom', href: '/spaces/bedroom' },
+        { label: 'Office', href: '/spaces/office' },
+      ],
     },
     {
       slug: 'contemporary',
       title: 'Contemporary',
       description: 'Modern paintings reflecting today\'s artistic conversation.',
       count: '2,600+',
-      popularSearches: ['Neo-Expressionism', 'Street Art', 'Digital Mixed', 'Conceptual', 'New Realism'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+        { label: 'Office', href: '/spaces/office' },
+      ],
     },
     {
       slug: 'impressionism',
       title: 'Impressionism',
       description: 'Light-filled paintings that capture fleeting moments and atmosphere.',
       count: '1,400+',
-      popularSearches: ['Plein Air', 'Post-Impressionist', 'Soft Brush', 'Garden Scene', 'Water Scene'],
+      relatedLinks: [
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+      ],
     },
     {
       slug: 'geometric',
       title: 'Geometric',
       description: 'Precise, pattern-driven compositions with mathematical beauty.',
       count: '980+',
-      popularSearches: ['Hard Edge', 'Op Art', 'Tessellation', 'Grid Work', 'Color Blocks'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Office', href: '/spaces/office' },
+        { label: 'Retail', href: '/spaces/retail' },
+      ],
     },
     {
       slug: 'landscape',
       title: 'Landscape',
       description: 'Horizon, depth, and the natural world rendered in paint.',
       count: '2,100+',
-      popularSearches: ['Mountain', 'Ocean', 'Forest', 'Desert', 'Countryside'],
+      relatedLinks: [
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Nature', href: '/subjects/nature' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+      ],
     },
   ],
   mediums: [
@@ -120,28 +206,52 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       title: 'Oil Painting',
       description: 'Rich, luminous works with deep color and lasting texture.',
       count: '4,100+',
-      popularSearches: ['Oil on Canvas', 'Oil on Board', 'Thick Impasto', 'Alla Prima', 'Glazing Technique'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Portrait', href: '/subjects/portrait' },
+        { label: 'Still Life', href: '/subjects/still-life' },
+      ],
     },
     {
       slug: 'watercolor',
       title: 'Watercolor',
       description: 'Translucent, fluid paintings with a light, ethereal quality.',
       count: '1,600+',
-      popularSearches: ['Botanical', 'Landscape', 'Portrait', 'Abstract Watercolor', 'Loose Style'],
+      relatedLinks: [
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Portrait', href: '/subjects/portrait' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Nature', href: '/subjects/nature' },
+      ],
     },
     {
       slug: 'acrylic',
       title: 'Acrylic',
       description: 'Versatile, vibrant paintings with bold color and fast drying.',
       count: '2,800+',
-      popularSearches: ['Pour Painting', 'Acrylic Abstract', 'Mixed Media', 'Flat Acrylic', 'Textured'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Geometric', href: '/styles/geometric' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+      ],
     },
     {
       slug: 'mixed-media',
       title: 'Mixed Media',
       description: 'Layered, experimental works combining multiple materials.',
       count: '920+',
-      popularSearches: ['Collage', 'Encaustic', 'Ink and Paint', 'Texture Work', 'Found Objects'],
+      relatedLinks: [
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Geometric', href: '/styles/geometric' },
+        { label: 'Office', href: '/spaces/office' },
+      ],
     },
   ],
   subjects: [
@@ -150,42 +260,78 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       title: 'Landscape',
       description: 'The natural world — horizons, forests, skies, and water.',
       count: '3,400+',
-      popularSearches: ['Mountain', 'Ocean', 'Forest', 'Desert Landscape', 'Rolling Hills'],
+      relatedLinks: [
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Nature', href: '/subjects/nature' },
+        { label: 'Living Room', href: '/spaces/living-room' },
+      ],
     },
     {
       slug: 'architecture',
       title: 'Architecture',
       description: 'Buildings, cities, and the built environment.',
       count: '1,100+',
-      popularSearches: ['City Skyline', 'Interior', 'Bridge', 'Ruins', 'Modern Building'],
+      relatedLinks: [
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Office', href: '/spaces/office' },
+        { label: 'Hotel', href: '/spaces/hotel' },
+      ],
     },
     {
       slug: 'floral',
       title: 'Floral',
       description: 'Flowers and botanical subjects in every style and scale.',
       count: '2,200+',
-      popularSearches: ['Roses', 'Wildflowers', 'Botanical Print', 'Peonies', 'Abstract Floral'],
+      relatedLinks: [
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Bedroom', href: '/spaces/bedroom' },
+        { label: 'Nature', href: '/subjects/nature' },
+      ],
     },
     {
       slug: 'portrait',
       title: 'Portrait',
       description: 'The human face and figure — from realism to abstraction.',
       count: '1,800+',
-      popularSearches: ['Figure Study', 'Contemporary Portrait', 'Abstract Face', 'Silhouette', 'Bust Study'],
+      relatedLinks: [
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+      ],
     },
     {
       slug: 'still-life',
       title: 'Still Life',
       description: 'Objects, arrangements, and the quiet beauty of everyday things.',
       count: '1,300+',
-      popularSearches: ['Fruit', 'Vessels', 'Books', 'Food', 'Flowers in Vase'],
+      relatedLinks: [
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Dining Room', href: '/spaces/dining-room' },
+        { label: 'Floral', href: '/subjects/floral' },
+      ],
     },
     {
       slug: 'nature',
       title: 'Nature',
       description: 'Animals, plants, and the broader natural world.',
       count: '2,600+',
-      popularSearches: ['Birds', 'Trees', 'Ocean Life', 'Wildlife', 'Forest Floor'],
+      relatedLinks: [
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Spa', href: '/spaces/spa' },
+      ],
     },
   ],
 }
@@ -203,7 +349,6 @@ export const CATEGORY_LABELS: Record<BrowseCategory, string> = {
   subjects: 'Subjects',
 }
 
-// Nav Discover items for dropdown + mobile drawer
 export const DISCOVER_NAV_ITEMS = [
   { label: 'Spaces',   desc: 'Browse by room or environment',   href: '/spaces' },
   { label: 'Styles',   desc: 'Abstract, Minimalist, Realism…',  href: '/styles' },

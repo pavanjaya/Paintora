@@ -12,7 +12,13 @@ const TRENDING_DATA: BrowsePageData = {
   title: 'Trending',
   description: 'The most popular paintings on Paintora right now.',
   count: '12,400+',
-  popularSearches: ['Abstract', 'Minimalist', 'Landscape', 'Portrait', 'Floral', 'Geometric'],
+  relatedLinks: [
+    { label: 'Abstract', href: '/styles/abstract' },
+    { label: 'Minimalist', href: '/styles/minimalist' },
+    { label: 'Landscape', href: '/subjects/landscape' },
+    { label: 'Floral', href: '/subjects/floral' },
+    { label: 'Geometric', href: '/styles/geometric' },
+  ],
 }
 
 export default function Page() {
