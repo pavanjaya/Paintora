@@ -1514,10 +1514,10 @@ img.loaded { opacity: 1; }
 .browse-orient-icon--vertical { width: 14px; height: 22px; }
 .browse-orient-icon--square { width: 18px; height: 18px; }
 .browse-active-filters { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px 1.5rem 0; }
-.browse-active-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 12px; background: var(--ink); color: #fff; border-radius: 20px; font-size: 12px; font-weight: 500; font-family: var(--sans); }
+.browse-active-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 12px; background: #fff; color: var(--ink); border: 1px solid #d1d5db; border-radius: 20px; font-size: 12px; font-weight: 500; font-family: var(--sans); }
 .browse-active-chip-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.browse-active-chip button { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 15px; line-height: 1; padding: 0; margin-left: 2px; display: flex; align-items: center; }
-.browse-active-chip button:hover { color: #fff; }
+.browse-active-chip button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 15px; line-height: 1; padding: 0; margin-left: 2px; display: flex; align-items: center; }
+.browse-active-chip button:hover { color: var(--ink); }
 .browse-active-clear { background: none; border: none; font-size: 12px; font-family: var(--sans); color: var(--muted); cursor: pointer; padding: 4px 0; text-decoration: underline; }
 .browse-active-clear:hover { color: var(--ink); }
 .browse-filter-color-checks { display: flex; flex-direction: column; gap: 0; margin-bottom: 12px; }

@@ -57,6 +57,7 @@ export default function BrowsePage({
   const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [filters, setFilters] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
+  const [pending, setPending] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
@@ -127,8 +128,21 @@ export default function BrowsePage({
   }
 
   const resetFilters = () => {
-    setFilters({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
+    const empty = { orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' }
+    setFilters(empty)
+    setPending(empty)
     setVisibleCount(PAGE_SIZE)
+  }
+
+  const applyFilters = () => {
+    setFilters(pending)
+    setVisibleCount(PAGE_SIZE)
+    setActiveDropdown(null)
+  }
+
+  const openFilters = () => {
+    setPending(filters) // sync panel to current applied state
+    setActiveDropdown(v => v === 'filters' ? null : 'filters')
   }
 
   const hasActiveFilters = (filters.orientation && filters.orientation !== 'Any') || filters.color || filters.blackAndWhite
@@ -204,7 +218,7 @@ export default function BrowsePage({
             <div className="browse-filter-right">
               <button
                 className={`browse-filter-toggle${activeDropdown === 'filters' ? ' active' : ''}`}
-                onClick={() => setActiveDropdown(v => v === 'filters' ? null : 'filters')}
+                onClick={openFilters}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
                 Filters
@@ -225,8 +239,8 @@ export default function BrowsePage({
                   {ORIENTATION_OPTIONS.map(o => (
                     <button
                       key={o}
-                      className={`browse-filter-orient-btn${filters.orientation === o ? ' active' : ''}`}
-                      onClick={() => setFilters(f => ({ ...f, orientation: o }))}
+                      className={`browse-filter-orient-btn${pending.orientation === o ? ' active' : ''}`}
+                      onClick={() => setPending(f => ({ ...f, orientation: o }))}
                     >
                       {o !== 'Any' && <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />}
                       {o}
@@ -239,7 +253,7 @@ export default function BrowsePage({
                 <div className="browse-filter-color-checks">
                   <label className="browse-filter-check-row">
                     <span>Black and white</span>
-                    <input type="checkbox" checked={filters.blackAndWhite} onChange={e => setFilters(f => ({ ...f, blackAndWhite: e.target.checked }))} />
+                    <input type="checkbox" checked={pending.blackAndWhite} onChange={e => setPending(f => ({ ...f, blackAndWhite: e.target.checked }))} />
                   </label>
                 </div>
                 <div className="browse-filter-color-swatches">
@@ -247,16 +261,16 @@ export default function BrowsePage({
                     <button
                       key={c.value}
                       title={c.label}
-                      className={`browse-filter-swatch${filters.color === c.value ? ' active' : ''}`}
+                      className={`browse-filter-swatch${pending.color === c.value ? ' active' : ''}`}
                       style={{ background: c.hex, border: c.value === 'white' ? '1.5px solid #e0e0e0' : 'none' }}
-                      onClick={() => setFilters(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
+                      onClick={() => setPending(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
                     />
                   ))}
                 </div>
               </div>
               <div className="browse-filter-panel-footer">
                 <button className="browse-filter-clear" onClick={resetFilters}>Clear all</button>
-                <button className="browse-filter-apply" onClick={() => setActiveDropdown(null)}>Apply</button>
+                <button className="browse-filter-apply" onClick={applyFilters}>Apply</button>
               </div>
             </div>
           )}
