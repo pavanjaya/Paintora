@@ -2499,7 +2499,7 @@ img.loaded { opacity: 1; }
 .ap-btn-primary:not(:disabled):hover { opacity: 0.82; }
 .ap-btn-secondary {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 20px; border-radius: 9px;
+  padding: 9px 22px; border-radius: 100px;
   background: var(--ink); color: #fff; border: none;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
   transition: opacity 0.12s;
@@ -2508,7 +2508,7 @@ img.loaded { opacity: 1; }
 .ap-btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
 .ap-btn-danger {
   display: inline-flex; align-items: center;
-  padding: 9px 20px; border-radius: 9px;
+  padding: 9px 22px; border-radius: 100px;
   background: none; color: #dc2626; border: 1.5px solid #dc2626;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
   transition: background 0.12s;
@@ -2516,7 +2516,7 @@ img.loaded { opacity: 1; }
 .ap-btn-danger:hover { background: #fef2f2; }
 .ap-btn-ghost {
   display: inline-flex; align-items: center;
-  padding: 9px 20px; border-radius: 9px;
+  padding: 9px 22px; border-radius: 100px;
   background: #f4f4f5; color: #52525b; border: 1.5px solid #e4e4e7;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
   transition: background 0.12s;
