@@ -308,9 +308,9 @@ export default function PaintingDetail({ id }: { id: string }) {
       {toast && (
         <div style={{
           position: 'fixed', bottom: 28, left: '50%', transform: 'translateX(-50%)',
-          background: '#1a1a2e', color: '#fff', padding: '12px 20px',
+          background: '#fff', color: 'var(--ink)', padding: '12px 20px',
           borderRadius: 10, fontSize: 14, fontFamily: 'var(--sans)', fontWeight: 500,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.2)', zIndex: 999,
+          boxShadow: '0 4px 24px rgba(0,0,0,0.10)', border: '1px solid #e5e7eb', zIndex: 999,
           display: 'flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
         }}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
