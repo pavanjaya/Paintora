@@ -35,20 +35,20 @@ export default function AccountLayout({ active, user, avatarUrl, children }: Pro
     <div style={{ paddingTop: 68, minHeight: '85vh', background: '#fff' }}>
       {/* Desktop: sidebar + content */}
       <div className="al-desktop">
-        <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
-          <aside style={{ flexShrink: 0, width: 180, background: 'transparent' }}>
+        <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2.5rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '2rem', alignItems: 'flex-start' }}>
+          <aside style={{ flexShrink: 0, width: 170, borderRight: '1px solid #e4e4e7', paddingRight: '1rem' }}>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {NAV.map(({ key, label, href, icon }) => (
                 <Link key={key} href={href} style={{
                   display: 'flex', alignItems: 'center', gap: 9,
-                  padding: '9px 12px', borderRadius: 8,
+                  padding: '8px 10px', borderRadius: 7,
                   fontSize: 13.5, fontWeight: active === key ? 600 : 400,
                   color: active === key ? '#191947' : '#71717a',
-                  background: active === key ? '#f4f4f6' : 'transparent',
+                  background: 'transparent',
                   textDecoration: 'none', fontFamily: 'var(--sans)',
-                  transition: 'background 0.12s, color 0.12s',
+                  transition: 'color 0.12s',
                 }}>
-                  <span style={{ display: 'flex', alignItems: 'center', color: active === key ? '#7c3aed' : 'currentColor', opacity: active === key ? 1 : 0.5 }}>{icon}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', color: active === key ? '#7c3aed' : 'currentColor', opacity: active === key ? 1 : 0.45 }}>{icon}</span>
                   {label}
                 </Link>
               ))}
