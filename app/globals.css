@@ -2499,23 +2499,29 @@ img.loaded { opacity: 1; }
 .ap-btn-primary:not(:disabled):hover { opacity: 0.82; }
 .ap-btn-secondary {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 22px; border-radius: 100px;
+  padding: 9px 20px; border-radius: 9px;
   background: #f4f4f5; color: var(--ink); border: 1.5px solid #e4e4e7;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
+  transition: background 0.12s;
 }
+.ap-btn-secondary:hover { background: #ebebed; }
 .ap-btn-secondary:disabled { opacity: 0.55; cursor: not-allowed; }
 .ap-btn-danger {
   display: inline-flex; align-items: center;
-  padding: 9px 20px; border-radius: 100px;
+  padding: 9px 20px; border-radius: 9px;
   background: none; color: #dc2626; border: 1.5px solid #dc2626;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
+  transition: background 0.12s;
 }
+.ap-btn-danger:hover { background: #fef2f2; }
 .ap-btn-ghost {
   display: inline-flex; align-items: center;
-  padding: 9px 20px; border-radius: 100px;
-  background: #f4f4f5; color: #71717a; border: 1.5px solid #e4e4e7;
+  padding: 9px 20px; border-radius: 9px;
+  background: #f4f4f5; color: #52525b; border: 1.5px solid #e4e4e7;
   font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: var(--sans);
+  transition: background 0.12s;
 }
+.ap-btn-ghost:hover { background: #ebebed; }
 .ap-msg { font-size: 13px; }
 .ap-msg.ok { color: #16a34a; }
 .ap-msg.err { color: #dc2626; }
