@@ -213,7 +213,6 @@ export default function PaintingDetail({ id }: { id: string }) {
                       setSaved(next)
                       setSaveLabel(next ? 'Saved!' : 'Removed')
                       setTimeout(() => setSaveLabel(null), 1800)
-                      setTimeout(() => setToast(null), 2500)
                       if (next) {
                         await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: id })
                       } else {
