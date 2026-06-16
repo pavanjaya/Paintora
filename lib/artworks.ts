@@ -41,22 +41,23 @@ export async function fetchFeedArtworks(): Promise<ArtItem[]> {
   return data.map(mapRow)
 }
 
+const STOP_WORDS = new Set(['painting', 'paintings', 'for', 'a', 'an', 'the', 'and', 'of', 'in', 'on', 'with'])
+
+function extractKeywords(query: string): string[] {
+  return query
+    .toLowerCase()
+    .split(/\s+/)
+    .map(w => w.replace(/[^a-z0-9]/g, ''))
+    .filter(w => w.length > 1 && !STOP_WORDS.has(w))
+}
+
 export async function searchArtworks(query: string): Promise<ArtItem[]> {
   if (!query.trim()) return fetchArtworks()
 
-  const q = query.trim().toLowerCase()
+  const keywords = extractKeywords(query)
+  if (keywords.length === 0) return fetchArtworks()
 
-  // Search across title, style name, medium name, category name using ilike
-  const { data } = await supabase
-    .from('artworks')
-    .select(SELECT)
-    .eq('status', 'published')
-    .or(`title.ilike.%${q}%,styles.name.ilike.%${q}%,mediums.name.ilike.%${q}%,categories.name.ilike.%${q}%`)
-    .order('created_at', { ascending: false })
-
-  if (data && data.length > 0) return data.map(mapRow)
-
-  // Fallback: fetch all and filter client-side (handles joined column filtering)
+  // Fetch all published artworks and filter client-side by any keyword match
   const { data: all } = await supabase
     .from('artworks')
     .select(SELECT)
@@ -66,12 +67,15 @@ export async function searchArtworks(query: string): Promise<ArtItem[]> {
   if (!all || all.length === 0) return []
 
   return all
-    .filter((a: any) =>
-      (a.title ?? '').toLowerCase().includes(q) ||
-      (a.style?.name ?? '').toLowerCase().includes(q) ||
-      (a.medium?.name ?? '').toLowerCase().includes(q) ||
-      (a.category?.name ?? '').toLowerCase().includes(q)
-    )
+    .filter((a: any) => {
+      const fields = [
+        (a.title ?? '').toLowerCase(),
+        (a.style?.name ?? '').toLowerCase(),
+        (a.medium?.name ?? '').toLowerCase(),
+        (a.category?.name ?? '').toLowerCase(),
+      ]
+      return keywords.some(kw => fields.some(f => f.includes(kw)))
+    })
     .map(mapRow)
 }
 
