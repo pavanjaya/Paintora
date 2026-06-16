@@ -2689,7 +2689,7 @@ img.loaded { opacity: 1; }
 .ap-feat-muted { color: #d1d5db; margin-right: 6px; }
 .ap-plan-tier-current {
   font-size: 12px; font-weight: 600; color: #a1a1aa;
-  text-align: center; padding: 7px; border-radius: 8px;
+  text-align: center; padding: 7px; border-radius: 100px;
   background: #f4f4f6; border: 1px solid #e4e4e7;
 }
 .ap-plan-upgrade-btn {
