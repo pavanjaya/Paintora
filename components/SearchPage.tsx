@@ -131,7 +131,7 @@ export default function SearchPage({ query }: { query: string }) {
         <div className="browse-header">
           <div className="browse-header-inner">
             <h1 className="browse-title">
-              {query ? `"${query}"` : 'All Paintings'}
+              {query ? `${query} Paintings` : 'All Paintings'}
             </h1>
             <span className="browse-count">{artworks.length} painting{artworks.length !== 1 ? 's' : ''}</span>
           </div>
