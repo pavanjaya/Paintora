@@ -1630,11 +1630,11 @@ img.loaded { opacity: 1; }
 /* ─── Painting Detail Page ───────────────────────────────────────────── */
 .painting-detail-main { padding-top: 68px; min-height: 100vh; }
 
-.painting-breadcrumb { max-width: 1280px; margin: 0 auto; padding: 1rem 2rem; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+.painting-breadcrumb { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
 .painting-breadcrumb a { color: var(--muted); text-decoration: none; }
 .painting-breadcrumb a:hover { color: var(--ink); }
 
-.painting-detail-grid { max-width: 1280px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: start; }
+.painting-detail-grid { padding: 2rem 1.5rem; display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: start; }
 
 .painting-detail-img-col { display: flex; flex-direction: column; gap: 12px; }
 .painting-variant-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
