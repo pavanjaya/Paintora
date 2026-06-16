@@ -38,7 +38,7 @@ export default function AccountLayout({ active, user, avatarUrl, children }: Pro
         <div style={{ maxWidth: 1060, margin: '0 auto', padding: '2rem 1.5rem 4rem', display: 'flex', flexDirection: 'row', gap: '1.5rem', alignItems: 'flex-start' }}>
           <aside style={{ flexShrink: 0, width: 210, background: '#fff', borderRadius: 16, border: '1px solid #e2e2e6', boxShadow: 'none', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '1rem', borderBottom: '1px solid #e2e2e6', background: '#f8f8fa' }}>
-              <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0, overflow: 'hidden' }}>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#f0f0f3', color: '#191947', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, fontFamily: 'var(--sans)', flexShrink: 0, overflow: 'hidden' }}>
                 {avatarUrl ? <img src={avatarUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : initial}
               </div>
               <div style={{ overflow: 'hidden' }}>

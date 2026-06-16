@@ -79,7 +79,7 @@ export default function ProfilePage() {
           <div className="ap-card-header">
             {/* Clickable avatar with upload */}
             <div style={{ position: 'relative', flexShrink: 0 }}>
-              <div className="ap-avatar-lg" style={{ background: avatarUrl ? 'transparent' : '#7c3aed', overflow: 'hidden', cursor: 'pointer' }} onClick={() => fileRef.current?.click()}>
+              <div className="ap-avatar-lg" style={{ cursor: 'pointer' }} onClick={() => fileRef.current?.click()}>
                 {avatarUrl
                   ? <img src={avatarUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : initial}

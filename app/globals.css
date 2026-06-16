@@ -2417,7 +2417,7 @@ img.loaded { opacity: 1; }
 }
 .al-user-avatar {
   width: 36px; height: 36px; border-radius: 50%;
-  background: #7c3aed; color: #fff;
+  background: #f0f0f3; color: #191947;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 700; font-family: var(--sans); flex-shrink: 0;
   overflow: hidden;
@@ -2458,7 +2458,7 @@ img.loaded { opacity: 1; }
 .ap-card-header { display: flex; align-items: center; gap: 14px; }
 .ap-avatar-lg {
   width: 56px; height: 56px; border-radius: 50%;
-  background: #7c3aed; color: #fff;
+  background: #f0f0f3; color: #191947;
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; font-weight: 700; flex-shrink: 0;
   overflow: hidden;
