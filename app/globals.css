@@ -10,7 +10,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   --ink-muted: #71717a;
   --border: rgba(15,15,20,0.08);
   --border-soft: rgba(15,15,20,0.05);
-  --border-solid: var(--border-solid);
+  --border-solid: #e4e4e7;
   --coral-light: #F0F0F0;
   --sage: #3DBF9A;
   --sage-light: #EDFAF5;
