@@ -25,6 +25,7 @@ export default function PaintingDetail({ id }: { id: string }) {
   const [upgradeOpen, setUpgradeOpen] = useState(false)
   const [downloadOpen, setDownloadOpen] = useState(false)
   const [variant, setVariant] = useState<'vertical' | 'horizontal' | 'square' | 'space'>('vertical')
+  const [toast, setToast] = useState<string | null>(null)
   const [art, setArt] = useState<ArtItem | null>(null)
   const [artLoading, setArtLoading] = useState(true)
   const [allArtworks, setAllArtworks] = useState<ArtItem[]>([...FEED_ARTWORKS, ...GALLERY_IMGS])
@@ -210,6 +211,8 @@ export default function PaintingDetail({ id }: { id: string }) {
                       if (!user) { setAuthMode('login'); setAuthOpen(true); return }
                       const next = !saved
                       setSaved(next)
+                      setToast(next ? 'Saved to your collection' : 'Removed from saved')
+                      setTimeout(() => setToast(null), 2500)
                       if (next) {
                         await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: id })
                       } else {
@@ -301,6 +304,19 @@ export default function PaintingDetail({ id }: { id: string }) {
           </section>
         )}
       </main>
+
+      {toast && (
+        <div style={{
+          position: 'fixed', bottom: 28, left: '50%', transform: 'translateX(-50%)',
+          background: '#1a1a2e', color: '#fff', padding: '12px 20px',
+          borderRadius: 10, fontSize: 14, fontFamily: 'var(--sans)', fontWeight: 500,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.2)', zIndex: 999,
+          display: 'flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
+        }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          {toast}
+        </div>
+      )}
 
       <Footer />
 
