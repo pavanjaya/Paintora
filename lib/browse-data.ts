@@ -31,9 +31,12 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       relatedLinks: [
         { label: 'Abstract', href: '/styles/abstract' },
         { label: 'Minimalist', href: '/styles/minimalist' },
-        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
         { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Landscape', href: '/subjects/landscape' },
         { label: 'Floral', href: '/subjects/floral' },
+        { label: 'Portrait', href: '/subjects/portrait' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
       ],
     },
     {
@@ -47,6 +50,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Geometric', href: '/styles/geometric' },
         { label: 'Minimalist', href: '/styles/minimalist' },
         { label: 'Acrylic', href: '/mediums/acrylic' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Architecture', href: '/subjects/architecture' },
+        { label: 'Portrait', href: '/subjects/portrait' },
       ],
     },
     {
@@ -60,6 +66,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Minimalist', href: '/styles/minimalist' },
         { label: 'Watercolor', href: '/mediums/watercolor' },
         { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Nature', href: '/subjects/nature' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Still Life', href: '/subjects/still-life' },
       ],
     },
     {
@@ -73,6 +82,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Oil Painting', href: '/mediums/oil' },
         { label: 'Contemporary', href: '/styles/contemporary' },
         { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Watercolor', href: '/mediums/watercolor' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Nature', href: '/subjects/nature' },
       ],
     },
     {
@@ -83,9 +95,12 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
       relatedLinks: [
         { label: 'Abstract', href: '/styles/abstract' },
         { label: 'Minimalist', href: '/styles/minimalist' },
-        { label: 'Landscape', href: '/subjects/landscape' },
         { label: 'Contemporary', href: '/styles/contemporary' },
         { label: 'Oil Painting', href: '/mediums/oil' },
+        { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Architecture', href: '/subjects/architecture' },
+        { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Portrait', href: '/subjects/portrait' },
       ],
     },
     {
@@ -99,6 +114,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Watercolor', href: '/mediums/watercolor' },
         { label: 'Abstract', href: '/styles/abstract' },
         { label: 'Nature', href: '/subjects/nature' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Contemporary', href: '/styles/contemporary' },
+        { label: 'Oil Painting', href: '/mediums/oil' },
       ],
     },
     {
@@ -112,6 +130,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Contemporary', href: '/styles/contemporary' },
         { label: 'Acrylic', href: '/mediums/acrylic' },
         { label: 'Mixed Media', href: '/mediums/mixed-media' },
+        { label: 'Minimalist', href: '/styles/minimalist' },
+        { label: 'Architecture', href: '/subjects/architecture' },
+        { label: 'Portrait', href: '/subjects/portrait' },
       ],
     },
     {
@@ -125,6 +146,9 @@ export const BROWSE_DATA: Record<BrowseCategory, BrowsePageData[]> = {
         { label: 'Watercolor', href: '/mediums/watercolor' },
         { label: 'Minimalist', href: '/styles/minimalist' },
         { label: 'Landscape', href: '/subjects/landscape' },
+        { label: 'Abstract', href: '/styles/abstract' },
+        { label: 'Impressionism', href: '/styles/impressionism' },
+        { label: 'Still Life', href: '/subjects/still-life' },
       ],
     },
   ],
