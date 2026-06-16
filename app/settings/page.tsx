@@ -114,17 +114,17 @@ export default function SettingsPage() {
           </form>
         </div>
 
-        {/* Danger zone */}
+        {/* Delete account */}
         <div className="ap-card ap-danger-card">
-          <h2 className="ap-section-title ap-section-title-danger">Danger zone</h2>
-          <p className="ap-danger-desc">Permanently delete your account and all associated data. This action cannot be undone.</p>
+          <h2 className="ap-section-title">Delete account</h2>
+          <p className="ap-danger-desc">Once deleted, your account and all associated data — saved paintings, download history, and preferences — cannot be recovered.</p>
           {!deleteConfirm ? (
-            <button className="ap-btn-danger" onClick={() => setDeleteConfirm(true)}>Delete account</button>
+            <button className="ap-btn-danger" onClick={() => setDeleteConfirm(true)}>Delete my account</button>
           ) : (
             <div className="ap-delete-confirm">
-              <p className="ap-delete-warn">Are you sure? All your saved paintings, downloads and account data will be permanently removed.</p>
+              <p className="ap-delete-warn">This will permanently remove your account. This cannot be undone.</p>
               <div className="ap-delete-actions">
-                <button className="ap-btn-danger" onClick={() => { supabase.auth.signOut(); router.push('/') }}>Yes, delete everything</button>
+                <button className="ap-btn-danger" onClick={() => { supabase.auth.signOut(); router.push('/') }}>Yes, delete my account</button>
                 <button className="ap-btn-ghost" onClick={() => setDeleteConfirm(false)}>Cancel</button>
               </div>
             </div>

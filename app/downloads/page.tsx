@@ -25,6 +25,14 @@ export default function DownloadsPage() {
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
   const [downloads, setDownloads] = useState<DownloadRecord[]>([])
   const [loading, setLoading] = useState(true)
+  const [removingId, setRemovingId] = useState<string | null>(null)
+
+  const removeDownload = async (id: string) => {
+    setRemovingId(id)
+    await supabase.from('downloads').delete().eq('id', id)
+    setDownloads(prev => prev.filter(d => d.id !== id))
+    setRemovingId(null)
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
@@ -91,7 +99,17 @@ export default function DownloadsPage() {
                     <span>{new Date(d.downloaded_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                   </div>
                 </div>
-                <Link href={`/paintings/${d.painting_id}`} className="ap-dl-btn">View</Link>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                  <Link href={`/paintings/${d.painting_id}`} className="ap-dl-btn">View</Link>
+                  <button
+                    className="ap-art-remove"
+                    onClick={() => removeDownload(d.id)}
+                    disabled={removingId === d.id}
+                    title="Remove from history"
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
