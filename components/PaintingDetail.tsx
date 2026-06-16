@@ -221,11 +221,15 @@ export default function PaintingDetail({ id }: { id: string }) {
                       }
                     }}
                   >
-                    {saveLabel ? (
-                      <span style={{ fontSize: 12, fontWeight: 600, fontFamily: 'var(--sans)', whiteSpace: 'nowrap', padding: '0 4px' }}>{saveLabel}</span>
-                    ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    {saveLabel && (
+                      <span style={{
+                        position: 'absolute', bottom: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)',
+                        background: '#1a1a2e', color: '#fff', fontSize: 11, fontWeight: 500,
+                        fontFamily: 'var(--sans)', padding: '5px 10px', borderRadius: 6,
+                        whiteSpace: 'nowrap', pointerEvents: 'none',
+                      }}>{saveLabel}</span>
                     )}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                   </button>
                 </div>
 

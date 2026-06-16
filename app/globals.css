@@ -2363,9 +2363,9 @@ img.loaded { opacity: 1; }
   flex: 1; margin-bottom: 0;
 }
 .painting-download-row .painting-save-btn-large {
-  flex: 0 0 auto; min-width: 52px; padding: 0 10px;
+  flex: 0 0 52px; width: 52px; padding: 0;
   display: flex; align-items: center; justify-content: center;
-  transition: min-width 0.2s;
+  position: relative;
 }
 .download-size-panel {
   margin-top: 10px;
