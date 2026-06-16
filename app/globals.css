@@ -1767,8 +1767,8 @@ img.loaded { opacity: 1; }
   font-family: var(--sans); font-size: 15px; font-weight: 600;
   cursor: pointer; transition: all 0.18s;
 }
-.painting-save-btn-large:hover { border-color: #7c3aed; color: #7c3aed; background: #f5f3ff; }
-.painting-save-btn-large.saved { background: #f5f3ff; color: #7c3aed; border-color: #7c3aed; }
+.painting-save-btn-large:hover { border-color: var(--ink); background: var(--bg-soft); }
+.painting-save-btn-large.saved { border-color: var(--ink); background: var(--bg-soft); color: var(--ink); }
 
 /* ── BROWSE LOGIN GATE ── */
 .browse-login-gate {
@@ -2363,8 +2363,8 @@ img.loaded { opacity: 1; }
   flex: 1; margin-bottom: 0;
 }
 .painting-download-row .painting-save-btn-large {
-  flex: 1; width: auto; padding: 14px 20px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  flex: 0 0 52px; width: 52px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
 }
 .download-size-panel {
   margin-top: 10px;
