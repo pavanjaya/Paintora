@@ -1,7 +1,15 @@
 import { FEED_ARTWORKS, GALLERY_IMGS } from './data'
 export type { ArtItem } from './data'
 
-export type BrowseCategory = 'spaces' | 'styles' | 'mediums' | 'subjects'
+export type BrowseCategory = 'spaces' | 'styles' | 'mediums' | 'subjects' | 'color-palettes'
+
+export type ColorPaletteData = {
+  slug: string
+  title: string
+  description: string
+  count: string
+  hex: string[]
+}
 
 export type RelatedLink = { label: string; href: string }
 
@@ -347,7 +355,17 @@ export const CATEGORY_LABELS: Record<BrowseCategory, string> = {
   styles: 'Styles',
   mediums: 'Mediums',
   subjects: 'Subjects',
+  'color-palettes': 'Color Palettes',
 }
+
+export const COLOR_PALETTES: ColorPaletteData[] = [
+  { slug: 'warm-tones',   title: 'Warm Tones',    description: 'Reds, oranges, and golden hues that bring energy and warmth to any space.',  count: '1,200+', hex: ['#C0392B','#E67E22','#F1C40F','#A0522D'] },
+  { slug: 'cool-blues',   title: 'Cool Blues',    description: 'Calming blues and teals perfect for bedrooms, offices, and meditation spaces.', count: '980+',   hex: ['#1A5276','#2980B9','#76D7C4','#AED6F1'] },
+  { slug: 'earth-tones',  title: 'Earth Tones',   description: 'Grounded neutrals — sand, clay, and olive — for organic, natural interiors.',  count: '1,050+', hex: ['#6B4226','#C4A35A','#8B9D77','#D4C5A9'] },
+  { slug: 'moody-darks',  title: 'Moody Darks',   description: 'Deep, dramatic palettes with blacks, navy, and forest green for bold spaces.',  count: '760+',   hex: ['#1C2833','#1B2631','#154360','#186A3B'] },
+  { slug: 'soft-pastels', title: 'Soft Pastels',  description: 'Delicate pinks, lilacs, and mints that feel light and airy.',                  count: '890+',   hex: ['#F9AFCA','#D7BDE2','#A9DFBF','#AED6F1'] },
+  { slug: 'monochrome',   title: 'Monochrome',    description: 'Black, white, and grey paintings with strong graphic presence.',                count: '640+',   hex: ['#1A1A1A','#555555','#AAAAAA','#F0F0F0'] },
+]
 
 export const DISCOVER_NAV_ITEMS = [
   { label: 'Spaces',   desc: 'Browse by room or environment',   href: '/spaces' },
