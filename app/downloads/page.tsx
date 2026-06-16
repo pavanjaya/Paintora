@@ -90,7 +90,12 @@ export default function DownloadsPage() {
           <div className="ap-card ap-dl-list">
             {downloads.map((d, i) => (
               <div key={d.id} className={`ap-dl-row${i === downloads.length - 1 ? ' last' : ''}`}>
-                <img src={d.painting_img} alt={d.painting_name} className="ap-dl-img" />
+                <div className="ap-dl-img" style={{ overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {d.painting_img
+                    ? <img src={d.painting_img} alt={d.painting_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                    : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  }
+                </div>
                 <div className="ap-dl-info">
                   <span className="ap-dl-name">{d.painting_name}</span>
                   <div className="ap-dl-meta">
