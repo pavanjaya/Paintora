@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 }
 
 const TRENDING_DATA: BrowsePageData = {
+  slug: 'trending',
   title: 'Trending',
   description: 'The most popular paintings on Paintora right now.',
   count: '12,400+',
