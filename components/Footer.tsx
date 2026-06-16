@@ -9,6 +9,7 @@ const NAV_COLS = [
       { label: 'Styles', href: '/styles' },
       { label: 'Mediums', href: '/mediums' },
       { label: 'Subjects', href: '/subjects' },
+      { label: 'Color Palettes', href: '/color-palettes' },
     ],
   },
   {
