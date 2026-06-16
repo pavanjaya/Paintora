@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { fetchArtworks } from '@/lib/artworks'
@@ -15,28 +14,57 @@ import AuthModal from '@/components/AuthModal'
 const PAGE_SIZE = 16
 const FREE_LIMIT = 12
 
-const STYLE_OPTIONS   = ['Abstract', 'Minimalist', 'Contemporary', 'Impressionism', 'Geometric', 'Landscape']
-const MEDIUM_OPTIONS  = ['Oil', 'Watercolor', 'Acrylic', 'Mixed Media']
-const SUBJECT_OPTIONS = ['Landscape', 'Portrait', 'Floral', 'Still Life', 'Nature', 'Architecture']
-const SORT_OPTIONS    = ['Trending', 'Newest', "Editor's Picks", 'Price: Low to High', 'Price: High to Low']
+const ORIENTATION_OPTIONS = ['Any', 'Horizontal', 'Vertical', 'Square']
+const COLOR_OPTIONS = [
+  { label: 'Red',    value: 'red',    hex: '#E53935' },
+  { label: 'Orange', value: 'orange', hex: '#FB8C00' },
+  { label: 'Yellow', value: 'yellow', hex: '#FDD835' },
+  { label: 'Green',  value: 'green',  hex: '#43A047' },
+  { label: 'Cyan',   value: 'cyan',   hex: '#26C6DA' },
+  { label: 'Blue',   value: 'blue',   hex: '#1E40FF' },
+  { label: 'Purple', value: 'purple', hex: '#8E24AA' },
+  { label: 'Pink',   value: 'pink',   hex: '#F48FB1' },
+  { label: 'White',  value: 'white',  hex: '#FFFFFF' },
+  { label: 'Gray',   value: 'gray',   hex: '#9E9E9E' },
+  { label: 'Black',  value: 'black',  hex: '#1A1A1A' },
+  { label: 'Brown',  value: 'brown',  hex: '#8D6E63' },
+]
 
-type FilterState = { style: string; medium: string; subject: string; sort: string }
+type FilterState = { orientation: string; color: string; blackAndWhite: boolean }
 type ActiveDropdown = 'filters' | null
 
+// Related searches shown as chips below the title
+const RELATED: Record<string, string[]> = {
+  'pour painting':    ['Fluid Art', 'Acrylic', 'Abstract', 'Colorful', 'Texture'],
+  'acrylic abstract': ['Bold Colors', 'Abstract', 'Contemporary', 'Geometric', 'Textured'],
+  'oil on canvas':    ['Realism', 'Impressionism', 'Portrait', 'Landscape', 'Still Life'],
+  'minimalist':       ['Line Art', 'Monochrome', 'Geometric', 'Scandinavian', 'White Space'],
+  'landscape':        ['Mountain', 'Ocean', 'Forest', 'Countryside', 'Sky'],
+  'floral':           ['Roses', 'Botanical', 'Wildflowers', 'Peonies', 'Abstract Floral'],
+}
+
+function getRelated(q: string): string[] {
+  const key = q.toLowerCase()
+  for (const [k, v] of Object.entries(RELATED)) {
+    if (key.includes(k) || k.includes(key)) return v
+  }
+  return ['Abstract', 'Minimalist', 'Landscape', 'Floral', 'Contemporary']
+}
+
 export default function SearchPage({ query }: { query: string }) {
-  const router = useRouter()
   const [user, setUser] = useState<{ id?: string; email?: string } | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
   const [saved, setSaved] = useState<Set<string>>(new Set())
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const [filters, setFilters] = useState<FilterState>({ style: '', medium: '', subject: '', sort: 'Trending' })
+  const [filters, setFilters] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false })
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
   const [dbArtworks, setDbArtworks] = useState<ArtItem[]>(ALL_ARTWORKS)
 
   useEffect(() => { fetchArtworks().then(setDbArtworks) }, [])
+  useEffect(() => { setVisibleCount(PAGE_SIZE) }, [query])
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
@@ -61,10 +89,6 @@ export default function SearchPage({ query }: { query: string }) {
   }, [])
 
   useEffect(() => {
-    setVisibleCount(PAGE_SIZE)
-  }, [query])
-
-  useEffect(() => {
     const bar = filterBarRef.current
     if (!bar) return
     const threshold = bar.offsetTop
@@ -86,9 +110,9 @@ export default function SearchPage({ query }: { query: string }) {
     const isSaved = saved.has(id)
     setSaved(prev => { const n = new Set(prev); isSaved ? n.delete(id) : n.add(id); return n })
     if (isSaved) {
-      await supabase.from('saves').delete().eq('user_id', (user as { id?: string }).id!).eq('artwork_id', id)
+      await supabase.from('saves').delete().eq('user_id', user.id!).eq('artwork_id', id)
     } else {
-      await supabase.from('saves').upsert({ user_id: (user as { id?: string }).id!, artwork_id: id })
+      await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: id })
     }
   }, [user, saved])
 
@@ -98,29 +122,20 @@ export default function SearchPage({ query }: { query: string }) {
         return a.name.toLowerCase().includes(q) || a.style.toLowerCase().includes(q) || (a.medium ?? '').toLowerCase().includes(q)
       })
     : dbArtworks
+
   const gated = !user && artworks.length > FREE_LIMIT
   const visible = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const hasMore = !gated && visibleCount < artworks.length
+  const hasActiveFilters = (filters.orientation && filters.orientation !== 'Any') || filters.color || filters.blackAndWhite
+  const relatedSearches = getRelated(query)
 
-  const setFilter = (key: keyof FilterState, val: string) => {
-    setFilters(f => ({ ...f, [key]: f[key] === val ? '' : val }))
-    setActiveDropdown(null)
-    setVisibleCount(PAGE_SIZE)
-  }
-
-  const resetFilters = () => {
-    setFilters({ style: '', medium: '', subject: '', sort: 'Trending' })
-    setVisibleCount(PAGE_SIZE)
-  }
-
-  const hasActiveFilters = filters.style || filters.medium || filters.subject
+  const resetFilters = () => setFilters({ orientation: 'Any', color: '', blackAndWhite: false })
 
   return (
     <>
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-       
         onStylesPage={() => {}}
         isLoggedIn={!!user}
         userEmail={user?.email}
@@ -130,17 +145,22 @@ export default function SearchPage({ query }: { query: string }) {
       <main className="browse-main">
         <div className="browse-header">
           <div className="browse-header-inner">
-            <h1 className="browse-title">
-              {query ? `${query} Paintings` : 'All Paintings'}
-            </h1>
-            <span className="browse-count">{artworks.length} painting{artworks.length !== 1 ? 's' : ''}</span>
+            <h1 className="browse-title">{query ? `${query} Paintings` : 'All Paintings'}</h1>
+            {query && <p className="browse-desc">Browse curated paintings matching &ldquo;{query}&rdquo;.</p>}
+            <span className="browse-count">{artworks.length} paintings</span>
           </div>
         </div>
 
-        {/* Filter bar */}
         <div ref={filterBarRef} className={`browse-filter-bar${sticky ? ' sticky' : ''}`}>
           <div className="browse-filter-inner">
-            <div className="browse-filter-right" style={{ borderLeft: 'none', paddingLeft: 0 }}>
+            <div className="browse-tags-scroll">
+              {relatedSearches.map(q => (
+                <Link key={q} href={`/search?q=${encodeURIComponent(q)}`} className={`browse-popular-tag${query === q ? ' active' : ''}`}>
+                  {q}
+                </Link>
+              ))}
+            </div>
+            <div className="browse-filter-right">
               <button
                 className={`browse-filter-toggle${activeDropdown === 'filters' ? ' active' : ''}`}
                 onClick={() => setActiveDropdown(v => v === 'filters' ? null : 'filters')}
@@ -149,7 +169,7 @@ export default function SearchPage({ query }: { query: string }) {
                 Filters
                 {hasActiveFilters && (
                   <span className="browse-filter-badge">
-                    {[filters.style, filters.medium, filters.subject].filter(Boolean).length}
+                    {[filters.orientation !== 'Any' ? filters.orientation : '', filters.color, filters.blackAndWhite ? 'bw' : ''].filter(Boolean).length}
                   </span>
                 )}
               </button>
@@ -159,26 +179,37 @@ export default function SearchPage({ query }: { query: string }) {
           {activeDropdown === 'filters' && (
             <div className="browse-filter-panel">
               <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Style</div>
-                <div className="browse-filter-panel-chips">
-                  {STYLE_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.style === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, style: f.style === o ? '' : o }))}>{o}</button>
+                <div className="browse-filter-panel-label">Orientation</div>
+                <div className="browse-filter-orientation-grid">
+                  {ORIENTATION_OPTIONS.map(o => (
+                    <button
+                      key={o}
+                      className={`browse-filter-orient-btn${filters.orientation === o ? ' active' : ''}`}
+                      onClick={() => setFilters(f => ({ ...f, orientation: o }))}
+                    >
+                      {o !== 'Any' && <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />}
+                      {o}
+                    </button>
                   ))}
                 </div>
               </div>
               <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Medium</div>
-                <div className="browse-filter-panel-chips">
-                  {MEDIUM_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.medium === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, medium: f.medium === o ? '' : o }))}>{o}</button>
-                  ))}
+                <div className="browse-filter-panel-label">Color</div>
+                <div className="browse-filter-color-checks">
+                  <label className="browse-filter-check-row">
+                    <span>Black and white</span>
+                    <input type="checkbox" checked={filters.blackAndWhite} onChange={e => setFilters(f => ({ ...f, blackAndWhite: e.target.checked }))} />
+                  </label>
                 </div>
-              </div>
-              <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Subject</div>
-                <div className="browse-filter-panel-chips">
-                  {SUBJECT_OPTIONS.map(o => (
-                    <button key={o} className={`browse-filter-chip${filters.subject === o ? ' active' : ''}`} onClick={() => setFilters(f => ({ ...f, subject: f.subject === o ? '' : o }))}>{o}</button>
+                <div className="browse-filter-color-swatches">
+                  {COLOR_OPTIONS.map(c => (
+                    <button
+                      key={c.value}
+                      title={c.label}
+                      className={`browse-filter-swatch${filters.color === c.value ? ' active' : ''}`}
+                      style={{ background: c.hex, border: c.value === 'white' ? '1.5px solid #e0e0e0' : 'none' }}
+                      onClick={() => setFilters(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
+                    />
                   ))}
                 </div>
               </div>
@@ -190,7 +221,6 @@ export default function SearchPage({ query }: { query: string }) {
           )}
         </div>
 
-        {/* Grid */}
         <div className="browse-grid-section">
           {artworks.length === 0 && (
             <div className="browse-empty-state">
@@ -238,7 +268,7 @@ export default function SearchPage({ query }: { query: string }) {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </div>
                 <h3 className="browse-gate-title">Log in to see more</h3>
-                <p className="browse-gate-sub">Explore the full collection — {artworks.length}+ curated contemporary works, high-resolution downloads, and more.</p>
+                <p className="browse-gate-sub">Explore the full collection — {artworks.length}+ curated contemporary works.</p>
                 <div className="browse-gate-actions">
                   <button className="browse-gate-cta-primary" onClick={() => { setAuthMode('signup'); setAuthOpen(true) }}>Create free account</button>
                   <button className="browse-gate-cta-secondary" onClick={() => { setAuthMode('login'); setAuthOpen(true) }}>Log in</button>
@@ -258,7 +288,6 @@ export default function SearchPage({ query }: { query: string }) {
       </main>
 
       <Footer />
-
       <AuthModal
         mode={authMode}
         open={authOpen}

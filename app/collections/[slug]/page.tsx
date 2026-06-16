@@ -72,7 +72,7 @@ const COLLECTIONS: Record<string, CollectionData> = {
     emoji: '⭐',
     title: 'Curated by Paintora',
     description: 'Our handpicked selection of the most exceptional paintings.',
-    about: "The best of what we carry — handpicked by our editorial team for quality, originality, and lasting appeal. If you're not sure where to start, start here.",
+    about: 'The best of what we carry — handpicked by our editorial team for quality, originality, and lasting appeal. Start here.',
     count: 32,
     tag: 'Curated',
   },

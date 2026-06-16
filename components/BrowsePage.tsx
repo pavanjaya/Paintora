@@ -57,7 +57,6 @@ export default function BrowsePage({
   const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [filters, setFilters] = useState<FilterState>({ orientation: 'Any', color: '', blackAndWhite: false, sort: 'Trending' })
-  const [activeTab, setActiveTab] = useState<string>('')
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
@@ -116,13 +115,10 @@ export default function BrowsePage({
 
   const isLoading = dbArtworks === undefined
   const artworks: ArtItem[] = dbArtworks ?? []
-  const filteredArtworks = activeTab
-    ? artworks.filter(a => a.name?.toLowerCase().includes(activeTab.toLowerCase()) || a.style?.toLowerCase().includes(activeTab.toLowerCase()))
-    : artworks
-  const gated = !user && filteredArtworks.length > FREE_LIMIT
-  const visibleArtworks = gated ? filteredArtworks.slice(0, FREE_LIMIT) : filteredArtworks.slice(0, visibleCount)
+  const gated = !user && artworks.length > FREE_LIMIT
+  const visibleArtworks = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const visible = visibleArtworks
-  const hasMore = !gated && visibleCount < filteredArtworks.length
+  const hasMore = !gated && visibleCount < artworks.length
 
   const setFilter = (key: keyof FilterState, val: string) => {
     setFilters(f => ({ ...f, [key]: f[key] === val ? '' : val }))
@@ -200,13 +196,9 @@ export default function BrowsePage({
           <div className="browse-filter-inner">
             <div className="browse-tags-scroll">
               {data.popularSearches.map(q => (
-                <button
-                  key={q}
-                  className={`browse-popular-tag${activeTab === q ? ' active' : ''}`}
-                  onClick={() => { setActiveTab(t => t === q ? '' : q); setVisibleCount(PAGE_SIZE) }}
-                >
+                <Link key={q} href={`/search?q=${encodeURIComponent(q)}`} className="browse-popular-tag">
                   {q}
-                </button>
+                </Link>
               ))}
             </div>
             <div className="browse-filter-right">
