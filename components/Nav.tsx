@@ -122,7 +122,7 @@ function NavInner({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLo
               />
               {searchQ && (
                 <button type="button" className="nav-search-clear visible" onClick={() => { setSearchQ(''); setSearchOpen(false) }}>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
               )}
             </form>
