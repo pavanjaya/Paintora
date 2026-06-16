@@ -2693,7 +2693,7 @@ img.loaded { opacity: 1; }
   background: #f4f4f6; border: 1px solid #e4e4e7;
 }
 .ap-plan-upgrade-btn {
-  width: 100%; padding: 9px; border-radius: 9px;
+  width: 100%; padding: 9px; border-radius: 100px;
   background: #7c3aed; color: #fff; border: none; cursor: pointer;
   font-size: 13px; font-weight: 700; font-family: var(--sans);
   transition: opacity 0.15s;
