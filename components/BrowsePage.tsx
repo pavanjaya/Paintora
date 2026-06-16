@@ -242,7 +242,10 @@ export default function BrowsePage({
                       className={`browse-filter-orient-btn${pending.orientation === o ? ' active' : ''}`}
                       onClick={() => setPending(f => ({ ...f, orientation: o }))}
                     >
-                      {o !== 'Any' && <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />}
+                      {o === 'Any'
+                        ? <span className="browse-orient-icon browse-orient-icon--any"><span /><span /><span /><span /></span>
+                        : <span className={`browse-orient-icon browse-orient-icon--${o.toLowerCase()}`} />
+                      }
                       {o}
                     </button>
                   ))}
