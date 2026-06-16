@@ -28,8 +28,7 @@ const NAV = [
   },
 ]
 
-export default function AccountLayout({ active, user, avatarUrl, children }: Props) {
-  const initial = (user?.email ?? 'U')[0].toUpperCase()
+export default function AccountLayout({ active, user: _user, avatarUrl: _avatarUrl, children }: Props) {
 
   return (
     <div style={{ paddingTop: 68, minHeight: '85vh', background: '#fff' }}>
