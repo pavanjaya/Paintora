@@ -269,7 +269,7 @@ function NavInner({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLo
               <>
                 <div style={{ position: 'relative' }}>
                   <div style={{ position: 'relative', display: 'inline-flex' }}>
-                    <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#7c3aed', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 700 }}>
+                    <button onClick={() => setProfileOpen(o => !o)} style={{ width: 34, height: 34, borderRadius: '50%', background: '#f0f0f3', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191947', fontSize: 13, fontWeight: 700 }}>
                       {userEmail ? userEmail[0].toUpperCase() : 'U'}
                     </button>
                     {isPro && <span style={{ position: 'absolute', bottom: -4, left: '50%', transform: 'translateX(-50%)', background: '#B87800', color: '#fff', fontSize: 8, fontWeight: 800, borderRadius: 3, padding: '1px 4px', lineHeight: 1.5, fontFamily: 'var(--sans)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>PRO</span>}
