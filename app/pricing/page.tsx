@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Nav from '@/components/Nav'
@@ -49,6 +49,13 @@ export default function PricingPage() {
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup')
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [user, setUser] = useState<{ email?: string } | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setUser(s?.user ?? null))
+    return () => subscription.unsubscribe()
+  }, [])
 
   return (
     <>
@@ -56,7 +63,7 @@ export default function PricingPage() {
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
         onStylesPage={() => router.push('/')}
-        isLoggedIn={false}
+        isLoggedIn={!!user} userEmail={user?.email}
         onLogout={() => supabase.auth.signOut()}
       />
 
