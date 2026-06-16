@@ -251,26 +251,6 @@ export default function BrowsePage({
                   ))}
                 </div>
               </div>
-              <div className="browse-filter-panel-group">
-                <div className="browse-filter-panel-label">Color</div>
-                <div className="browse-filter-color-checks">
-                  <label className="browse-filter-check-row">
-                    <span>Black and white</span>
-                    <input type="checkbox" checked={pending.blackAndWhite} onChange={e => setPending(f => ({ ...f, blackAndWhite: e.target.checked }))} />
-                  </label>
-                </div>
-                <div className="browse-filter-color-swatches">
-                  {COLOR_OPTIONS.map(c => (
-                    <button
-                      key={c.value}
-                      title={c.label}
-                      className={`browse-filter-swatch${pending.color === c.value ? ' active' : ''}`}
-                      style={{ background: c.hex, border: c.value === 'white' ? '1.5px solid #e0e0e0' : 'none' }}
-                      onClick={() => setPending(f => ({ ...f, color: f.color === c.value ? '' : c.value }))}
-                    />
-                  ))}
-                </div>
-              </div>
               <div className="browse-filter-panel-footer">
                 <button className="browse-filter-clear" onClick={resetFilters}>Clear all</button>
                 <button className="browse-filter-apply" onClick={applyFilters}>Apply</button>
