@@ -1460,7 +1460,7 @@ img.loaded { opacity: 1; }
 /* ─── Browse / Search Pages ─────────────────────────────────────────── */
 .browse-main { padding-top: 68px; min-height: 100vh; }
 
-.browse-header { padding: 1.75rem 1.5rem 1.25rem; background: var(--bg); }
+.browse-header { padding: 1.25rem 1.5rem 0.75rem; background: var(--bg); }
 .browse-header-inner { max-width: 100%; }
 
 .browse-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-muted); margin-bottom: 1rem; }
@@ -1532,7 +1532,7 @@ img.loaded { opacity: 1; }
 .browse-filter-apply { padding: 8px 20px; font-size: 13px; font-family: var(--sans); font-weight: 600; background: var(--ink); color: #fff; border: none; border-radius: 8px; cursor: pointer; }
 
 /* Grid */
-.browse-grid-section { padding: 1.25rem 1.5rem 4rem; }
+.browse-grid-section { padding: 0.75rem 1.5rem 4rem; }
 .browse-load-more { display: flex; justify-content: center; margin-top: 3rem; }
 
 /* ─── Spaces Index Page ──────────────────────────────────────────────── */
