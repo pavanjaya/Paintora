@@ -1767,8 +1767,8 @@ img.loaded { opacity: 1; }
   font-family: var(--sans); font-size: 15px; font-weight: 600;
   cursor: pointer; transition: all 0.18s;
 }
-.painting-save-btn-large:hover { border-color: var(--ink); background: var(--bg-soft); }
-.painting-save-btn-large.saved { background: var(--ink); color: #fff; border-color: var(--ink); }
+.painting-save-btn-large:hover { border-color: #7c3aed; color: #7c3aed; background: #f5f3ff; }
+.painting-save-btn-large.saved { background: #f5f3ff; color: #7c3aed; border-color: #7c3aed; }
 
 /* ── BROWSE LOGIN GATE ── */
 .browse-login-gate {
