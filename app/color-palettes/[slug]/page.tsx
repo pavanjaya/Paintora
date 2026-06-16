@@ -19,5 +19,5 @@ export default async function Page({ params }: Props) {
   const { slug } = await params
   const data = getColorPalettePage(slug)
   if (!data) notFound()
-  return <BrowsePage data={data} category="color-palettes" />
+  return <BrowsePage data={data} category={'color-palettes' as any} />
 }

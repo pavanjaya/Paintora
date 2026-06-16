@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { FEED_ARTWORKS, STYLES, SPACES } from '@/lib/data'
 
@@ -29,7 +29,7 @@ const DISCOVER_ITEMS = [
   { label: 'Color Palettes', desc: 'Warm tones, Cool blues, Earthy…', href: '/color-palettes' },
 ]
 
-export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLogout, isPro }: {
+type NavProps = {
   onLogin: () => void
   onSignup: () => void
   onStylesPage: () => void
@@ -37,7 +37,9 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
   userEmail?: string
   onLogout: () => void
   isPro?: boolean
-}) {
+}
+
+function NavInner({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLogout, isPro }: NavProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -370,5 +372,13 @@ export default function Nav({ onLogin, onSignup, onStylesPage, isLoggedIn, userE
         )}
       </div>
     </>
+  )
+}
+
+export default function Nav(props: NavProps) {
+  return (
+    <Suspense fallback={null}>
+      <NavInner {...props} />
+    </Suspense>
   )
 }

@@ -1,7 +1,7 @@
 import { FEED_ARTWORKS, GALLERY_IMGS } from './data'
 export type { ArtItem } from './data'
 
-export type BrowseCategory = 'spaces' | 'styles' | 'mediums' | 'subjects' | 'color-palettes'
+export type BrowseCategory = 'spaces' | 'styles' | 'mediums' | 'subjects'
 
 export type ColorPaletteData = {
   slug: string
@@ -370,7 +370,6 @@ export const CATEGORY_LABELS: Record<BrowseCategory, string> = {
   styles: 'Styles',
   mediums: 'Mediums',
   subjects: 'Subjects',
-  'color-palettes': 'Color Palettes',
 }
 
 export const COLOR_PALETTES: ColorPaletteData[] = [
