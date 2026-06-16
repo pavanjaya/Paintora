@@ -25,7 +25,7 @@ export default function PaintingDetail({ id }: { id: string }) {
   const [upgradeOpen, setUpgradeOpen] = useState(false)
   const [downloadOpen, setDownloadOpen] = useState(false)
   const [variant, setVariant] = useState<'vertical' | 'horizontal' | 'square' | 'space'>('vertical')
-  const [toast, setToast] = useState<{ msg: string; type: 'saved' | 'removed' } | null>(null)
+  const [saveLabel, setSaveLabel] = useState<string | null>(null)
   const [art, setArt] = useState<ArtItem | null>(null)
   const [artLoading, setArtLoading] = useState(true)
   const [allArtworks, setAllArtworks] = useState<ArtItem[]>([...FEED_ARTWORKS, ...GALLERY_IMGS])
@@ -211,7 +211,8 @@ export default function PaintingDetail({ id }: { id: string }) {
                       if (!user) { setAuthMode('login'); setAuthOpen(true); return }
                       const next = !saved
                       setSaved(next)
-                      setToast(next ? { msg: 'Saved to your collection', type: 'saved' } : { msg: 'Removed from saved', type: 'removed' })
+                      setSaveLabel(next ? 'Saved!' : 'Removed')
+                      setTimeout(() => setSaveLabel(null), 1800)
                       setTimeout(() => setToast(null), 2500)
                       if (next) {
                         await supabase.from('saves').upsert({ user_id: user.id!, artwork_id: id })
@@ -220,7 +221,11 @@ export default function PaintingDetail({ id }: { id: string }) {
                       }
                     }}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    {saveLabel ? (
+                      <span style={{ fontSize: 12, fontWeight: 600, fontFamily: 'var(--sans)', whiteSpace: 'nowrap', padding: '0 4px' }}>{saveLabel}</span>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    )}
                   </button>
                 </div>
 
@@ -305,24 +310,6 @@ export default function PaintingDetail({ id }: { id: string }) {
         )}
       </main>
 
-      {toast && (
-        <div style={{
-          position: 'fixed', top: 88, right: 24,
-          background: '#fff', color: toast.type === 'saved' ? '#166534' : 'var(--muted)',
-          padding: '12px 20px', borderRadius: 10, fontSize: 14,
-          fontFamily: 'var(--sans)', fontWeight: 500, whiteSpace: 'nowrap',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
-          border: `1px solid ${toast.type === 'saved' ? '#bbf7d0' : '#e5e7eb'}`,
-          background: toast.type === 'saved' ? '#f0fdf4' : '#fff',
-          zIndex: 999, display: 'flex', alignItems: 'center', gap: 8,
-        }}>
-          {toast.type === 'saved'
-            ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          }
-          {toast.msg}
-        </div>
-      )}
 
       <Footer />
 
