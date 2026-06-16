@@ -350,6 +350,21 @@ export function getBrowsePage(category: BrowseCategory, slug: string): BrowsePag
   return BROWSE_DATA[category]?.find(p => p.slug === slug) ?? null
 }
 
+export function getColorPalettePage(slug: string): BrowsePageData | null {
+  const palette = COLOR_PALETTES.find(p => p.slug === slug)
+  if (!palette) return null
+  return {
+    slug: palette.slug,
+    title: palette.title,
+    description: palette.description,
+    count: palette.count,
+    relatedLinks: COLOR_PALETTES.filter(p => p.slug !== slug).slice(0, 5).map(p => ({
+      label: p.title,
+      href: `/color-palettes/${p.slug}`,
+    })),
+  }
+}
+
 export const CATEGORY_LABELS: Record<BrowseCategory, string> = {
   spaces: 'Spaces',
   styles: 'Styles',
