@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { fetchArtworks } from '@/lib/artworks'
+import { searchArtworks } from '@/lib/artworks'
 import { ALL_ARTWORKS } from '@/lib/browse-data'
 import type { ArtItem } from '@/lib/browse-data'
 import Img from '@/components/Img'
@@ -61,9 +61,12 @@ export default function SearchPage({ query }: { query: string }) {
   const [activeDropdown, setActiveDropdown] = useState<ActiveDropdown>(null)
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [sticky, setSticky] = useState(false)
-  const [dbArtworks, setDbArtworks] = useState<ArtItem[]>(ALL_ARTWORKS)
+  const [dbArtworks, setDbArtworks] = useState<ArtItem[] | undefined>(undefined)
 
-  useEffect(() => { fetchArtworks().then(setDbArtworks) }, [])
+  useEffect(() => {
+    setDbArtworks(undefined)
+    searchArtworks(query).then(setDbArtworks)
+  }, [query])
   useEffect(() => { setVisibleCount(PAGE_SIZE) }, [query])
 
   useEffect(() => {
@@ -116,13 +119,8 @@ export default function SearchPage({ query }: { query: string }) {
     }
   }, [user, saved])
 
-  const artworks: ArtItem[] = query.trim()
-    ? dbArtworks.filter(a => {
-        const q = query.toLowerCase()
-        return a.name.toLowerCase().includes(q) || a.style.toLowerCase().includes(q) || (a.medium ?? '').toLowerCase().includes(q)
-      })
-    : dbArtworks
-
+  const isLoading = dbArtworks === undefined
+  const artworks: ArtItem[] = dbArtworks ?? []
   const gated = !user && artworks.length > FREE_LIMIT
   const visible = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
   const hasMore = !gated && visibleCount < artworks.length
@@ -222,7 +220,18 @@ export default function SearchPage({ query }: { query: string }) {
         </div>
 
         <div className="browse-grid-section">
-          {artworks.length === 0 && (
+          {isLoading && (
+            <div className="feed-grid">
+              {Array.from({ length: 16 }).map((_, i) => (
+                <div key={i} className="skeleton-card">
+                  <div className="skeleton-img" />
+                  <div className="skeleton skeleton-text" />
+                  <div className="skeleton skeleton-text short" />
+                </div>
+              ))}
+            </div>
+          )}
+          {!isLoading && artworks.length === 0 && (
             <div className="browse-empty-state">
               <p className="browse-empty-icon">🎨</p>
               <h2 className="browse-empty-title">No paintings found for &ldquo;{query}&rdquo;</h2>
@@ -230,7 +239,7 @@ export default function SearchPage({ query }: { query: string }) {
               <Link href="/" className="browse-empty-cta">Browse all paintings</Link>
             </div>
           )}
-          <div className="feed-grid">
+          {!isLoading && <div className="feed-grid">
             {visible.map((art, i) => (
               <Link key={`${i}-${art.img}`} href={`/paintings/${art.id}`} className="artwork-card" style={{ textDecoration: 'none', display: 'block' }}>
                 <div className="artwork-img-wrap">
@@ -258,7 +267,7 @@ export default function SearchPage({ query }: { query: string }) {
                 </div>
               </Link>
             ))}
-          </div>
+          </div>}
 
           {gated && (
             <div className="browse-login-gate">

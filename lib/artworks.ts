@@ -41,6 +41,40 @@ export async function fetchFeedArtworks(): Promise<ArtItem[]> {
   return data.map(mapRow)
 }
 
+export async function searchArtworks(query: string): Promise<ArtItem[]> {
+  if (!query.trim()) return fetchArtworks()
+
+  const q = query.trim().toLowerCase()
+
+  // Search across title, style name, medium name, category name using ilike
+  const { data } = await supabase
+    .from('artworks')
+    .select(SELECT)
+    .eq('status', 'published')
+    .or(`title.ilike.%${q}%,styles.name.ilike.%${q}%,mediums.name.ilike.%${q}%,categories.name.ilike.%${q}%`)
+    .order('created_at', { ascending: false })
+
+  if (data && data.length > 0) return data.map(mapRow)
+
+  // Fallback: fetch all and filter client-side (handles joined column filtering)
+  const { data: all } = await supabase
+    .from('artworks')
+    .select(SELECT)
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+
+  if (!all || all.length === 0) return []
+
+  return all
+    .filter((a: any) =>
+      (a.title ?? '').toLowerCase().includes(q) ||
+      (a.style?.name ?? '').toLowerCase().includes(q) ||
+      (a.medium?.name ?? '').toLowerCase().includes(q) ||
+      (a.category?.name ?? '').toLowerCase().includes(q)
+    )
+    .map(mapRow)
+}
+
 export async function fetchArtworkById(id: string): Promise<ArtItem | null> {
   const { data } = await supabase
     .from('artworks')
