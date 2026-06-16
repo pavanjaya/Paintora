@@ -63,7 +63,6 @@ export default function SpacesIndexPage() {
                 <span className="spaces-index-count">{space.count} paintings</span>
                 <h2 className="spaces-index-name">{space.title}</h2>
                 <p className="spaces-index-desc">{space.description}</p>
-                <span className="spaces-index-cta">Browse →</span>
               </div>
             </Link>
           ))}

@@ -60,7 +60,6 @@ export default function CategoryIndexPage({ category, title, subtitle, images, b
                 <span className="spaces-index-count">{item.count} paintings</span>
                 <h2 className="spaces-index-name">{item.title}</h2>
                 <p className="spaces-index-desc">{item.description}</p>
-                <span className="spaces-index-cta">Browse →</span>
               </div>
             </Link>
           ))}
