@@ -125,7 +125,6 @@ export default function PaintingDetail({ id }: { id: string }) {
       <Nav
         onLogin={() => { setAuthMode('login'); setAuthOpen(true) }}
         onSignup={() => { setAuthMode('signup'); setAuthOpen(true) }}
-       
         onStylesPage={() => {}}
         isLoggedIn={!!user}
         userEmail={user?.email}
@@ -145,20 +144,9 @@ export default function PaintingDetail({ id }: { id: string }) {
 
         {/* Main content */}
         <div className="painting-detail-grid">
-          {/* Image + Variant Tabs */}
+          {/* Image */}
           <div className="painting-detail-img-col">
-            <div className="painting-variant-tabs">
-              {(['vertical', 'horizontal', 'square', 'space'] as const).map(v => (
-                <button
-                  key={v}
-                  className={`painting-variant-tab${variant === v ? ' active' : ''}`}
-                  onClick={() => setVariant(v)}
-                >
-                  {v === 'vertical' ? 'Vertical' : v === 'horizontal' ? 'Horizontal' : v === 'square' ? 'Square' : 'With Space'}
-                </button>
-              ))}
-            </div>
-            <div className={`painting-detail-img-wrap variant-${variant}`}>
+            <div className="painting-detail-img-wrap">
               <img
                 src={art.img}
                 alt={art.name}
@@ -172,27 +160,17 @@ export default function PaintingDetail({ id }: { id: string }) {
 
           {/* Info panel */}
           <div className="painting-detail-info">
-            <h1 className="painting-detail-title">{art.name}</h1>
             <p className="painting-detail-collection">{art.style} · Paintora Collection</p>
+            <h1 className="painting-detail-title">{art.name}</h1>
 
-            {/* Metadata grid */}
+            {/* Metadata */}
             <div className="painting-detail-meta-grid">
-              <div className="painting-meta-cell">
-                <span className="painting-meta-cell-label">Resolution</span>
-                <span className="painting-meta-cell-value">3000 × 4000px</span>
-              </div>
-              <div className="painting-meta-cell">
-                <span className="painting-meta-cell-label">Format</span>
-                <span className="painting-meta-cell-value">JPG / PNG</span>
-              </div>
-              <div className="painting-meta-cell">
-                <span className="painting-meta-cell-label">License</span>
-                <span className="painting-meta-cell-value">Commercial</span>
-              </div>
-              <div className="painting-meta-cell">
-                <span className="painting-meta-cell-label">Style</span>
-                <span className="painting-meta-cell-value">{art.style}</span>
-              </div>
+              {art.style && (
+                <div className="painting-meta-cell">
+                  <span className="painting-meta-cell-label">Style</span>
+                  <span className="painting-meta-cell-value">{art.style}</span>
+                </div>
+              )}
               {art.medium && (
                 <div className="painting-meta-cell">
                   <span className="painting-meta-cell-label">Medium</span>
@@ -201,10 +179,14 @@ export default function PaintingDetail({ id }: { id: string }) {
               )}
               {art.dim && (
                 <div className="painting-meta-cell">
-                  <span className="painting-meta-cell-label">Size</span>
+                  <span className="painting-meta-cell-label">Dimensions</span>
                   <span className="painting-meta-cell-value">{art.dim}</span>
                 </div>
               )}
+              <div className="painting-meta-cell">
+                <span className="painting-meta-cell-label">Collection</span>
+                <span className="painting-meta-cell-value">Paintora Originals</span>
+              </div>
             </div>
 
             {/* Actions */}
@@ -265,7 +247,6 @@ export default function PaintingDetail({ id }: { id: string }) {
                             document.body.removeChild(a)
                             URL.revokeObjectURL(url)
                           } catch {
-                            // fallback for CORS-blocked URLs
                             window.open(art.img, '_blank')
                           }
                           if (user?.id) {
@@ -310,35 +291,7 @@ export default function PaintingDetail({ id }: { id: string }) {
                             <span className="artwork-overlay-name">{a.name}</span>
                             <span className="artwork-overlay-style">{a.style}</span>
                           </div>
-                          <button className="artwork-overlay-dl">View Details</button>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* You may also like */}
-        {similar.length > 0 && (
-          <section className="painting-related">
-            <div className="painting-related-inner">
-              <h2 className="section-title" style={{ fontSize: 'clamp(16px,2vw,22px)', marginBottom: '1.5rem' }}>You May Also Like</h2>
-              <div className="feed-grid">
-                {similar.map((a, i) => (
-                  <a key={i} href={`/paintings/${a.id}`} className="artwork-card" style={{ textDecoration: 'none' }}>
-                    <div className="artwork-img-wrap">
-                      <Img src={a.img} alt={a.name} />
-                      <div className="artwork-overlay">
-                        <div className="artwork-overlay-top" />
-                        <div className="artwork-overlay-bottom">
-                          <div className="artwork-overlay-info">
-                            <span className="artwork-overlay-name">{a.name}</span>
-                            <span className="artwork-overlay-style">{a.style}</span>
-                          </div>
-                          <button className="artwork-overlay-dl">View Details</button>
+                          <span className="artwork-view-btn">View</span>
                         </div>
                       </div>
                     </div>
