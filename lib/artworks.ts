@@ -26,7 +26,7 @@ function mapRow(a: any): ArtItem {
   }
 }
 
-const SELECT = 'id, title, thumbnail_url, dimensions, style:styles(name), medium:mediums(name), category:categories(name)'
+const SELECT = 'id, title, thumbnail_url, style:styles(name), medium:mediums(name), category:categories(name)'
 
 export async function fetchArtworks(): Promise<ArtItem[]> {
   const { data } = await supabase
