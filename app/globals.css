@@ -1634,6 +1634,9 @@ img.loaded { opacity: 1; }
 
 .collection-detail-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; font-family: var(--sans); }
 .collection-detail-about { font-size: 15px; color: var(--ink-muted); line-height: 1.65; margin-top: 10px; max-width: 580px; font-family: var(--sans); }
+.collection-detail-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.collection-share-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--ink); background: none; border: 1px solid var(--border-solid); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.collection-share-btn:hover { background: var(--ink); color: #fff; }
 
 .col-rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; padding: 0 1.5rem 5rem; }
 .col-rank-card { display: flex; flex-direction: column; gap: 12px; border-radius: 12px; border: 1px solid var(--border); background: #fff; padding: 16px; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; }

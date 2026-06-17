@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { fetchArtworks } from '@/lib/artworks'
@@ -28,6 +28,18 @@ export default function CollectionDetailPage({ data }: { data: CollectionData })
   const [authOpen, setAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
   const [saved, setSaved] = useState<Set<string>>(new Set())
+  const [copied, setCopied] = useState(false)
+
+  const handleShare = useCallback(async () => {
+    const url = window.location.href
+    if (navigator.share) {
+      await navigator.share({ title: data.title, url })
+    } else {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }, [data.title])
   const [artworks, setArtworks] = useState<ArtItem[] | undefined>(undefined)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
@@ -90,7 +102,22 @@ export default function CollectionDetailPage({ data }: { data: CollectionData })
             <h1 className="browse-title">{data.title}</h1>
             <p className="browse-desc">{data.description}</p>
             {data.about && <p className="collection-detail-about">{data.about}</p>}
-            <span className="browse-count">{data.count} paintings</span>
+            <div className="collection-detail-meta">
+              <span className="browse-count">{data.count} paintings</span>
+              <button className="collection-share-btn" onClick={handleShare} title="Share collection">
+                {copied ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Link copied
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    Share
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
