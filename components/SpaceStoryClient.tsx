@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AuthModal from '@/components/AuthModal'
+import Img from '@/components/Img'
 import type { SpaceStory } from '@/lib/space-stories'
 import { SPACE_STORIES } from '@/lib/space-stories'
 
@@ -36,7 +37,7 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
 
         {/* Hero */}
         <div className="ss-hero">
-          <img src={story.heroImg} alt={story.title} className="ss-hero-img" />
+          <Img src={story.heroImg} alt={story.title} className="ss-hero-img" />
           <div className="ss-hero-overlay" />
           <div className="ss-hero-content">
             <div className="ss-hero-tag">{story.tag} · {story.label}</div>
@@ -89,7 +90,7 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
               {story.paintings.map((p, i) => (
                 <Link key={i} href={p.href} className="ss-painting-card">
                   <div className="ss-painting-img">
-                    <img src={p.src} alt={p.name} />
+                    <Img src={p.src} alt={p.name} />
                   </div>
                   <div className="ss-painting-info">
                     <span className="ss-painting-name">{p.name}</span>
@@ -109,7 +110,7 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
               {related.map(r => (
                 <Link key={r.slug} href={`/space-stories/${r.slug}`} className="ss-related-card">
                   <div className="ss-related-img">
-                    <img src={r.heroImg} alt={r.title} />
+                    <Img src={r.heroImg} alt={r.title} />
                   </div>
                   <div className="ss-related-info">
                     <span className="ss-related-tag">{r.tag} · {r.label}</span>
