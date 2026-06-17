@@ -1,15 +1,16 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import Img from './Img'
 
 const INSITU_ITEMS = [
-  { img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85', label: 'Modern Living Room', title: 'Contemporary Arrangement', tag: 'Residential' },
-  { img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85', label: 'Executive Office', title: 'Authority & Gravitas', tag: 'Commercial' },
-  { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85', label: 'Boutique Café', title: 'Warm Atmosphere', tag: 'Hospitality' },
-  { img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85', label: 'Hotel Lobby', title: 'Grand Welcome', tag: 'Hospitality' },
-  { img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85', label: 'Luxury Bedroom', title: 'Quiet Luxury', tag: 'Residential' },
-  { img: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=1200&q=85', label: 'Home Library', title: 'Curated Calm', tag: 'Residential' },
+  { img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85', label: 'Modern Living Room', title: 'Contemporary Arrangement', tag: 'Residential', slug: 'contemporary-arrangement' },
+  { img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85', label: 'Executive Office', title: 'Authority & Gravitas', tag: 'Commercial', slug: 'authority-and-gravitas' },
+  { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85', label: 'Boutique Café', title: 'Warm Atmosphere', tag: 'Hospitality', slug: 'warm-atmosphere' },
+  { img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=85', label: 'Hotel Lobby', title: 'Grand Welcome', tag: 'Hospitality', slug: 'grand-welcome' },
+  { img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85', label: 'Luxury Bedroom', title: 'Quiet Luxury', tag: 'Residential', slug: 'quiet-luxury' },
+  { img: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=1200&q=85', label: 'Home Library', title: 'Curated Calm', tag: 'Residential', slug: 'curated-calm' },
 ]
 
 export default function InSitu() {
@@ -39,7 +40,7 @@ export default function InSitu() {
 
       <div className="insitu-track" ref={scrollRef}>
         {INSITU_ITEMS.map((item, i) => (
-          <div key={i} className="insitu-card">
+          <Link key={i} href={`/space-stories/${item.slug}`} className="insitu-card" style={{ textDecoration: 'none' }}>
             <div className="insitu-card-img">
               <Img src={item.img} alt={item.title} />
             </div>
@@ -47,7 +48,7 @@ export default function InSitu() {
               <p className="insitu-card-label">{item.label}</p>
               <strong className="insitu-card-title">{item.title}</strong>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
