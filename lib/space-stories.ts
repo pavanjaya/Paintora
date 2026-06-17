@@ -29,7 +29,7 @@ export const SPACE_STORIES: SpaceStory[] = [
     label: 'Executive Office',
     title: 'Authority & Gravitas',
     headline: 'A contemporary law office where thoughtfully curated art creates an atmosphere of confidence, clarity, and lasting first impressions.',
-    intro: 'Every detail within a professional space influences how people feel. From the moment clients step inside, the environment communicates values before a single conversation begins. In this project, carefully selected contemporary paintings complement clean architecture, natural materials, and restrained color palettes to create a reception that feels refined, welcoming, and trustworthy.\n\nRather than competing for attention, each artwork works in harmony with the space—adding depth, texture, and visual balance while reinforcing the firm's modern identity.',
+    intro: 'Every detail within a professional space influences how people feel. From the moment clients step inside, the environment communicates values before a single conversation begins. In this project, carefully selected contemporary paintings complement clean architecture, natural materials, and restrained color palettes to create a reception that feels refined, welcoming, and trustworthy.\n\nRather than competing for attention, each artwork works in harmony with the space—adding depth, texture, and visual balance while reinforcing the firm\'s modern identity.',
     heroImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=90',
     sections: [
       {
