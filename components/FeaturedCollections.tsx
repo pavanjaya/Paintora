@@ -14,7 +14,7 @@ export default function FeaturedCollections() {
   return (
     <section id="collections">
       <div className="section-head">
-        <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Featured collections.</h2>
+        <h2 className="section-title" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>Curated collections.</h2>
         <Link href="/collections" className="view-all">View all</Link>
       </div>
       <div className="collections-grid">
