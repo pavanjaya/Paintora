@@ -70,6 +70,17 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
           </div>
         </div>
 
+        {/* Designer quote */}
+        <div className="ss-container">
+          <blockquote className="ss-quote">
+            <p className="ss-quote-text">"{story.quote.text}"</p>
+            <footer className="ss-quote-author">
+              <span className="ss-quote-name">{story.quote.author}</span>
+              <span className="ss-quote-role">{story.quote.role}</span>
+            </footer>
+          </blockquote>
+        </div>
+
         {/* Body sections */}
         <div className="ss-container">
           {story.sections.map((sec, i) => (
