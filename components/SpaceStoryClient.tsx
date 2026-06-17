@@ -85,18 +85,6 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
           </blockquote>
         </div>
 
-        {/* Body sections */}
-        <div className="ss-container">
-          {story.sections.map((sec, i) => (
-            <div key={i} className="ss-section">
-              {sec.heading && <h2 className="ss-section-heading">{sec.heading}</h2>}
-              {sec.body.split('\n\n').map((p, j) => (
-                <p key={j} className="ss-body">{p}</p>
-              ))}
-            </div>
-          ))}
-        </div>
-
         {/* Curated paintings */}
         <div className="ss-paintings-band">
           <div className="ss-container">
@@ -115,6 +103,18 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Body sections */}
+        <div className="ss-container">
+          {story.sections.map((sec, i) => (
+            <div key={i} className="ss-section">
+              {sec.heading && <h2 className="ss-section-heading">{sec.heading}</h2>}
+              {sec.body.split('\n\n').map((p, j) => (
+                <p key={j} className="ss-body">{p}</p>
+              ))}
+            </div>
+          ))}
         </div>
 
         {/* Related stories */}
