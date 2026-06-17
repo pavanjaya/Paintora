@@ -98,4 +98,5 @@ export type ArtItem = {
   dim?: string
   medium?: string
   h?: string
+  orientation?: 'Horizontal' | 'Vertical' | 'Square'
 }

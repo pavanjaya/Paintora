@@ -5,6 +5,15 @@ import { FEED_ARTWORKS, GALLERY_IMGS } from './data'
 const FALLBACK_FEED = FEED_ARTWORKS
 const FALLBACK_ALL = [...FEED_ARTWORKS, ...GALLERY_IMGS]
 
+function parseOrientation(dim?: string): ArtItem['orientation'] {
+  if (!dim) return undefined
+  const nums = dim.match(/(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)/i)
+  if (!nums) return undefined
+  const w = parseFloat(nums[1]), h = parseFloat(nums[2])
+  if (Math.abs(w - h) / Math.max(w, h) < 0.1) return 'Square'
+  return w > h ? 'Horizontal' : 'Vertical'
+}
+
 function mapRow(a: any): ArtItem {
   return {
     id: a.id as string,
@@ -13,10 +22,11 @@ function mapRow(a: any): ArtItem {
     style: a.style?.name ?? a.category?.name ?? 'Art',
     medium: a.medium?.name,
     dim: a.dimensions,
+    orientation: parseOrientation(a.dimensions),
   }
 }
 
-const SELECT = 'id, title, thumbnail_url, style:styles(name), medium:mediums(name), category:categories(name)'
+const SELECT = 'id, title, thumbnail_url, dimensions, style:styles(name), medium:mediums(name), category:categories(name)'
 
 export async function fetchArtworks(): Promise<ArtItem[]> {
   const { data } = await supabase

@@ -116,10 +116,13 @@ export default function BrowsePage({
 
   const isLoading = dbArtworks === undefined
   const artworks: ArtItem[] = dbArtworks ?? []
-  const gated = !user && artworks.length > FREE_LIMIT
-  const visibleArtworks = gated ? artworks.slice(0, FREE_LIMIT) : artworks.slice(0, visibleCount)
+  const filtered = filters.orientation && filters.orientation !== 'Any'
+    ? artworks.filter(a => a.orientation === filters.orientation)
+    : artworks
+  const gated = !user && filtered.length > FREE_LIMIT
+  const visibleArtworks = gated ? filtered.slice(0, FREE_LIMIT) : filtered.slice(0, visibleCount)
   const visible = visibleArtworks
-  const hasMore = !gated && visibleCount < artworks.length
+  const hasMore = !gated && visibleCount < filtered.length
 
   const setFilter = (key: keyof FilterState, val: string) => {
     setFilters(f => ({ ...f, [key]: f[key] === val ? '' : val }))
