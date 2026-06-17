@@ -31,7 +31,20 @@ export default function Hero() {
           ))}
         </div>
         <div className="hero-stats">
-          <span>12,400+ paintings</span>
+          <div className="hero-stat">
+            <span className="hero-stat-num">50,000+</span>
+            <span className="hero-stat-label">curated paintings</span>
+          </div>
+          <div className="hero-stat-divider" />
+          <div className="hero-stat">
+            <span className="hero-stat-num">250+</span>
+            <span className="hero-stat-label">collections</span>
+          </div>
+          <div className="hero-stat-divider" />
+          <div className="hero-stat">
+            <span className="hero-stat-num">40+</span>
+            <span className="hero-stat-label">spaces</span>
+          </div>
         </div>
       </div>
 
