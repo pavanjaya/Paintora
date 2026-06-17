@@ -73,10 +73,14 @@ export default function SpaceStoryClient({ story }: { story: SpaceStory }) {
         {/* Designer quote */}
         <div className="ss-container">
           <blockquote className="ss-quote">
-            <p className="ss-quote-text">"{story.quote.text}"</p>
+            <span className="ss-quote-mark">"</span>
+            <p className="ss-quote-text">{story.quote.text}"</p>
             <footer className="ss-quote-author">
-              <span className="ss-quote-name">{story.quote.author}</span>
-              <span className="ss-quote-role">{story.quote.role}</span>
+              <Img src={story.quote.avatar} alt={story.quote.author} className="ss-quote-avatar" />
+              <div className="ss-quote-meta">
+                <span className="ss-quote-name">{story.quote.author}</span>
+                <span className="ss-quote-role">{story.quote.role}</span>
+              </div>
             </footer>
           </blockquote>
         </div>

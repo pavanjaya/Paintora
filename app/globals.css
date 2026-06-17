@@ -467,10 +467,13 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .ss-highlight-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--ink); line-height: 1.5; }
 .ss-highlight-item svg { color: #16a34a; flex-shrink: 0; margin-top: 3px; }
 
-.ss-quote { margin: 3rem 0 0; padding: 2.5rem 2rem 2.5rem 2.5rem; border-left: 3px solid var(--ink); background: #f9f9fb; border-radius: 0 12px 12px 0; }
-.ss-quote-text { font-family: var(--serif); font-size: clamp(17px, 2vw, 21px); font-weight: 500; color: var(--ink); line-height: 1.6; margin: 0 0 1.25rem; font-style: italic; }
-.ss-quote-author { display: flex; flex-direction: column; gap: 2px; }
-.ss-quote-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.ss-quote { margin: 3.5rem 0 0; padding: 0; border: none; background: none; position: relative; text-align: center; }
+.ss-quote-mark { font-family: var(--serif); font-size: 72px; line-height: 1; color: var(--ink); opacity: 0.12; display: block; margin-bottom: -0.25em; }
+.ss-quote-text { font-family: var(--serif); font-size: clamp(19px, 2.2vw, 26px); font-weight: 400; color: var(--ink); line-height: 1.65; margin: 0 auto 2rem; font-style: italic; max-width: 680px; }
+.ss-quote-author { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.ss-quote-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.ss-quote-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.ss-quote-name { font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: 0.01em; }
 .ss-quote-role { font-size: 12px; color: var(--ink-muted); }
 
 .ss-section { padding: 3rem 0; border-bottom: 1px solid var(--border-solid); }

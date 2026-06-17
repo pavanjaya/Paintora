@@ -11,7 +11,7 @@ export type SpaceStory = {
     body: string
   }[]
   highlights: string[]
-  quote: { text: string; author: string; role: string }
+  quote: { text: string; author: string; role: string; avatar: string }
   whyItWorks: string
   curatedNote: string
   paintings: {
@@ -58,6 +58,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'We didn\'t want art that demanded attention. We wanted art that made the space feel inevitable — as if the room couldn\'t have been any other way.',
       author: 'Arjun Mehta',
       role: 'Lead Interior Designer',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80',
     },
     whyItWorks: 'Artwork has the ability to shape perception. In professional interiors, carefully chosen paintings create moments of pause, introduce personality, and make large spaces feel more inviting without overwhelming the architecture.',
     curatedNote: 'Every painting featured in this project has been selected to complement the interior\'s scale, lighting, materials, and purpose. Together they create a cohesive visual language that elevates the everyday experience of the workplace.',
@@ -97,6 +98,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'A living room should tell you something about the people in it. The paintings we chose don\'t just fill the walls — they start conversations.',
       author: 'Priya Nair',
       role: 'Interior Architect',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
     },
     whyItWorks: 'In residential spaces, art should feel personal and intentional. The right painting on the right wall transforms a room from a collection of furniture into a place that reflects who lives there.',
     curatedNote: 'Paintora paintings are selected for how they interact with natural light, room scale, and the overall material palette — not just how they look in isolation.',
@@ -135,6 +137,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'People don\'t notice the art consciously — they just feel more comfortable, more at home. That\'s exactly what we were after.',
       author: 'Meera Krishnan',
       role: 'Café Design Consultant',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80',
     },
     whyItWorks: 'In hospitality, art is never just decoration — it is part of the experience guests remember and return for. The right curation creates emotional memory.',
     curatedNote: 'Every artwork in this café was chosen to feel personal, warm, and slightly unexpected — the kind of art that makes guests look twice and stay a little longer.',
@@ -173,6 +176,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'The lobby needed to say something before anyone reached the front desk. The art does that — it sets a tone that carries through the entire stay.',
       author: 'Rajan Verma',
       role: 'Hospitality Design Director',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80',
     },
     whyItWorks: 'Hotels that invest in serious art curation create spaces guests remember and return to. Art at this scale communicates confidence, investment, and a genuine point of view.',
     curatedNote: 'Every piece in this lobby was considered against the building\'s architecture, the brand\'s visual identity, and the emotional journey of arriving guests.',
@@ -211,6 +215,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'In a bedroom, the art is the last thing you see at night and the first thing in the morning. It has to be exactly right — not beautiful, but right.',
       author: 'Sunita Rao',
       role: 'Residential Interior Designer',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80',
     },
     whyItWorks: 'Bedrooms reveal the true purpose of curation — not to fill walls, but to support the life lived in the room. Art here is intimate, personal, and quietly essential.',
     curatedNote: 'Each painting was selected for how it feels at rest — soft, grounded, and completely at home in a space designed for recovery and reflection.',
@@ -249,6 +254,7 @@ export const SPACE_STORIES: SpaceStory[] = [
       text: 'A library is already full of meaning. The art we added had to deserve its place among the books — to feel chosen, not placed.',
       author: 'Vikram Desai',
       role: 'Private Residence Designer',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80',
     },
     whyItWorks: 'In a library, art must earn the competition. Books are already a form of curated visual and intellectual richness. Art that belongs here must add to that depth, not distract from it.',
     curatedNote: 'Paintora\'s curation for this library prioritised works with sustained visual interest — paintings that reveal more over time, matching the experience of reading itself.',
