@@ -95,7 +95,7 @@ function NavInner({ onLogin, onSignup, onStylesPage, isLoggedIn, userEmail, onLo
 
   return (
     <>
-      <nav style={{ borderBottom: scrolled ? '1px solid rgba(15,15,20,0.08)' : 'none', boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.04)' : 'none' }}>
+      <nav style={{ boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.04)' : 'none' }}>
         <div className="nav-inner" style={{ position: 'relative' }}>
 
           {/* LEFT: Logo */}
