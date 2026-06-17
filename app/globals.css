@@ -449,7 +449,7 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 
 /* ── SPACE STORY PAGE ── */
 .ss-article { padding-top: 68px; background: #fff; }
-.ss-hero { position: relative; height: 90vh; min-height: 560px; max-height: 800px; overflow: hidden; }
+.ss-hero { position: relative; height: 65vh; min-height: 420px; max-height: 600px; overflow: hidden; }
 .ss-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ss-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,15,0.7) 0%, rgba(10,10,15,0.2) 50%, transparent 100%); }
 .ss-hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 5vw 3.5rem; }
@@ -491,9 +491,9 @@ section { max-width: 100%; margin: 0; padding: 4rem 1.5rem; }
 .ss-related-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
 .ss-related-title { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
 
-.ss-back-wrap { padding: 2rem 0 4rem; max-width: 780px; margin: 0 auto; padding-left: 1.5rem; }
-.ss-back { font-size: 14px; color: var(--ink-muted); text-decoration: none; transition: color 0.15s; }
-.ss-back:hover { color: var(--ink); }
+.ss-back-wrap { padding: 3rem 0 5rem; display: flex; justify-content: center; }
+.ss-back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; border: 1.5px solid var(--border-solid); border-radius: 100px; padding: 10px 22px; transition: background 0.15s, border-color 0.15s; font-family: var(--sans); }
+.ss-back:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
 /* ── TESTIMONIALS ── */
 /* ── Testimonials marquee ── */
