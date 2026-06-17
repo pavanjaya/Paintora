@@ -224,8 +224,9 @@ mark { background: var(--violet-light); color: var(--violet); border-radius: 3px
 .hero-stats {
   display: flex; align-items: center; gap: 16px; margin-top: 0.25rem;
 }
-.hero-stat { display: flex; flex-direction: column; gap: 2px; }
-.hero-stat-icon { color: var(--ink-muted); margin-bottom: 4px; }
+.hero-stat { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+.hero-stat > div { display: flex; flex-direction: column; gap: 1px; }
+.hero-stat-icon { color: var(--ink-muted); flex-shrink: 0; }
 .hero-stat-num { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; }
 .hero-stat-label { font-size: 11px; font-weight: 400; color: var(--ink-muted); }
 .hero-stat-divider { width: 1px; height: 28px; background: var(--border-solid); }
