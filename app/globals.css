@@ -1635,8 +1635,12 @@ img.loaded { opacity: 1; }
 .collection-detail-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; font-family: var(--sans); }
 .collection-detail-about { font-size: 15px; color: var(--ink-muted); line-height: 1.65; margin-top: 10px; max-width: 580px; font-family: var(--sans); }
 .collection-detail-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.collection-share-wrap { position: relative; }
 .collection-share-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--ink); background: none; border: 1px solid var(--border-solid); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
 .collection-share-btn:hover { background: var(--ink); color: #fff; }
+.collection-share-dropdown { position: absolute; right: 0; top: calc(100% + 8px); background: #fff; border: 1px solid var(--border-solid); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10); padding: 6px; min-width: 160px; z-index: 100; display: flex; flex-direction: column; gap: 2px; }
+.collection-share-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--ink); text-decoration: none; background: none; border: none; cursor: pointer; width: 100%; transition: background 0.12s; }
+.collection-share-option:hover { background: #f4f4f6; }
 
 .col-rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; padding: 0 1.5rem 5rem; }
 .col-rank-card { display: flex; flex-direction: column; gap: 12px; border-radius: 12px; border: 1px solid var(--border); background: #fff; padding: 16px; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; }
