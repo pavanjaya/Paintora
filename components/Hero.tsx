@@ -15,13 +15,10 @@ const SPACES = [
   { label: 'For cafés',         href: '/spaces/cafe' },
 ]
 
-export default function Hero({ userName }: { userName?: string }) {
+export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-left">
-        {userName && (
-          <div className="hero-welcome">✦ Welcome back, {userName}</div>
-        )}
         <div className="hero-badge">#1 Painting Platform in India</div>
         <h1 className="hero-title">Paintings that<br />define a space.</h1>
         <p className="hero-sub">

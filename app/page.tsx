@@ -106,7 +106,7 @@ export default function Home() {
       />
 
       <main>
-        <Hero userName={user ? (user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]) : undefined} />
+        <Hero />
         <TrendingPaintings   artworks={artworks} onPreview={openPreview} savedIds={savedIds} onToggleSave={toggleSave} />
         <SpacesGrid          onSpacePage={() => setSpaceOpen(true)} />
         <FeaturedCollections />
